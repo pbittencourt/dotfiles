@@ -1,0 +1,468 @@
+##################
+# i3 config file #
+##################
+
+# use win key
+set $mod Mod4
+
+# default applications
+set $texteditor mousepad
+set $terminal alacritty
+set $browser firefox
+
+# font for window titles and bar
+font pango:Iosevka 8
+
+# border style <normal|1pixel|pixel xx|none|pixel>
+new_window	pixel 3
+new_float	pixel 3
+
+# window border settings
+default_border          pixel 3
+default_floating_border pixel 3
+
+# hide borders <both|none>
+hide_edge_borders none
+
+# change borders
+bindsym $mod+n border normal 0
+bindsym $mod+y border pixel 1
+bindsym $mod+u border pixel	3
+bindsym $mod+i border none
+
+# change focus
+bindsym $mod+Left	focus left
+bindsym $mod+Down	focus down
+bindsym $mod+Up		focus up
+bindsym $mod+Right	focus right
+
+# change focus: vim keys
+bindsym $mod+h	focus left
+bindsym $mod+j	focus down
+bindsym $mod+k	focus up
+bindsym $mod+l	focus right
+
+# move focused window
+bindsym $mod+Shift+Left 	move left
+bindsym $mod+Shift+Down 	move down
+bindsym $mod+Shift+Up 		move up
+bindsym $mod+Shift+Right	move right
+
+# fake "ALT-TAB" function
+bindsym Mod1+Tab focus left
+
+# split orientation
+bindsym $mod+c split h
+bindsym $mod+v split v
+#bindsym $mod+q split t
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# show the next scratchpad window or hide the focused scratchpad window
+bindsym $mod+minus scratchpad show
+
+# move focused floating window to the center of all outputs
+bindsym $mod+Shift+y move absolute position center
+
+# move focused floating window to the current position of the cursor
+bindsym $mod+Shift+m move position mouse
+
+# set a window to stick to the glass
+bindsym $mod+Shift+s sticky toggle
+
+# set workspaces names
+#set $workspace1 "1"
+#set $workspace2 "2"
+#set $workspace3 "3"
+#set $workspace4 "4"
+#set $workspace5 "5"
+#set $workspace6 "6"
+#set $workspace7 "7"
+#set $workspace8 "8"
+set $workspace1 "1 "
+set $workspace2 "2 " 
+#set $workspace2 "2 "
+set $workspace3 "3 "
+set $workspace4 "4 "
+set $workspace5 "5 "
+set $workspace6 "6 "
+set $workspace7 "7 "
+set $workspace8 "8 "
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+
+# move to workspace with focused container
+bindsym $mod+Ctrl+1 move container to workspace $workspace1; workspace $workspace1
+bindsym $mod+Ctrl+2 move container to workspace $workspace2; workspace $workspace2
+bindsym $mod+Ctrl+3 move container to workspace $workspace3; workspace $workspace3
+bindsym $mod+Ctrl+4 move container to workspace $workspace4; workspace $workspace4
+bindsym $mod+Ctrl+5 move container to workspace $workspace5; workspace $workspace5
+bindsym $mod+Ctrl+6 move container to workspace $workspace6; workspace $workspace6
+bindsym $mod+Ctrl+7 move container to workspace $workspace7; workspace $workspace7
+bindsym $mod+Ctrl+8 move container to workspace $workspace8; workspace $workspace8
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth	no
+bindsym $mod+Tab		workspace back_and_forth
+bindsym $mod+Shift+Tab  move container to workspace back_and_forth; workspace back_and_forth
+
+# Moving workspaces between monitors
+bindsym $mod+p move workspace to output right
+bindsym $mod+o move workspace to output left
+
+# start a terminal (urxvt | i3)
+bindsym $mod+Return exec $terminal
+bindsym $mod+Shift+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# switching window with win+tab
+bindsym $mod+Ctrl+Tab exec --no-startup-id rofi -show window
+
+# program launcher (rofi | i3-dmenu-desktop)
+bindsym $mod+d exec rofi -show run
+bindsym $mod+Ctrl+d exec --no-startup-id i3-dmenu-desktop
+
+# rofi search documentations
+# https://github.com/Zeioth/rofi-zeal
+bindsym $mod+Shift+d exec $HOME/.config/rofi/rofi-zeal.sh
+
+# shortcut applications
+bindsym $mod+F1 workspace $workspace1;	exec firefox
+bindsym $mod+F2 workspace $workspace2;	exec $terminal -e vim
+bindsym $mod+F3         				exec thunar
+bindsym $mod+F4			            	exec xcalc
+bindsym $mod+F5			            	exec $texteditor
+bindsym $mod+F6			            	exec pavucontrol
+bindsym $mod+Print		            	exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Imagens/captures'
+bindsym Print   		            	exec flameshot gui
+
+# assign program to workspace
+assign [class="Firefox"] 		    $workspace1
+assign [class="Atom"] 			    $workspace2
+assign [class="Inkscape"] 		    $workspace5
+assign [class="Deja-dup"] 		    $workspace7
+assign [class="TelegramDesktop"] 	$workspace8
+
+# open applications in floating mode and define borders
+for_window [title="alsamixer"] 		    floating enable
+for_window [title="Autokey"] 		    floating enable
+for_window [title="feh"]        	    floating enable
+for_window [title="feh"]        	    resize set 640 720
+for_window [title="feh"]        	    move absolute position center
+for_window [title="File Transfer*"]	    floating enable
+for_window [class="flameshot"] 		    floating enable
+for_window [class="gnome-calculator"]   floating enable
+for_window [class="xcalc"]              floating enable
+for_window [title="Calculator"]         floating enable
+for_window [class="Lxappearance"] 	    floating enable
+for_window [class="Nitrogen"] 		    floating enable border normal
+for_window [class="Pavucontrol"] 	    floating enable
+for_window [class="skypeforlinux"] 	    floating enable
+for_window [class="Telegram"] 		    floating enable
+for_window [class="Mousepad"] 		    floating enable
+for_window [class="Mousepad"] 		    resize set 640 480
+for_window [class="Mousepad"] 		    move absolute position center
+
+# edit i3 config
+bindsym $mod+Shift+o exec $terminal -e vim '.config/i3/config'
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Para de beber, Pedro!' -b 'Retire-se, por favor!' 'i3-msg exit'"
+
+# float, resize and move it!
+bindsym $mod+Ctrl+space mode "float and move"
+mode "float and move" {
+    bindsym q floating enable; resize set 940 520; move absolute position 20 20; mode "default"
+    bindsym w floating enable; resize set 940 520; move absolute position 480 20; mode "default"
+    bindsym e floating enable; resize set 940 520; move absolute position 960 20; mode "default"
+    bindsym a floating enable; resize set 940 520; move absolute position 20 270; mode "default"
+    bindsym s floating enable; resize set 940 520; move absolute position center; mode "default"
+    bindsym d floating enable; resize set 940 520; move absolute position 940 270; mode "default"
+    bindsym z floating enable; resize set 940 520; move absolute position 20 540; mode "default"
+    bindsym x floating enable; resize set 940 520; move absolute position 480 540; mode "default"
+    bindsym c floating enable; resize set 940 520; move absolute position 960 540; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# start i3bar to display a workspace bar
+bar {
+    status_command		i3blocks -c ~/.config/i3/i3blocks.conf
+    bindsym button4		yes
+    bindsym button5		yes
+    position			bottom
+    separator_symbol		"."
+    workspace_buttons		yes
+    strip_workspace_numbers	no
+    font pango:Font Awesome, Iosevka 9
+
+    colors {
+	background $background
+	statusline $foreground
+	separator  $white2 #454947
+        # class             border  backg   text
+        focused_workspace   $green $green $background
+        active_workspace    $magenta $magenta $background
+        inactive_workspace  $white1 $white1 $foreground
+        binding_mode        $magenta $magenta $background
+        urgent_workspace    $magenta $magenta $background
+    }
+    
+    # only show bar on system's suspend and resize
+    # (to use with polybar without problems)
+    #mode            hide
+    #hidden_state    hide
+    #modifier        Mod1
+    # colors commented to use i3bar, again
+    #colors {
+	#background $red #222D31
+	#statusline $white1 #F9FAF9
+	#separator  $white2 #454947
+    #    # class             border  backg   text
+    #    focused_workspace   $green $green $background
+    #    active_workspace    $green $background $green
+    #    inactive_workspace  $green $background $white2
+    #    binding_mode        $red $red $white1
+    #    urgent_workspace    $red $red $white1
+    #}
+}
+
+# key indicators
+bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
+bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
+# Enable/disable caps mode
+#mode "caps" {
+#    bindsym Caps_Lock mode "default"
+#}
+#bindsym Caps_Lock mode "caps"
+
+# volume control
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+
+# lock screen
+bindsym $mod+Shift+9 exec gnome-screensaver-command -a
+bindsym $mod+Ctrl+9 exec --no-startup-id blurlock
+
+# system suspend
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    #bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id lock
+
+    #bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit
+
+    #bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend
+
+    #bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate
+
+    #bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym h exec --no-startup-id systemctl reboot
+
+    #bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+0 mode "$mode_system"
+
+###########
+# I3 GAPS #
+###########
+
+gaps inner	    15
+gaps outer	    0
+smart_gaps	    on
+smart_borders	on
+
+# Press $mod+Shift+g to enter the gap mode.
+# Choose o or i for modifying outer/inner gaps.
+# Press one of + / - (in-/decrement for current workspace) 
+# or 0 (remove gaps for current workspace). If you also press 
+# Shift with these keys, the change will be global for all workspaces.
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+########################
+# STARTUP APPLICATIONS #
+########################
+
+# launch thunar in daemon mode to let it handle automatic mounting
+exec thunar --daemon
+
+# network icon on tray
+exec nm-applet
+
+# polybar
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# compton
+#exec_always --no-startup-id compton --config $HOME/.config/compton.conf -cCGf
+
+# wallpaper
+exec_always --no-startup-id nitrogen --restore
+
+# redshift: better light! oh, my eyes!
+exec redshift-gtk -l -23.486:-46.73 -t 6500:3500 -g 0.8 -m randr -v
+
+# dunst to send notifications
+exec dunst
+
+# dropbox
+exec sleep 15; dropbox start
+
+# mount google's drives (work and personal)
+#exec sleep 15; google-drive-ocamlfuse -label drivearvi ~/"Drive ARVI"
+#exec sleep 20; google-drive-ocamlfuse -label drivepedro ~/"Drive PEDRO"
+
+# telegram
+#exec sleep 30; $HOME/Telegram/Telegram
+
+# autokey
+#exec sleep 30; autokey-gtk
+
+# flameshot
+exec sleep 45; flameshot
+
+# backup
+exec sleep 60; deja-dup --backup
+
+#################
+# COLOR PALETTE #
+#################
+
+# fetch from .Xresources
+# actually, only BLACK and WHITE are different
+set_from_resource $background background
+set_from_resource $foreground foreground
+set_from_resource $black1       color0        # black
+set_from_resource $white1       color7        # white
+set_from_resource $black2       color8        # black
+set_from_resource $white2       color15       # white
+set_from_resource $red          color1        # red
+set_from_resource $green        color2        # green
+set_from_resource $yellow       color3        # yellow
+set_from_resource $blue         color4        # blue
+set_from_resource $magenta      color5        # magenta
+set_from_resource $cyan         color6        # cyan
+
+
+# DEFINE theme colors       border      backgr.     text        indic.      child_border
+client.focused              $background $background $foreground $yellow     $green
+client.focused_inactive     $background $background $foreground $magenta    $foreground
+client.unfocused            $background $background $white1     $cyan       $foreground
+client.urgent               $magenta    $magenta    $foreground $red        $red
+client.placeholder          $magenta    $black2     $white2     $red        $magenta
+client.background           $background
