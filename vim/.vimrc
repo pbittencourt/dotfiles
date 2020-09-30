@@ -128,5 +128,9 @@ vnoremap <C-y> "+y
 nnoremap <C-p> "+gP
 vnoremap <C-p> "+gP
 
+" use ç instead of ^
+nnoremap ç ^
+vnoremap ç ^
+
 " match bracket colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta

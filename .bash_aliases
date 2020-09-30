@@ -5,6 +5,13 @@ mkcd ()
       cd -P -- "$1"
 }
 
+# combine 'cd' and 'ls'
+cdls ()
+{
+    cd "$1" &&
+    ls
+}
+
 # touch, chmod and edit!
 tce ()
 {
