@@ -1,0 +1,8 @@
+configuration {
+    theme: "./config-ashes";
+    width: 42;
+    lines: 7;
+    columns: 1;
+    font: "Iosevka 10";
+    show-icons: false;
+}

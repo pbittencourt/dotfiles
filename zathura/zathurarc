@@ -1,0 +1,84 @@
+# Zathura configuration file
+
+# Light/Default mode settings:
+# 
+#
+set notification-error-bg       "#ff5555" # Red
+set notification-error-fg       "#565e65" # Foreground
+set notification-warning-bg     "#ffb86c" # Orange
+set notification-warning-fg     "#44475a" # Selection
+set notification-bg             "#f3f4f5" # Background
+set notification-fg             "#565e65" # Foreground
+
+set completion-bg               "#f3f4f5" # Background
+set completion-fg               "#6272a4" # Comment
+set completion-group-bg         "#f3f4f5" # Background
+set completion-group-fg         "#6272a4" # Comment
+set completion-highlight-bg     "#44475a" # Selection
+set completion-highlight-fg     "#565e65" # Foreground
+
+set index-bg                    "#f3f4f5" # Background
+set index-fg                    "#565e65" # Foreground
+set index-active-bg             "#44475a" # Current Line
+set index-active-fg             "#565e65" # Foreground
+
+set inputbar-bg                 "#f3f4f5" # Background
+set inputbar-fg                 "#565e65" # Foreground
+set statusbar-bg                "#f3f4f5" # Background
+set statusbar-fg                "#565e65" # Foreground
+
+set highlight-color             "#ffb86c" # Orange
+set highlight-active-color      "#ff79c6" # Pink
+
+set default-bg                  "#f3f4f5" # Background
+set default-fg                  "#565e65" # Foreground
+
+set render-loading              true
+set render-loading-fg           "#f3f4f5" # Background
+set render-loading-bg           "#565e65" # Foreground
+
+# Recolor mode settings
+#
+#
+set recolor-lightcolor          "#f3f4f5" # Background
+set recolor-darkcolor           "#565e65" # Foreground
+#set recolor-keephue             true      # keep original color
+set recolor                     true
+
+
+# Startup options
+#
+#
+
+# Open document in fit-width mode by default
+set adjust-open "best-fit"
+
+# Remap keys
+map r reload
+map p print
+map i recolor
+map <C-=> zoom in
+map <C--> zoom out
+map R rotate
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+map <Left> navigate previous
+map <Right> navigate next
+map B jumplist backward
+map b jumplist forward
+
+# One page per row by default
+set pages-per-row 1
+
+# Stop at page boundries
+set scroll-page-aware "true"
+set scroll-full-overlap 0.01
+set scroll-step 100
+
+# Zoom settings
+set zoom-min 10
+set guioptions ""
+
+set font "Iosevka 10"
+set statusbar-basename true
