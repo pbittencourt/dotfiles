@@ -1,0 +1,1 @@
+/home/monolito/.config/i3

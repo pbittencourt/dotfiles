@@ -1,0 +1,18 @@
+O QUE PRECISAMOS COLOCAR NESSA PASTINHA MUITO DOIDA?
+
+/vim
+    .vimrc
+    /UltiSnips
+    /.config/ > vim -> mover tudo pruma pasta só
+/i3
+/general
+     /xresources-themes
+     .xresources
+     .bashrc
+     .bash_aliases
+/alacritty
+/dunst
+/inkscape
+/mpd
+/rofi
+/zathura
