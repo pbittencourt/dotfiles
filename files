@@ -2,8 +2,7 @@ O QUE PRECISAMOS COLOCAR NESSA PASTINHA MUITO DOIDA?
 
 /vim
     .vimrc
-    /UltiSnips
-    /.config/ > vim -> mover tudo pruma pasta só
+    /config
 /i3
 /general
      /xresources-themes
