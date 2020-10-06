@@ -52,6 +52,12 @@ set relativenumber
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
+" Show the 80th column
+" if (exists('+colorcolumn'))
+"     set colorcolumn=80
+"     highlight ColorColumn ctermbg=1
+" endif
+
 " The backspace key has slightly unintuitive behavior by default. For example,
 " by default, you can't backspace before the insertion point set with 'i'.
 " This configuration makes backspace behave more reasonably, in that you can
