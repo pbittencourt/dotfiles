@@ -52,11 +52,13 @@ set relativenumber
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
-" Show the 80th column
+" Vim 81th+ column layout concerns
 " if (exists('+colorcolumn'))
 "     set colorcolumn=80
 "     highlight ColorColumn ctermbg=1
 " endif
+highlight OverLength ctermbg=cyan ctermfg=white
+match OverLength /\%81v.\+/
 
 " The backspace key has slightly unintuitive behavior by default. For example,
 " by default, you can't backspace before the insertion point set with 'i'.
