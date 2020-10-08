@@ -12,6 +12,14 @@ cdls ()
     ls
 }
 
+# change to directory and
+# open vim
+cdvim ()
+{
+    cd "$1" &&
+    vim
+}
+
 # touch, chmod and edit!
 tce ()
 {
