@@ -62,3 +62,5 @@ inoremap ",<CR> "<CR>",<ESC>O
 inoremap (,<CR> (<CR>),<ESC>O
 inoremap [,<CR> [<CR>],<ESC>O
 inoremap {,<CR> {<CR>},<ESC>O
+"snap out of quotes in insert mode and continue editing!
+inoremap <leader>n <ESC>la
