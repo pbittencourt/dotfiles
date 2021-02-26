@@ -425,7 +425,11 @@ exec sleep 15; dropbox start
 
 # mount google's drives (work and personal)
 #exec sleep 15; google-drive-ocamlfuse -label drivearvi ~/"Drive ARVI"
-#exec sleep 20; google-drive-ocamlfuse -label drivepedro ~/"Drive PEDRO"
+exec sleep 15; google-drive-ocamlfuse -label drivepedro ~/"Drive PEDRO"
+
+# mount personal onedrive
+exec sleep 20 systemctl --user enable onedrive
+exec sleep 25 systemctl --user start onedrive
 
 # telegram
 #exec sleep 30; $HOME/Telegram/Telegram

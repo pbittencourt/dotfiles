@@ -152,3 +152,5 @@ vnoremap ç ^
 
 " match bracket colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+
+set conceallevel=2
