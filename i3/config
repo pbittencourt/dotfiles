@@ -175,8 +175,9 @@ bindsym $mod+Shift+d exec $HOME/.config/rofi/rofi-zeal.sh
 
 # shortcut applications
 bindsym $mod+F1 workspace $workspace1;	exec firefox
+bindsym $mod+Shift+F1                   exec google-chrome
 bindsym $mod+F2 workspace $workspace2;	exec $terminal -e vim
-bindsym $mod+F3 workspace $workspace3;	exec thunar
+bindsym $mod+F3                     	exec thunar
 bindsym $mod+F4			            	exec xcalc
 bindsym $mod+F5			            	exec $texteditor
 bindsym $mod+F6			            	exec pavucontrol

@@ -80,5 +80,8 @@ set scroll-step 100
 set zoom-min 10
 set guioptions ""
 
+# Copy selection to system clipboard
+set selection-clipboard clipboard
+
 set font "Iosevka 10"
 set statusbar-basename true
