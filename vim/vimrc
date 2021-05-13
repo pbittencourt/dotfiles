@@ -153,4 +153,8 @@ vnoremap ç ^
 " match bracket colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
+" change fold colors
+hi Folded ctermbg=none
+hi Folded ctermfg=green
+
 set conceallevel=2
