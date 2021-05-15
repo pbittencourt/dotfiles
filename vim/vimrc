@@ -1,6 +1,8 @@
-"------------"
-" VIM CONFIG "
-"------------"
+" ------------------------ "
+" VIM CONFIG
+" Pedro P. Bittencourt
+" github.com/pbittencourt
+" ------------------------ "
 
 set nocompatible
 filetype off
@@ -8,12 +10,26 @@ filetype off
 " ------------------------------------------------------------------ "
 " VUNDLE SECTION BEGIN
 " ------------------------------------------------------------------ "
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-" Let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Check OS
+if has('win32')
+    " convert / to \
+    set shellslash 
+
+    " Set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin('~/vimfiles/bundle')
+
+    " Let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+else
+    " Set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+    " Let Vundle manage Vundle, required
+    Plugin 'gmarik/Vundle.vim'
+endif
 
 " Add all your plugins here
 
@@ -32,6 +48,7 @@ Plugin 'jalvesaq/Nvim-R'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
 " ------------------------------------------------------------------ "
 " VUNDLE SECTION END
 " ------------------------------------------------------------------ "
