@@ -158,3 +158,6 @@ hi Folded ctermbg=none
 hi Folded ctermfg=green
 
 set conceallevel=2
+
+" testing macro saving!
+let @l = "A - liberada\<Esc>"
