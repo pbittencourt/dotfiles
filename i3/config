@@ -7,7 +7,7 @@ set $mod Mod4
 
 # default applications
 set $texteditor mousepad
-set $terminal alacritty
+set $terminal kitty
 set $browser firefox
 
 # font for window titles and bar

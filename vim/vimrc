@@ -5,9 +5,9 @@
 set nocompatible
 filetype off
 
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------ "
 " VUNDLE SECTION BEGIN
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------ "
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -18,29 +18,31 @@ Plugin 'gmarik/Vundle.vim'
 " Add all your plugins here
 
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 Plugin 'lervag/vimtex'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'godlygeek/tabular'
+"Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'lilydjwg/colorizer'
-Plugin 'christoomey/vim-system-copy'
+"Plugin 'christoomey/vim-system-copy'
 Plugin 'preservim/nerdtree'
 Plugin 'jalvesaq/Nvim-R'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------ "
 " VUNDLE SECTION END
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------ "
 
 "-- EXTERNAL CONFIGS  --
 " Autoclose quotes and stuff
 source ~/.vim/config/autoclose.vim
 " Configure LaTeX for vim
 source ~/.vim/config/vimtex.vim
+" Recorded macros
+source ~/.vim/config/macros.vim
 
 " Turn on syntax highlighting.
 syntax on
@@ -158,6 +160,3 @@ hi Folded ctermbg=none
 hi Folded ctermfg=green
 
 set conceallevel=2
-
-" testing macro saving!
-let @l = "A - liberada\<Esc>"
