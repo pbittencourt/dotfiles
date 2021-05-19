@@ -38,12 +38,14 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'lervag/vimtex'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-"Plugin 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'lilydjwg/colorizer'
 "Plugin 'christoomey/vim-system-copy'
 Plugin 'preservim/nerdtree'
 Plugin 'jalvesaq/Nvim-R'
+Plugin 'junegunn/goyo.vim'
+Plugin 'iamcco/markdown-preview.nvim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
