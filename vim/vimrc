@@ -172,10 +172,15 @@ nnoremap ç ^
 vnoremap ç ^
 
 " match bracket colors
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+hi MatchParen cterm=bold ctermbg=none ctermfg=green
 
 " change fold colors
 hi Folded ctermbg=none
 hi Folded ctermfg=green
+
+" UltiSnips personal data
+let g:snips_author = 'Pedro Pompermayer Bittencourt'
+let g:snips_email = 'contato@pedrobittencourt.com.br'
+let g:snips_github = 'https://github.com/pbittencourt'
 
 set conceallevel=2
