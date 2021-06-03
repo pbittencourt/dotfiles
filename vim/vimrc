@@ -121,7 +121,7 @@ set path+=**
 set wildmenu
 
 " Unbind some useless/annoying default key bindings.
-nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
+"nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
 
 " Disable audible bell because it's annoying.
 set noerrorbells visualbell t_vb=
@@ -175,8 +175,7 @@ vnoremap ç ^
 hi MatchParen cterm=bold ctermbg=none ctermfg=green
 
 " change fold colors
-hi Folded ctermbg=none
-hi Folded ctermfg=green
+hi Folded ctermbg=none ctermfg=green
 
 " UltiSnips personal data
 let g:snips_author = 'Pedro Pompermayer Bittencourt'
@@ -184,3 +183,7 @@ let g:snips_email = 'contato@pedrobittencourt.com.br'
 let g:snips_github = 'https://github.com/pbittencourt'
 
 set conceallevel=2
+
+" QUERAIV A DA CAETEC
+"syntax match [Group] [regex]{ms=int,me=int} conceal cchar=[single char]
+syntax match Normal '\v<[[:alpha:]_]+[^_[:digit:]]*0>'ms=e conceal cchar=₀
