@@ -1,0 +1,42 @@
+
+snippet artigo "Template de artigo básico" b
+\documentclass[11pt,a4paper]{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\title{$1}
+\author{${2:Pedro P. Bittencourt}\footnote{${3:Professor de física e matemática da educação básica.}}}
+\date{\today{}}
+%\graphicspath{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+$4
+\end{abstract}
+
+\section{$5}
+$0
+
+\end{document}
+endsnippet
+
+snippet un "número e unidade de medida" w
+\unit[$1]{$0}
+endsnippet
+
+snippet que "questão do pacote exercise" b
+\Question $0
+endsnippet
+
+snippet fr "fração"
+\frac{$1}{$2}
+endsnippet
