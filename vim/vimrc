@@ -34,20 +34,20 @@ endif
 " Add all your plugins here
 
 Plugin 'vim-scripts/indentpython.vim'
-"Plugin 'vim-syntastic/syntastic'
 Plugin 'lervag/vimtex'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-"Plugin 'vim-pandoc/vim-pandoc'
-"Plugin 'vim-pandoc/vim-pandoc-syntax' 
 Plugin 'lilydjwg/colorizer'
-"Plugin 'christoomey/vim-system-copy'
 Plugin 'preservim/nerdtree'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
-Plugin 'iamcco/markdown-preview.nvim'
+"Plugin 'vim-pandoc/vim-pandoc'
+"Plugin 'vim-pandoc/vim-pandoc-syntax' 
+"Plugin 'vim-syntastic/syntastic'
+"Plugin 'christoomey/vim-system-copy'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -75,6 +75,10 @@ set shortmess+=I
 " Show line numbers.
 set number
 set relativenumber
+
+" Spell checking
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=pt
+autocmd BufRead,BufNewFile *.tex setlocal spell spelllang=pt
 
 " Always show the status line at the bottom, 
 " even if you only have one window open.
