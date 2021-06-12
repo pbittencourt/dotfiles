@@ -11,3 +11,6 @@ call matchadd('Conceal', ':::$', 0, -1, {'conceal': '◹'})
 
 " Transforma letras das alternativas em bolinhas fofoletes!
 call matchadd('Conceal', '^A\.\s', 0, -1, {'conceal': '☉'})
+
+" Serassi funciona com caracteres matemáticos?
+call matchadd('Conceal', '\therefore', 0, -1, {'conceal': '∴'})

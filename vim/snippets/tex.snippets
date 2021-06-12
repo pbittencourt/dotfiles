@@ -1,4 +1,8 @@
+#====================#
+# SNIPPETS FOR LaTeX #
+#====================#
 
+# Inicia um artigo latex, modelo tradicional
 snippet artigo "Template de artigo básico" b
 \documentclass[11pt,a4paper]{article}
 \usepackage[brazil]{babel}
@@ -29,14 +33,24 @@ $0
 \end{document}
 endsnippet
 
-snippet un "número e unidade de medida" w
-\unit[$1]{$0}
-endsnippet
-
-snippet que "questão do pacote exercise" b
-\Question $0
-endsnippet
+#------------------#
+# Matemática geral #
+#------------------#
 
 snippet fr "fração"
 \frac{$1}{$2}
+endsnippet
+
+snippet ra "rightarrow"
+\Rightarrow 
+endsnippet
+
+#----------------#
+# Ciências geral #
+#----------------#
+
+# Insere um número com unidade de medida
+# (só funciona em arquivo *.tex, demanda pacote `siunitx`)
+snippet un "número e unidade de medida" w
+\unit[$1]{$0}
 endsnippet
