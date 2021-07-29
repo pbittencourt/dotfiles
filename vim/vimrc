@@ -37,13 +37,13 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'lervag/vimtex'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'godlygeek/tabular'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'godlygeek/tabular'
 Plugin 'lilydjwg/colorizer'
-Plugin 'preservim/nerdtree'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
+"Plugin 'preservim/nerdtree'
 "Plugin 'vim-pandoc/vim-pandoc'
 "Plugin 'vim-pandoc/vim-pandoc-syntax' 
 "Plugin 'vim-syntastic/syntastic'
@@ -141,11 +141,6 @@ nnoremap <Left>  :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up>    :echoe "Use k"<CR>
 nnoremap <Down>  :echoe "Use j"<CR>
-" ...and in insert mode
-inoremap <Left>  <ESC>:echoe "Use h"<CR>
-inoremap <Right> <ESC>:echoe "Use l"<CR>
-inoremap <Up>    <ESC>:echoe "Use k"<CR>
-inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
 " Don't break words
 set wrap linebreak
@@ -164,7 +159,7 @@ nnoremap <C-L> <C-W><C-L>
 set encoding=utf-8
 
 " run python scripts
-autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 
 " remap copy/paste commands
@@ -183,6 +178,9 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=green
 " change fold colors
 hi Folded ctermbg=none ctermfg=green
 
+" comments in italics
+highlight Comment cterm=italic
+
 " UltiSnips personal data
 let g:snips_author = 'Pedro Pompermayer Bittencourt'
 let g:snips_email = 'contato@pedrobittencourt.com.br'
@@ -190,6 +188,27 @@ let g:snips_github = 'https://github.com/pbittencourt'
 
 set conceallevel=2
 
-" QUERAIV A DA CAETEC
-"syntax match [Group] [regex]{ms=int,me=int} conceal cchar=[single char]
+" Um teste de conceal, deixar aqui pra entender depois
+" (caso apareça esse zerinho aí, lembro de ter visto antes)
 syntax match Normal '\v<[[:alpha:]_]+[^_[:digit:]]*0>'ms=e conceal cchar=₀
+
+" Para executar o pandoc sem plugin
+""" source: https://piware.de/2014/07/vim-config-for-markdownlatex-pandoc-editing
+""function s:MDSettings()
+""    nnoremap <leader>b :! pandoc -t beamer % -o %<.pdf<CR><CR>
+""    nnoremap <leader>l :! pandoc -t latex % -o %<.pdf<CR>
+""    nnoremap <leader>v :! zathura %<.pdf 2>&1 >/dev/null &<CR><CR>
+""
+""    " adjust syntax highlighting for LaTeX parts
+""    "   inline formulas:
+""    syntax region Statement oneline matchgroup=Delimiter start="\$" end="\$"
+""    "   environments:
+""    syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+""    "   commands:
+""    syntax region Statement matchgroup=Delimiter start="{" end="}" contains=Statement
+""endfunction
+""
+""autocmd BufRead,BufNewFile *.md setfiletype markdown
+""autocmd FileType markdown :call <SID>MDSettings()
+
+nnoremap <F9> :!pandoc % -o %:r.pdf<CR>
