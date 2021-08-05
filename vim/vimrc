@@ -190,7 +190,7 @@ set conceallevel=2
 
 " Um teste de conceal, deixar aqui pra entender depois
 " (caso apareça esse zerinho aí, lembro de ter visto antes)
-syntax match Normal '\v<[[:alpha:]_]+[^_[:digit:]]*0>'ms=e conceal cchar=₀
+""syntax match Normal '\v<[[:alpha:]_]+[^_[:digit:]]*0>'ms=e conceal cchar=₀
 
 " Para executar o pandoc sem plugin
 """ source: https://piware.de/2014/07/vim-config-for-markdownlatex-pandoc-editing
@@ -211,4 +211,8 @@ syntax match Normal '\v<[[:alpha:]_]+[^_[:digit:]]*0>'ms=e conceal cchar=₀
 ""autocmd BufRead,BufNewFile *.md setfiletype markdown
 ""autocmd FileType markdown :call <SID>MDSettings()
 
-nnoremap <F9> :!pandoc % -o %:r.pdf<CR>
+" JUPYTEXT
+let g:jupytext_enable = 1
+let g:jupytext_command = 'jupytext'
+let g:jupytext_fmt = 'md'
+autocmd FileType markdown map <buffer> <F5> <esc>:w<CR>:exec '!jupytext --to py' shellescape(@%, 1)<CR>:exec '!python3' expand('%:t:r') . ('.py')<CR>
