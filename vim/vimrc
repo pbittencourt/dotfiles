@@ -9,7 +9,6 @@ filetype off
 
 " ------------------------------------------------------------------ "
 " VUNDLE SECTION BEGIN
-" ------------------------------------------------------------------ "
 
 " Check OS
 if has('win32')
@@ -32,7 +31,6 @@ else
 endif
 
 " Add all your plugins here
-
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'lervag/vimtex'
 Plugin 'plasticboy/vim-markdown'
@@ -53,17 +51,21 @@ Plugin 'junegunn/goyo.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" ------------------------------------------------------------------ "
 " VUNDLE SECTION END
 " ------------------------------------------------------------------ "
 
-"-- EXTERNAL CONFIGS  --
-" Autoclose quotes and stuff
+" --------------- "
+" EXTERNAL CONFIG
+" --------------- "
+
+" Autoclose stuff
 source ~/.vim/config/autoclose.vim
 " Configure LaTeX for vim
 source ~/.vim/config/vimtex.vim
 " Recorded macros
 source ~/.vim/config/macros.vim
+" JupyText
+source ~/.vim/config/jupytext.vim
 
 " Turn on syntax highlighting.
 syntax on
@@ -162,6 +164,9 @@ set encoding=utf-8
 autocmd FileType python map <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 
+" run markdown preview
+nmap <silent> <F5> <Plug>MarkdownPreview
+
 " remap copy/paste commands
 nnoremap <C-y> "+y
 vnoremap <C-y> "+y
@@ -180,11 +185,6 @@ hi Folded ctermbg=none ctermfg=green
 
 " comments in italics
 highlight Comment cterm=italic
-
-" UltiSnips personal data
-let g:snips_author = 'Pedro Pompermayer Bittencourt'
-let g:snips_email = 'contato@pedrobittencourt.com.br'
-let g:snips_github = 'https://github.com/pbittencourt'
 
 set conceallevel=2
 
@@ -210,9 +210,3 @@ set conceallevel=2
 ""
 ""autocmd BufRead,BufNewFile *.md setfiletype markdown
 ""autocmd FileType markdown :call <SID>MDSettings()
-
-" JUPYTEXT
-let g:jupytext_enable = 1
-let g:jupytext_command = 'jupytext'
-let g:jupytext_fmt = 'md'
-autocmd FileType markdown map <buffer> <F9> <esc>:w<CR>:exec '!jupytext --to py' shellescape(@%, 1)<CR>:exec '!python3' expand('%:t:r') . ('.py')<CR>
