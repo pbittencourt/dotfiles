@@ -6,6 +6,7 @@
 
 set nocompatible
 filetype off
+""filetype plugin on
 
 " ------------------------------------------------------------------ "
 " VUNDLE SECTION BEGIN
@@ -45,6 +46,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'lilydjwg/colorizer'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
+"Plugin 'vimwiki/vimwiki'
 "Plugin 'preservim/nerdtree'
 "Plugin 'vim-pandoc/vim-pandoc'
 "Plugin 'vim-pandoc/vim-pandoc-syntax' 

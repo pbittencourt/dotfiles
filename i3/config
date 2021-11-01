@@ -187,7 +187,7 @@ bindsym Print   		            	exec flameshot gui
 
 # assign program to workspace
 assign [class="Firefox"] 		    $workspace1
-assign [class="Atom"] 			    $workspace2
+assign [class="RStudio"]			$workspace2
 assign [class="Inkscape"] 		    $workspace5
 assign [class="Deja-dup"] 		    $workspace7
 assign [class="TelegramDesktop"] 	$workspace8
