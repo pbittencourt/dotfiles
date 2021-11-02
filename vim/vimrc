@@ -6,7 +6,6 @@
 
 set nocompatible
 filetype off
-""filetype plugin on
 
 " ------------------------------------------------------------------ "
 " VUNDLE SECTION BEGIN
@@ -120,13 +119,6 @@ set hidden
 " it contains any capital letters. This makes searching more convenient.
 set ignorecase
 set smartcase
-
-" Indentation
-set expandtab
-set shiftwidth=4
-set tabstop=4
-set smartindent
-set autoindent
 
 " Enable searching as you type, rather than waiting till you press enter.
 set incsearch
