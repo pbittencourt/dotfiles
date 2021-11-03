@@ -90,6 +90,15 @@ source ~/.vim/config/markdown.vim
 syntax on
 syntax enable
 
+" Indentation
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+"set textwidth=79
+set expandtab
+set autoindent
+"set fileformat=unix
+
 " Disable the default Vim startup message.
 set shortmess+=I
 
@@ -137,12 +146,13 @@ set noerrorbells visualbell t_vb=
 " Enable mouse support
 set mouse+=a
 
-" Try to prevent bad habits like using the arrow keys for movement
-" Do this in normal mode...
+" Remap movement and escape keys
 nnoremap <Left>  :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up>    :echoe "Use k"<CR>
 nnoremap <Down>  :echoe "Use j"<CR>
+inoremap <esc> <nop>
+inoremap jk <esc>
 
 " Don't break words
 set wrap linebreak
