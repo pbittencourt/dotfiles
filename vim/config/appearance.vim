@@ -2,14 +2,6 @@
 
 set conceallevel=2
 
-" Vim 81th+ column layout concerns
-if (exists('+colorcolumn'))
-    set colorcolumn=80
-    highlight ColorColumn ctermbg=white
-endif
-highlight OverLength ctermbg=white ctermfg=red
-match OverLength /\%81v.\+/
-
 " match bracket colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=green
 
@@ -18,6 +10,9 @@ hi Folded ctermbg=none ctermfg=green
 
 " comments in italics
 highlight Comment cterm=italic
+
+" spaces and tabs!
+set listchars=tab:\ ▸,eol:¬,trail:·
 
 " Um teste de conceal, deixar aqui pra entender depois
 " (caso apareça esse zerinho aí, lembro de ter visto antes)
