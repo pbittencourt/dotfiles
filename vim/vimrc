@@ -24,7 +24,7 @@ if has('win32')
 
     " colorscheme
     set background=light
-    colorscheme gruvbox
+    colorscheme rakr
 else
     " Set the runtime path to include Vundle and initialize
     set rtp+=~/.vim/bundle/Vundle.vim
