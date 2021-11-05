@@ -8,7 +8,7 @@ set nocompatible
 filetype off
 
 " ------------------------------------------------------------------ "
-" VUNDLE SECTION BEGIN
+" VUNDLE
 
 " Check OS
 if has('win32')
@@ -50,6 +50,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'lilydjwg/colorizer'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
 Plugin 'sillybun/vim-repl'
 "Plugin 'vimwiki/vimwiki'
 "Plugin 'preservim/nerdtree'
@@ -62,12 +63,11 @@ Plugin 'sillybun/vim-repl'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" VUNDLE SECTION END
+" VUNDLE
 " ------------------------------------------------------------------ "
 
-" --------------- "
-" EXTERNAL CONFIG
-" --------------- "
+" ------------------------------------------------------------------ "
+" SECTIONS
 
 " Autoclose stuff
 source ~/.vim/config/autoclose.vim
@@ -85,6 +85,50 @@ source ~/.vim/config/nvimr.vim
 source ~/.vim/config/python.vim
 " Markdown
 source ~/.vim/config/markdown.vim
+" Plugins general config
+source ~/.vim/config/plugins.vim
+
+let g:goyo_linenr = 1
+
+" SECTIONS
+" ------------------------------------------------------------------ "
+
+" ------------------------------------------------------------------ "
+" REMAPS
+
+" Movement and escape
+nnoremap <Left>  :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up>    :echoe "Use k"<CR>
+nnoremap <Down>  :echoe "Use j"<CR>
+inoremap jk <esc>
+
+" Buffer switching
+map <leader>gn :bn<CR>
+map <leader>gp :bp<CR>
+map <leader>gd :bd<CR>
+
+" 'Q' in normal mode enters Ex mode
+nmap Q <Nop> 
+
+" Split navigations
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+
+" remap copy/paste commands
+nnoremap <C-y> "+y
+vnoremap <C-y> "+y
+nnoremap <C-p> "+gP
+vnoremap <C-p> "+gP
+
+" use ç instead of ^
+nnoremap ç ^
+vnoremap ç ^
+
+" REMAPS
+" ------------------------------------------------------------------ "
 
 " Turn on syntax highlighting.
 syntax on
@@ -138,20 +182,12 @@ set path+=**
 set wildmenu
 
 " Unbind some useless/annoying default key bindings.
-"nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
 
 " Disable audible bell because it's annoying.
 set noerrorbells visualbell t_vb=
 
 " Enable mouse support
 set mouse+=a
-
-" Remap movement and escape keys
-nnoremap <Left>  :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up>    :echoe "Use k"<CR>
-nnoremap <Down>  :echoe "Use j"<CR>
-inoremap jk <esc>
 
 " Don't break words
 set wrap linebreak
@@ -160,21 +196,6 @@ set wrap linebreak
 set splitbelow
 set splitright
 
-" Split navigations
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-
 " UTF-8 support
 set encoding=utf-8
 
-" remap copy/paste commands
-nnoremap <C-y> "+y
-vnoremap <C-y> "+y
-nnoremap <C-p> "+gP
-vnoremap <C-p> "+gP
-
-" use ç instead of ^
-nnoremap ç ^
-vnoremap ç ^

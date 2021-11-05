@@ -11,9 +11,10 @@ hi Folded ctermbg=none ctermfg=green
 " comments in italics
 highlight Comment cterm=italic
 
-" spaces and tabs!
-" inspired by https://gist.github.com/adinapoli/4723877
-nmap <leader>1 :set list!<CR>  " toggle `set list`
+" formatting indicators
+" (inspired by https://gist.github.com/adinapoli/4723877)
+" toggle `set list`
+nmap <leader>1 :set list!<CR>  
 set listchars=tab:\ ▸,eol:¬,trail:·,space:⋅,extends:»,precedes:«
 
 " Um teste de conceal, deixar aqui pra entender depois
