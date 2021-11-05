@@ -1,5 +1,12 @@
 " GENERAL Plugin configs
 
+" ================
+" MARKDOWN-PREVIEW
+" ================
+
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_markdown_css = '/home/monolito/OneDrive/backlog/css/axist.min.css'
+
 " ====
 " GOYO
 " ====
