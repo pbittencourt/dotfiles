@@ -1,7 +1,5 @@
 " General appearance config (colors, fonts, so on)
 
-set conceallevel=2
-
 " match bracket colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=green
 
@@ -11,11 +9,13 @@ hi Folded ctermbg=none ctermfg=green
 " comments in italics
 highlight Comment cterm=italic
 
-" formatting indicators
+" formatting non-printable objects
 " (inspired by https://gist.github.com/adinapoli/4723877)
 " toggle `set list`
 nmap <leader>1 :set list!<CR>  
 set listchars=tab:\ ▸,eol:¬,trail:·,space:⋅,extends:»,precedes:«
+
+set conceallevel=2
 
 " Um teste de conceal, deixar aqui pra entender depois
 " (caso apareça esse zerinho aí, lembro de ter visto antes)

@@ -1,0 +1,28 @@
+extends markdown
+extends r
+
+snippet meta "YAML header"
+---
+title: "${1:Título do documento}"
+author: "${2:Pedro P. Bittencourt}"
+date: "`!v strftime("%Y-%m-%d")`"
+output: ${3:html_document}
+---
+endsnippet
+
+# -------------------------------------
+# Source:
+# https://github.com/jimhester/dotfiles
+# -------------------------------------
+
+snippet rc "R code"
+\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title}}\}
+${0:${VISUAL}}
+\`\`\`
+endsnippet
+
+snippet rp "R plot"
+\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title},} dev=${3:'svg'}${4:, warning=${5:FALSE}}\}
+${0:${VISUAL}}
+\`\`\`
+endsnippet

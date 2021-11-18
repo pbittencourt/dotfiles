@@ -8,7 +8,7 @@ set nocompatible
 filetype off
 
 " ------------------------------------------------------------------ "
-" VUNDLE
+" <VUNDLE
 
 " Check OS
 if has('win32')
@@ -22,7 +22,7 @@ if has('win32')
     " Let Vundle manage Vundle, required
     Plugin 'VundleVim/Vundle.vim'
 
-    " colorscheme
+    " Set windows neovim colorscheme
     set background=light
     colorscheme rakr
 else
@@ -36,22 +36,23 @@ else
     " Spell checking for markdown and tex documents
     " (it's not working on windows)
     autocmd BufRead,BufNewFile *.md setlocal spell spelllang=pt
+    autocmd BufRead,BufNewFile *.Rmd setlocal spell spelllang=pt
     autocmd BufRead,BufNewFile *.tex setlocal spell spelllang=pt
 endif
 
 " Add all your plugins here
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'vim-scripts/indentpython.vim'
+Plugin 'sillybun/vim-repl'
 Plugin 'lervag/vimtex'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'godlygeek/tabular'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'lilydjwg/colorizer'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
-Plugin 'sillybun/vim-repl'
 "Plugin 'vimwiki/vimwiki'
 "Plugin 'preservim/nerdtree'
 "Plugin 'vim-pandoc/vim-pandoc'
@@ -63,11 +64,11 @@ Plugin 'sillybun/vim-repl'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" VUNDLE
+" VUNDLE>
 " ------------------------------------------------------------------ "
 
 " ------------------------------------------------------------------ "
-" SECTIONS
+" <SECTIONS
 
 " Autoclose stuff
 source ~/.vim/config/autoclose.vim
@@ -75,26 +76,24 @@ source ~/.vim/config/autoclose.vim
 source ~/.vim/config/appearance.vim
 " Recorded macros
 source ~/.vim/config/macros.vim
+" Python
+source ~/.vim/config/python.vim
+" Markdown
+source ~/.vim/config/markdown.vim
 " LaTeX
 source ~/.vim/config/vimtex.vim
 " JupyText
 source ~/.vim/config/jupytext.vim
 " R
 source ~/.vim/config/nvimr.vim
-" Python
-source ~/.vim/config/python.vim
-" Markdown
-source ~/.vim/config/markdown.vim
-" Plugins general config
+" General config for plugins
 source ~/.vim/config/plugins.vim
 
-let g:goyo_linenr = 1
-
-" SECTIONS
+" SECTIONS>
 " ------------------------------------------------------------------ "
 
 " ------------------------------------------------------------------ "
-" REMAPS
+" <REMAPS
 
 " Movement and escape
 nnoremap <Left>  :echoe "Use h"<CR>
@@ -108,7 +107,7 @@ map <leader>gn :bn<CR>
 map <leader>gp :bp<CR>
 map <leader>gd :bd<CR>
 
-" 'Q' in normal mode enters Ex mode
+" `Q` in normal mode enters Ex mode
 nmap Q <Nop> 
 
 " Split navigations
@@ -127,7 +126,7 @@ vnoremap <C-p> "+gP
 nnoremap ç ^
 vnoremap ç ^
 
-" REMAPS
+" REMAPS>
 " ------------------------------------------------------------------ "
 
 " Turn on syntax highlighting.
@@ -153,6 +152,13 @@ set relativenumber
 " Always show the status line at the bottom, 
 " even if you only have one window open.
 set laststatus=2
+
+" 81th column highligth
+set colorcolumn=80
+highlight ColorColumn ctermbg=255 
+
+" Comments in italics
+highlight Comment cterm=italic
 
 " The backspace key has slightly unintuitive behavior by default. For example,
 " by default, you can't backspace before the insertion point set with 'i'.
@@ -199,3 +205,11 @@ set splitright
 " UTF-8 support
 set encoding=utf-8
 
+" Automatically reload vimrc configuration upon save
+" https://superuser.com/a/1120318
+if has ('autocmd') " Remain compatible with earlier versions
+ augroup vimrc     " Source vim configuration upon save
+    autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+    autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+  augroup END
+endif " has autocmd

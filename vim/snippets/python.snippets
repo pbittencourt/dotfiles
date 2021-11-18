@@ -1,3 +1,16 @@
+snippet init "bang utf and docstring"
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+File: ${1:`vim_snippets#Filename('$1.py', 'foo.py')`}
+Author: `g:snips_author`
+Email: `g:snips_email`
+Github: `g:snips_github`
+Description: ${0}
+"""
+endsnippet
+
 snippet pf "print with f-strings"
 print(f'$1')$0
 endsnippet
