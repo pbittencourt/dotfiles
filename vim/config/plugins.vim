@@ -62,7 +62,7 @@ let g:repl_program = {
 			\	}
 let g:repl_ipython_version = '7.12'
 let g:repl_position = 3
-let g:sendtorepl_invoke_key = "<leader>l"
+let g:sendtorepl_invoke_key = "<space>"
 let g:repl_python_auto_send_unfinish_line = 1
 nnoremap <leader>r :REPLToggle<Cr>
 nnoremap <leader>e :REPLSendSession<Cr>
