@@ -74,9 +74,13 @@ nnoremap <leader>e :REPLSendSession<Cr>
 " Start R automatically, even if Vim is already started
 let R_auto_start = 2
 
+" Set space to to send line (in normal mode) or selection (in visual mode)
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+
 " Object browser options
 let R_objbr_place = 'console,above'
-let R_objbr_opendf = 0    " Hide data.frames elements
+let R_objbr_opendf = 1    " Hide data.frames elements
 let R_objbr_openlist = 0  " Hide lists elements
 let R_objbr_allnames = 0  " Hide hidden objects
 

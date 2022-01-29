@@ -84,8 +84,6 @@ source ~/.vim/config/markdown.vim
 source ~/.vim/config/vimtex.vim
 " JupyText
 source ~/.vim/config/jupytext.vim
-" R
-source ~/.vim/config/nvimr.vim
 " General config for plugins
 source ~/.vim/config/plugins.vim
 

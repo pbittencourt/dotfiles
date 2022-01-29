@@ -1,10 +1,5 @@
 " R syntax
 
-" Set space to to send line (in normal mode) or selection (in visual mode)
-" (only works with NVIM-R plugin!)
-vmap <Space> <Plug>RDSendSelection
-nmap <Space> <Plug>RDSendLine
-
 " 81th column highligth
 highlight OverLength ctermfg=red
 match OverLength /\%81v.\+/
