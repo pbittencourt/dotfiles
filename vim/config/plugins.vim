@@ -5,7 +5,7 @@
 " =========
 
 " Defines how the edit window is opened
-let g:UltiSnipsEditSplit="context"
+let g:UltiSnipsEditSplit = "context"
 
 " UltiSnips personal data
 let g:snips_author = 'Pedro Pompermayer Bittencourt'
@@ -13,7 +13,7 @@ let g:snips_email = 'contato@pedrobittencourt.com.br'
 let g:snips_github = 'https://github.com/pbittencourt'
 
 " Trigger configuration
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger = "<tab>"
 
 " ================
 " MARKDOWN-PREVIEW
@@ -57,7 +57,6 @@ let g:limelight_paragraph_span = 0
 
 let g:repl_program = {
 			\	'python': 'ipython',
-			\	'r': 'R',
 			\	'default': 'bash'
 			\	}
 let g:repl_ipython_version = '7.12'
@@ -80,7 +79,6 @@ nmap <Space> <Plug>RDSendLine
 
 " Object browser options
 let R_objbr_place = 'console,above'
-let R_objbr_opendf = 1    " Hide data.frames elements
+let R_objbr_opendf = 1    " Show data.frames elements
 let R_objbr_openlist = 0  " Hide lists elements
 let R_objbr_allnames = 0  " Hide hidden objects
-
