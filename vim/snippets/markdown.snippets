@@ -1,9 +1,5 @@
 extends tex, markdown, html
 
-snippet 42
-The universe, life, and everything
-endsnippet
-
 snippet codepy "python code in ipynotebook" biw
 \`\`\`python
 $1
@@ -24,4 +20,59 @@ endsnippet
 
 snippet bi "bold italics"
 ***${1:${VISUAL}}***$0
+endsnippet
+
+# modelo de história de usuário
+snippet hu "user history" b
+# ${1:Título da história}
+
+## Necessidade de negócio
+
+**Enquanto** $0--
+
+**Quando** --
+
+**Quero** --
+
+**Para** --
+
+Descrição detalhada aqui
+
+## Critérios de aceite
+
+**Funcionalidade**: --
+
+**Cenário**: --
+
+**Dado** --
+
+**Quando** --
+
+**Então** --
+
+**E** --
+
+## Pontos de complexidade
+
+Inserir tabela aqui
+
+## DoR
+
+- [ ] Narrativa/Necessidade de negócio definida
+- [ ] Critérios de aceite definidos
+- [ ] Validação do PO team (necessidades e critérios)
+- [ ] Pontos de complexidade definidos
+- [ ] Dependências identificadas
+- [ ] Viabilidade técnica definida
+- [ ] Protótipo finalizado (caso houver)
+- [ ] Cenários de teste mapeados
+
+## DoD
+
+- [ ] Desenvolvimento finalizado
+- [ ] Testes aprovados
+- [ ] Homologação pelo PO team
+- [ ] Item ativado em produção
+- [ ] Horas lançadas
+
 endsnippet

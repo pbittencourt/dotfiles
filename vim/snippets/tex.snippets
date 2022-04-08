@@ -37,12 +37,29 @@ endsnippet
 # Matemática geral #
 #------------------#
 
+snippet mk "inline math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
 snippet fr "fração"
 \frac{$1}{$2}
 endsnippet
 
+snippet / "fração pré-seleção" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
 snippet ra "rightarrow"
 \Rightarrow 
+endsnippet
+
+snippet avg "overline average bar"
+\overline{$1}$0
 endsnippet
 
 #----------------#

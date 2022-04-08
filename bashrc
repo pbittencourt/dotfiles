@@ -156,3 +156,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # alias para usar python 3.7 como default
 alias python='/usr/bin/python3.7'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

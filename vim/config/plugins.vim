@@ -27,6 +27,13 @@ let g:mkdp_markdown_css = '/home/monolito/OneDrive/backlog/css/axist.min.css'
 " ============
 
 let g:vim_markdown_emphasis_multiline = 0
+let g:vim_markdown_conceal_code_blocks = 0
+let g:markdown_fenced_languages = ['r', 'python']
+let g:vim_markdown_fenced_languages = ['r', 'python']
+
+" =============
+" PANDOC-SYNTAX
+" =============
 
 " ====
 " GOYO
@@ -82,3 +89,6 @@ let R_objbr_place = 'console,above'
 let R_objbr_opendf = 1    " Show data.frames elements
 let R_objbr_openlist = 0  " Hide lists elements
 let R_objbr_allnames = 0  " Hide hidden objects
+
+" Define a different shortcut for R_rmdchunk
+let R_rmdchunk = '``'

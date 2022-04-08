@@ -1,5 +1,6 @@
-extends markdown
 extends r
+extends latex
+extends markdown
 
 snippet meta "YAML header"
 ---
@@ -10,19 +11,8 @@ output: ${3:html_document}
 ---
 endsnippet
 
-# -------------------------------------
-# Source:
-# https://github.com/jimhester/dotfiles
-# -------------------------------------
-
-snippet rc "R code"
-\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title}}\}
-${0:${VISUAL}}
-\`\`\`
-endsnippet
-
-snippet rp "R plot"
-\`\`\`\{r ${1:`!v expand("%:t:r")`_${2:Title},} dev=${3:'svg'}${4:, warning=${5:FALSE}}\}
-${0:${VISUAL}}
+snippet rc "R chunk"
+\`\`\`\{r}
+${1:${VISUAL}}
 \`\`\`
 endsnippet

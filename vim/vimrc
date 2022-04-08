@@ -46,19 +46,20 @@ Plugin 'honza/vim-snippets'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'sillybun/vim-repl'
 Plugin 'lervag/vimtex'
-Plugin 'plasticboy/vim-markdown'
+""Plugin 'preservim/vim-markdown'     " conflita com vim-pandoc
+Plugin 'vim-pandoc/vim-pandoc'        " conflita com vim-markdown
+Plugin 'vim-pandoc/vim-pandoc-syntax' 
+""Plugin 'vim-pandoc/vim-rmarkdown'   " conflita com Nvim-R
 Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'godlygeek/tabular'
 Plugin 'lilydjwg/colorizer'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
-"Plugin 'vimwiki/vimwiki'
-"Plugin 'preservim/nerdtree'
-"Plugin 'vim-pandoc/vim-pandoc'
-"Plugin 'vim-pandoc/vim-pandoc-syntax' 
-"Plugin 'vim-syntastic/syntastic'
-"Plugin 'christoomey/vim-system-copy'
+""Plugin 'vimwiki/vimwiki'
+""Plugin 'preservim/nerdtree'
+""Plugin 'vim-syntastic/syntastic'
+""Plugin 'christoomey/vim-system-copy'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -135,7 +136,6 @@ syntax enable
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-"set textwidth=79
 set expandtab
 set autoindent
 "set fileformat=unix
@@ -150,13 +150,6 @@ set relativenumber
 " Always show the status line at the bottom, 
 " even if you only have one window open.
 set laststatus=2
-
-" 81th column highligth
-set colorcolumn=80
-highlight ColorColumn ctermbg=255 
-
-" Comments in italics
-highlight Comment cterm=italic
 
 " The backspace key has slightly unintuitive behavior by default. For example,
 " by default, you can't backspace before the insertion point set with 'i'.
@@ -205,9 +198,6 @@ set encoding=utf-8
 
 " Automatically reload vimrc configuration upon save
 " https://superuser.com/a/1120318
-if has ('autocmd') " Remain compatible with earlier versions
- augroup vimrc     " Source vim configuration upon save
+augroup vimrc     " Source vim configuration upon save
     autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
-    autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
-  augroup END
-endif " has autocmd
+augroup END
