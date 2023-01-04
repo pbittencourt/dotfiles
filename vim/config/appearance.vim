@@ -1,38 +1,22 @@
-" General appearance config (colors, fonts, so on)
+" Set matching pairs of characters and highlight matching brackets
+" https://github.com/nvim-zh/minimal_vim/blob/c4f6fa076bfea0a08eef322e97fd4fa0612f1af6/init.vim#L67
+set matchpairs+=<:>,「:」
 
-" 81th column highligth
-set colorcolumn=80
-highlight ColorColumn ctermbg=255 
-
-" match bracket colors
-hi MatchParen cterm=bold ctermbg=green ctermfg=white
-
-" fold colors
-hi Folded ctermbg=none ctermfg=cyan
-
-" by default, load file with all folds opened
-set nofoldenable
-
-" comments in italics
-highlight Comment cterm=italic
-
-" formatting non-printable objects
-" (inspired by https://gist.github.com/adinapoli/4723877)
-" toggle `set list`
-nmap <leader>1 :set list!<CR>  
+" caracteres não imprimíveis
+" source https://gist.github.com/adinapoli/4723877
 set listchars=tab:\ ▸,eol:¬,trail:·,space:⋅,extends:»,precedes:«
+nnoremap <leader>1 :set list!<CR>
+" (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
 
-" toggle text width
-" inspired by https://vi.stackexchange.com/a/12736
-fun! Toggle_TW()
-    if !exists('b:tw_mode')
-        let b:tw_mode = 80
-        set tw=80
-        echo "text width 80 chars toggle on"
-    else
-        unlet b:tw_mode
-        set tw=0
-        echo "text width toggle off"
-    endif
-endfun
-nmap <leader>tw :call Toggle_TW()<CR>  
+augroup gui_colors
+    autocmd!
+    autocmd BufRead,BufNewFile * :set termguicolors 
+    " FIXME as 2 linhas seguintes n estão funcionando sla fodac mein
+    "autocmd colorscheme * hi clear SpellBad
+    "autocmd colorscheme * hi SpellBad cterm=underline
+augroup END
+colorscheme nord
+let g:nord_bold = 1
+let g:nord_italic = 1
+let g:nord_underline = 1
+let g:nord_italic_comments = 1
