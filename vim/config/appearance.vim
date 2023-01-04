@@ -7,19 +7,3 @@ set matchpairs+=<:>,「:」
 set listchars=tab:\ ▸,eol:¬,trail:·,space:⋅,extends:»,precedes:«
 nnoremap <leader>1 :set list!<CR>
 " (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
-
-" colorscheme apenas em windows; linux mantém o padrão do terminal
-if has('win32')
-    augroup gui_colors
-        autocmd!
-        autocmd BufRead,BufNewFile * :set termguicolors 
-        " FIXME as 2 linhas seguintes n estão funcionando sla fodac mein
-        "autocmd colorscheme * hi clear SpellBad
-        "autocmd colorscheme * hi SpellBad cterm=underline
-    augroup END
-    colorscheme nord
-    let g:nord_bold = 1
-    let g:nord_italic = 1
-    let g:nord_underline = 1
-    let g:nord_italic_comments = 1
-endif
