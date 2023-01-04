@@ -64,9 +64,10 @@ let g:limelight_paragraph_span = 0
 
 let g:repl_program = {
 			\	'python': 'ipython',
+			\	'ipython': 'ipython',
 			\	'default': 'bash'
 			\	}
-let g:repl_ipython_version = '7.12'
+let g:repl_ipython_version = '7.16.3'
 let g:repl_position = 3
 let g:sendtorepl_invoke_key = "<space>"
 let g:repl_python_auto_send_unfinish_line = 1

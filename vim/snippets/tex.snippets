@@ -33,6 +33,22 @@ $0
 \end{document}
 endsnippet
 
+#---------------------#
+# Formatação de texto #
+#---------------------#
+
+snippet bb "bold text"
+\textbf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet ii "italic text"
+\emph{${1:${VISUAL:}}}$0
+endsnippet
+
+snippet tt "normal text"
+\textrm{$1} $0
+endsnippet
+
 #------------------#
 # Matemática geral #
 #------------------#
@@ -54,6 +70,10 @@ snippet / "fração pré-seleção" i
 \\frac{${VISUAL}}{$1}$0
 endsnippet
 
+snippet difr "displaystile fraction"
+\displaystyle\frac{$1}{$2}
+endsnippet
+
 snippet ra "rightarrow"
 \Rightarrow 
 endsnippet
@@ -61,6 +81,18 @@ endsnippet
 snippet avg "overline average bar"
 \overline{$1}$0
 endsnippet
+
+snippet .. "cdot" iA
+ \cdot 
+endsnippet
+
+snippet siseq "sistemas de equações"
+\item \$\begin{cases}
+	$1 \\\\
+	$2
+\end{cases}\$ $0
+endsnippet
+	
 
 #----------------#
 # Ciências geral #
