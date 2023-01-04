@@ -2,8 +2,8 @@
 
 window:
   padding:
-    x: 20
-    y: 20
+    x: 0
+    y: 0
 
 scrolling:
   history: 100
@@ -27,7 +27,7 @@ font:
     family: Iosevka
     style: Bold Italic
     
-  size: 10.0
+  size: 11.0
   
   offset:
     x: 1

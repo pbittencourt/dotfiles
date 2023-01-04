@@ -49,8 +49,8 @@ filetype plugin indent on    " required
 
 " carrega seções de forma 'dinâmica'
 " source: https://dev.to/iggredible/what-is-inside-my-vimrc-3ob7
-let b:fileList = split(globpath('~/vimfiles/config', '*.vim'), '\n')
-let b:fileList += split(globpath('~/vimfiles/custom-plugins', '*.vim'), '\n')
+let b:fileList = split(globpath('~/dotfiles/vim/config', '*.vim'), '\n')
+let b:fileList += split(globpath('~/dotfiles/vim/custom-plugins', '*.vim'), '\n')
 for fpath in b:fileList
   exe 'source' fpath
 endfor
