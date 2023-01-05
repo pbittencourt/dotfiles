@@ -5,7 +5,7 @@
 " ========================================================================== "
 
 set nocompatible     " requerido
-set encoding=utf-8   " acentuações
+set encoding=UTF-8   " acentuações
 filetype off         " requerido
 if has('win32')
     set shellslash   " no windows, converte / para \
@@ -42,6 +42,7 @@ Plugin          'lervag/vimtex'
 Plugin     'vim-airline/vim-airline'
 Plugin     'vim-airline/vim-airline-themes'
 Plugin           'tpope/vim-commentary'
+Plugin       'ryanoasis/vim-devicons'
 Plugin        'junegunn/vim-easy-align'
 Plugin           'tpope/vim-fugitive'
 Plugin  'prabirshrestha/vim-lsp'
@@ -50,6 +51,7 @@ Plugin      'plasticboy/vim-markdown'
 Plugin         'sheerun/vim-polyglot'
 Plugin        'sillybun/vim-repl'
 Plugin           'honza/vim-snippets'
+Plugin           'mhinz/vim-startify'
 Plugin           'tpope/vim-surround'
 
 call vundle#end()            " required

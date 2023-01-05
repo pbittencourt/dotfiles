@@ -13,8 +13,9 @@ nno <leader>tt :tabnew<CR>
 vno <C-y> "+y
 nno <C-p> "+gp
 
-" reload vimrc
-nno <leader>rl :source $MYVIMRC<CR>
+" edit/source vimrc
+nno <leader>ev :edit $MYVIMRC<CR>
+nno <leader>sv :source $MYVIMRC<CR>
 
 " movendo linhas
 " source: https://vim.fandom.com/wiki/Moving_lines_up_or_down
