@@ -4,6 +4,13 @@
 " https://github.com/pbittencourt/dotfiles
 " ========================================================================== "
 
+set nocompatible     " requerido
+set encoding=utf-8   " acentuações
+filetype off         " requerido
+if has('win32')
+    set shellslash   " no windows, converte / para \
+endif
+
 if has('win32')
     " Set the runtime path to include Vundle and initialize
     set rtp+=~/.vim/bundle/Vundle.vim
@@ -40,6 +47,7 @@ Plugin           'tpope/vim-fugitive'
 Plugin  'prabirshrestha/vim-lsp'
 Plugin           'mattn/vim-lsp-settings'
 Plugin      'plasticboy/vim-markdown'
+Plugin         'sheerun/vim-polyglot'
 Plugin        'sillybun/vim-repl'
 Plugin           'honza/vim-snippets'
 Plugin           'tpope/vim-surround'
