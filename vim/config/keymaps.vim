@@ -3,12 +3,16 @@ let mapleader = " "
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
-nno Q :q<CR>
-nno <leader>q :q<CR>
-nno <leader>w :w<CR>
 nno <leader>v :Lexplore<CR>
 nno <leader>f :FZF!<CR>
 nno <leader>tt :tabnew<CR>
+
+" modos mais rápidos de salvar e sair
+nno Q :q<CR>
+nno <leader>w :w<CR>
+nno <leader>q :q<CR>
+nno <leader>x :x<CR>
+nno <leader>a :q!<CR>
 
 " yank/paste -- ctrlC ctrlV conflita com terminal, então evitemos
 vno <C-y> "+y
