@@ -1,4 +1,5 @@
 " o essencial
+let mapleader = " "
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
