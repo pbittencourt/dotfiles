@@ -47,12 +47,13 @@ Plugin        'junegunn/vim-easy-align'
 Plugin           'tpope/vim-fugitive'
 Plugin  'prabirshrestha/vim-lsp'
 Plugin           'mattn/vim-lsp-settings'
-Plugin      'plasticboy/vim-markdown'
+Plugin      'preservim/vim-markdown'
 Plugin         'sheerun/vim-polyglot'
 Plugin        'sillybun/vim-repl'
 Plugin           'honza/vim-snippets'
 Plugin           'mhinz/vim-startify'
 Plugin           'tpope/vim-surround'
+Plugin      'jmcantrell/vim-virtualenv'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

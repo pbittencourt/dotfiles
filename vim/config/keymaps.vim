@@ -1,5 +1,5 @@
 " o essencial
-let mapleader = " "
+let mapleader = "\\"        " infelizmente o espaço dá ruim :(
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
@@ -9,10 +9,10 @@ nno <leader>tt :tabnew<CR>
 
 " modos mais rápidos de salvar e sair
 nno Q :q<CR>
-nno <leader>w :w<CR>
 nno <leader>q :q<CR>
 nno <leader>x :x<CR>
 nno <leader>a :q!<CR>
+nno <leader>u :update<CR>   " só salva se o buffer foi modificado
 
 " yank/paste -- ctrlC ctrlV conflita com terminal, então evitemos
 vno <C-y> "+y

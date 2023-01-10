@@ -1,6 +1,6 @@
 " largura de texto
 " source https://vi.stackexchange.com/a/12736
-fun! Toggle_TW()
+fun! ToggleTW()
     if !exists('b:tw_mode')
         let b:tw_mode = 79
         set tw=79
@@ -11,7 +11,7 @@ fun! Toggle_TW()
         echo 'DESLIGOU quebra de texto na 79ª coluna'
     endif
 endfun
-nmap <leader>tw :call Toggle_TW()<CR>
+nmap <leader>tw :call ToggleTW()<CR>
 
 " cor da 80ª coluna
 " source https://vi.stackexchange.com/a/6989
