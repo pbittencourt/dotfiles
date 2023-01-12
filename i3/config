@@ -74,7 +74,7 @@ floating_modifier $mod
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent        # troquei para controle de áudio
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -313,6 +313,15 @@ bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+bindsym $mod+a mode "audio control"
+mode "audio control" {
+    bindsym k exec pactl set-sink-volume 0 +5%
+    bindsym j exec pactl set-sink-volume 0 -5%
+    bindsym m exec pactl set-sink-mute 0 toggle
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # lock screen
 bindsym $mod+Shift+9 exec gnome-screensaver-command -a
