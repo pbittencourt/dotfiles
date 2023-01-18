@@ -426,7 +426,8 @@ exec nm-applet
 exec_always --no-startup-id nitrogen --restore
 
 # redshift: better light! oh, my eyes!
-exec redshift-gtk -l -23.486:-46.73 -t 6500:4000 -g 0.8 -m randr -v
+#exec redshift-gtk -l -23.486:-46.73 -t 6500:3000 -g 0.8 -m randr -v
+exec redshift
 
 # dunst to send notifications
 exec dunst
@@ -453,6 +454,10 @@ exec sleep 45; flameshot
 
 # backup
 exec sleep 60; deja-dup --backup
+
+# keyboard improvements
+exec xmodmap ~/.xmodmap
+exec xcape -e 'Mode_switch=Escape'
 
 #################
 # COLOR PALETTE #
