@@ -14,8 +14,8 @@ set $browser firefox
 font pango:Iosevka 8
 
 # border style <normal|1pixel|pixel xx|none|pixel>
-new_window	pixel 3
-new_float	pixel 3
+new_window pixel 3
+new_float pixel 3
 
 # window border settings
 default_border          pixel 3
@@ -27,26 +27,26 @@ hide_edge_borders none
 # change borders
 bindsym $mod+n border normal 0
 bindsym $mod+y border pixel 1
-bindsym $mod+u border pixel	3
+bindsym $mod+u border pixel 3
 bindsym $mod+i border none
 
 # change focus
-bindsym $mod+Left	focus left
-bindsym $mod+Down	focus down
-bindsym $mod+Up		focus up
-bindsym $mod+Right	focus right
+bindsym $mod+Left   focus left
+bindsym $mod+Down   focus down
+bindsym $mod+Up     focus up
+bindsym $mod+Right  focus right
 
 # change focus: vim keys
-bindsym $mod+h	focus left
-bindsym $mod+j	focus down
-bindsym $mod+k	focus up
-bindsym $mod+l	focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # move focused window
-bindsym $mod+Shift+Left 	move left
-bindsym $mod+Shift+Down 	move down
-bindsym $mod+Shift+Up 		move up
-bindsym $mod+Shift+Right	move right
+bindsym $mod+Shift+Left     move left
+bindsym $mod+Shift+Down     move down
+bindsym $mod+Shift+Up       move up
+bindsym $mod+Shift+Right    move right
 
 # fake "ALT-TAB" function
 bindsym Mod1+Tab focus left
@@ -54,7 +54,6 @@ bindsym Mod1+Tab focus left
 # split orientation
 bindsym $mod+c split h
 bindsym $mod+v split v
-#bindsym $mod+q split t
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -147,15 +146,15 @@ bindsym $mod+Ctrl+7 move container to workspace $workspace7; workspace $workspac
 bindsym $mod+Ctrl+8 move container to workspace $workspace8; workspace $workspace8
 
 # workspace back and forth (with/without active container)
-workspace_auto_back_and_forth	no
-bindsym $mod+Tab		workspace back_and_forth
+workspace_auto_back_and_forth no
+bindsym $mod+Tab  workspace back_and_forth
 bindsym $mod+Shift+Tab  move container to workspace back_and_forth; workspace back_and_forth
 
 # Moving workspaces between monitors
 bindsym $mod+p move workspace to output right
 bindsym $mod+o move workspace to output left
 
-# start a terminal (urxvt | i3)
+# start a terminal
 bindsym $mod+Return exec $terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal
 
@@ -174,43 +173,43 @@ bindsym $mod+Ctrl+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Shift+d exec $HOME/.config/rofi/rofi-zeal.sh
 
 # shortcut applications
-bindsym $mod+F1 workspace $workspace1;	exec firefox
-bindsym $mod+Shift+F1                   exec google-chrome
-bindsym $mod+F2 workspace $workspace2;	exec gvim
-bindsym $mod+F3                     	exec thunar
-bindsym $mod+F4			            	exec xcalc
-bindsym $mod+F5			            	exec $texteditor
-bindsym $mod+F6			            	exec pavucontrol
+bindsym $mod+F1 workspace $workspace1;  exec google-chrome
+bindsym $mod+F2 workspace $workspace2;  exec gvim
+bindsym $mod+F3                         exec thunar
+bindsym $mod+Shift+F3                   exec $terminal ranger ~/
+bindsym $mod+F4                         exec xcalc
+bindsym $mod+F5                         exec $texteditor
+bindsym $mod+F6                         exec pavucontrol
 bindsym $mod+F8 workspace $workspace8;  exec teams
-bindsym $mod+Print		            	exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Imagens/captures'
-bindsym Print   		            	exec flameshot gui
+bindsym $mod+Print                      exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Imagens/captures'
+bindsym Print                           exec flameshot gui
 
 # assign program to workspace
-assign [class="Firefox"] 		    $workspace1
-assign [class="RStudio"]			$workspace2
-assign [class="Inkscape"] 		    $workspace5
-assign [class="Deja-dup"] 		    $workspace7
-assign [class="TelegramDesktop"] 	$workspace8
+assign [class="Firefox"]            $workspace1
+assign [class="RStudio"]            $workspace2
+assign [class="Inkscape"]           $workspace5
+assign [class="Deja-dup"]           $workspace7
+assign [class="TelegramDesktop"]    $workspace8
 
 # open applications in floating mode and define borders
-for_window [title="alsamixer"] 		    floating enable
-for_window [title="Autokey"] 		    floating enable
-for_window [title="feh"]        	    floating enable
-for_window [title="feh"]        	    resize set 640 720
-for_window [title="feh"]        	    move absolute position center
-for_window [title="File Transfer*"]	    floating enable
-for_window [class="flameshot"] 		    floating enable
+for_window [title="alsamixer"]          floating enable
+for_window [title="Autokey"]            floating enable
+for_window [title="feh"]                floating enable
+for_window [title="feh"]                resize set 640 720
+for_window [title="feh"]                move absolute position center
+for_window [title="File Transfer*"]     floating enable
+for_window [class="flameshot"]          floating enable
 for_window [class="gnome-calculator"]   floating enable
 for_window [class="xcalc"]              floating enable
 for_window [title="Calculator"]         floating enable
-for_window [class="Lxappearance"] 	    floating enable
-for_window [class="Nitrogen"] 		    floating enable border normal
-for_window [class="Pavucontrol"] 	    floating enable
-for_window [class="skypeforlinux"] 	    floating enable
-for_window [class="Telegram"] 		    floating enable
-for_window [class="Mousepad"] 		    floating enable
-for_window [class="Mousepad"] 		    resize set 640 480
-for_window [class="Mousepad"] 		    move absolute position center
+for_window [class="Lxappearance"]       floating enable
+for_window [class="Nitrogen"]           floating enable border normal
+for_window [class="Pavucontrol"]        floating enable
+for_window [class="skypeforlinux"]      floating enable
+for_window [class="Telegram"]           floating enable
+for_window [class="Mousepad"]           floating enable
+for_window [class="Mousepad"]           resize set 640 480
+for_window [class="Mousepad"]           move absolute position center
 
 # edit i3 config
 bindsym $mod+Shift+o exec gvim '.config/i3/config'
@@ -260,19 +259,19 @@ mode "resize" {
 
 # start i3bar to display a workspace bar
 bar {
-    status_command		i3blocks -c ~/.config/i3/i3blocks.conf
-    bindsym button4		yes
-    bindsym button5		yes
-    position			bottom
-    separator_symbol		"."
-    workspace_buttons		yes
-    strip_workspace_numbers	no
+    status_command  i3blocks -c ~/.config/i3/i3blocks.conf
+    bindsym button4  yes
+    bindsym button5  yes
+    position   bottom
+    separator_symbol  "."
+    workspace_buttons  yes
+    strip_workspace_numbers no
     font pango:Font Awesome, Iosevka 9
 
     colors {
-	background $background
-	statusline $foreground
-	separator  $white2 #454947
+ background $background
+ statusline $foreground
+ separator  $white2 #454947
         # class             border  backg   text
         focused_workspace   $green $green $background
         active_workspace    $magenta $magenta $background
@@ -288,9 +287,9 @@ bar {
     #modifier        Mod1
     # colors commented to use i3bar, again
     #colors {
-	#background $red #222D31
-	#statusline $white1 #F9FAF9
-	#separator  $white2 #454947
+ #background $red #222D31
+ #statusline $white1 #F9FAF9
+ #separator  $white2 #454947
     #    # class             border  backg   text
     #    focused_workspace   $green $green $background
     #    active_workspace    $green $background $green
@@ -358,10 +357,10 @@ bindsym $mod+0 mode "$mode_system"
 # I3 GAPS #
 ###########
 
-gaps inner	    15
-gaps outer	    0
-smart_gaps	    on
-smart_borders	on
+gaps inner     15
+gaps outer     0
+smart_gaps     on
+smart_borders on
 
 # Press $mod+Shift+g to enter the gap mode.
 # Choose o or i for modifying outer/inner gaps.
@@ -427,7 +426,6 @@ exec_always --no-startup-id nitrogen --restore
 
 # redshift: better light! oh, my eyes!
 #exec redshift-gtk -l -23.486:-46.73 -t 6500:3000 -g 0.8 -m randr -v
-exec redshift
 
 # dunst to send notifications
 exec dunst
