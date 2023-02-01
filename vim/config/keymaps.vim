@@ -1,5 +1,4 @@
 " o essencial
-let mapleader = "\\"        " infelizmente o espaço dá ruim :(
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
