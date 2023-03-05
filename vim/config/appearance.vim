@@ -15,3 +15,10 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 20
+
+" highlight word under cursor
+" source: https://vi.stackexchange.com/a/25687
+augroup highlight_current_word
+  au!
+  au CursorHold * :exec 'match Search /\V\<' . expand('<cword>') . '\>/'
+augroup END
