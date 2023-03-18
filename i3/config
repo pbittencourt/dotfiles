@@ -9,6 +9,7 @@ set $mod Mod4
 set $texteditor mousepad
 set $terminal kitty
 set $browser brave-browser
+set $editor gvim
 
 # font for window titles and bar
 font pango:Iosevka 8
@@ -173,8 +174,8 @@ bindsym $mod+Ctrl+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Shift+d exec $HOME/.config/rofi/rofi-zeal.sh
 
 # shortcut applications
-bindsym $mod+F1 workspace $workspace1;  exec google-chrome
-bindsym $mod+F2 workspace $workspace2;  exec gvim
+bindsym $mod+F1 workspace $workspace1;  exec $browser
+bindsym $mod+F2 workspace $workspace2;  exec $editor
 bindsym $mod+F3                         exec thunar
 bindsym $mod+Shift+F3                   exec $terminal ranger
 bindsym $mod+F4                         exec xcalc
@@ -186,6 +187,7 @@ bindsym Print                           exec flameshot gui
 
 # assign program to workspace
 assign [class="Firefox"]            $workspace1
+assign [class="Brave-browser"]      $workspace1
 assign [class="RStudio"]            $workspace2
 assign [class="Inkscape"]           $workspace5
 assign [class="Deja-dup"]           $workspace7
