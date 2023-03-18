@@ -20,5 +20,5 @@ let g:netrw_winsize = 20
 " source: https://vi.stackexchange.com/a/25687
 augroup highlight_current_word
   au!
-  au CursorHold * :exec 'match Search /\V\<' . expand('<cword>') . '\>/'
+  au CursorHold * :exec 'match Search /\V\<' . substitute(expand('<cword>'), '[\*\/]', '', 'g') . '\>/'
 augroup END
