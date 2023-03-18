@@ -456,8 +456,8 @@ exec sleep 45; flameshot
 exec sleep 60; deja-dup --backup
 
 # keyboard improvements
-exec xmodmap ~/.xmodmap
-exec xcape -e 'Mode_switch=Escape'
+exec ~/dotfiles/hjkl.sh
+bindsym $mod+m exec ~/dotfiles/hjkl.sh
 
 #################
 # COLOR PALETTE #
