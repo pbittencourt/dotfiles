@@ -8,7 +8,7 @@ set $mod Mod4
 # default applications
 set $texteditor mousepad
 set $terminal kitty
-set $browser firefox
+set $browser brave-browser
 
 # font for window titles and bar
 font pango:Iosevka 8
@@ -176,7 +176,7 @@ bindsym $mod+Shift+d exec $HOME/.config/rofi/rofi-zeal.sh
 bindsym $mod+F1 workspace $workspace1;  exec google-chrome
 bindsym $mod+F2 workspace $workspace2;  exec gvim
 bindsym $mod+F3                         exec thunar
-bindsym $mod+Shift+F3                   exec $terminal ranger ~/
+bindsym $mod+Shift+F3                   exec $terminal ranger
 bindsym $mod+F4                         exec xcalc
 bindsym $mod+F5                         exec $texteditor
 bindsym $mod+F6                         exec pavucontrol
@@ -425,7 +425,7 @@ exec nm-applet
 exec_always --no-startup-id nitrogen --restore
 
 # redshift: better light! oh, my eyes!
-#exec redshift-gtk -l -23.486:-46.73 -t 6500:3000 -g 0.8 -m randr -v
+exec redshift-gtk -l -23.486:-46.73 -t 6500:3000 -g 0.8 -m randr -v
 
 # dunst to send notifications
 exec dunst
