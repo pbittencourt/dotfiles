@@ -74,4 +74,4 @@ ino {<CR> {<CR>}<ESC>O
 
 " fecha todos os outros buffers
 " https://stackoverflow.com/a/42071865
-nno <leader>b :%bd|e#<CR>
+nno <leader>b :%bd\|e#<CR>
