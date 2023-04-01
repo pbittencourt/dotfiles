@@ -7,14 +7,7 @@ set matchpairs+=<:>,「:」
 set listchars=eol:¬,trail:·,space:·,extends:»,precedes:«
 nnoremap <leader>1 :set list!<CR>
 " (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
-
-" netrw
-" source: https://www.akhatib.com/making-netrw-clean-and-minimally-disruptive-then-stop-using-it/
-let g:netrw_banner = 0
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_liststyle = 3
-let g:netrw_winsize = 20
+set list " inicia ligado por padrão
 
 " highlight word under cursor
 " source: https://vi.stackexchange.com/a/25687
