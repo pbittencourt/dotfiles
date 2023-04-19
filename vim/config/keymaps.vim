@@ -1,10 +1,11 @@
 " o essencial
+let mapleader = " "
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
 nno <leader>v :Lexplore<CR>
 nno <leader>f :FZF!<CR>
-nno <leader>tt :tabnew<CR>
+nno <leader>t :tabnew<CR>
 
 " modos mais rápidos de salvar e sair
 nno Q :q<CR>
