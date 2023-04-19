@@ -4,7 +4,7 @@ set matchpairs+=<:>,「:」
 
 " caracteres não imprimíveis
 " source https://gist.github.com/adinapoli/4723877
-set listchars=eol:¬,trail:·,space:·,extends:»,precedes:«
+set listchars=eol:¬,trail:░,space:·,extends:»,precedes:«
 nnoremap <leader>1 :set list!<CR>
 " (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
 set list " inicia ligado por padrão
