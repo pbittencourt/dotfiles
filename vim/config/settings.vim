@@ -13,6 +13,7 @@ set backspace=indent,eol,start  " deleta com backspace, sem precisar de <esc>dd
 set wrap linebreak              " não quebrar palavras quando quebrar linha
 set textwidth=79                " acima dessa largura, automat. quebra linha
 set colorcolumn=80              " destaca última coluna de texto
+set cursorcolumn cursorline     " destaca linha e coluna sob o cursor
 set ignorecase                  " busca case insensitive ...
 set smartcase                   " ... porém ignorado se usar algum uppercase
 set nohlsearch                  " na pesquisa, ñ destaca corresp. encontrada
