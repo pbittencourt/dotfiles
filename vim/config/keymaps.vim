@@ -1,10 +1,11 @@
 " o essencial
+let mapleader = " "
 ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
 nno <leader>v :Lexplore<CR>
 nno <leader>f :FZF!<CR>
-nno <leader>tt :tabnew<CR>
+nno <leader>t :tabnew<CR>
 
 " modos mais rápidos de salvar e sair
 nno Q :q<CR>
@@ -71,3 +72,7 @@ ino "<CR> "<CR>"<ESC>O
 ino (<CR> (<CR>)<ESC>O
 ino [<CR> [<CR>]<ESC>O
 ino {<CR> {<CR>}<ESC>O
+
+" fecha todos os outros buffers
+" https://stackoverflow.com/a/42071865
+nno <leader>b :%bd\|e#<CR>

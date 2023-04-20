@@ -1,8 +1,8 @@
-" ========================================================================== 
+" ==========================================================================
 " NOVA ERA configurações vim/neovim -- 2023 edition!
 " Pedro P. Bittencourt
 " https://github.com/pbittencourt/dotfiles
-" ========================================================================== 
+" ==========================================================================
 
 set nocompatible     " requerido
 set encoding=UTF-8   " acentuações
@@ -31,11 +31,13 @@ Plugin        'lilydjwg/colorizer'
 Plugin        'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin        'junegunn/fzf.vim'
 Plugin        'junegunn/goyo.vim'
+Plugin        'Yggdroot/indentLine'
 Plugin     'vim-scripts/indentpython.vim'
 Plugin        'junegunn/limelight.vim'
 Plugin          'iamcco/markdown-preview.nvim'
 Plugin 'arcticicestudio/nord-vim'
 Plugin        'jalvesaq/Nvim-R'
+Plugin           'sotte/presenting.vim'
 Plugin       'godlygeek/tabular'
 Plugin          'SirVer/ultisnips'
 Plugin          'lervag/vimtex'
