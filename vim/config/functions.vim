@@ -40,6 +40,26 @@ fun! ToggleLineColumn()
 endfun
 nmap <leader>lc :call ToggleLineColumn()<CR>
 
+" destaca texto sob o cursor
+" source: https://vi.stackexchange.com/a/25687
+fun! ToggleHighlightWord()
+    if !exists('b:hw_mode')
+        echo 'ATIVA o match de palavras!'
+        let b:hw_mode = 1
+        augroup highlight_current_word
+          au! CursorHold * :exec 'match Search /\V\<' . substitute(expand('<cword>'), '[\*\/]', '', 'g') . '\>/'
+        augroup END
+    else
+        echo 'DESATIVA o match de palavras!'
+        unlet b:hw_mode
+        " ainda precisa fazer essa parte; PENSAR ... "
+        augroup highlight_current_word
+          au! CursorHold
+        augroup END
+    endif
+endfun
+nmap <leader>hi :call ToggleHighlightWord()<CR>
+
 " copia correspondências para o registro
 " source: https://vi.stackexchange.com/questions/7357/copying-just-the-matches-to-a-register
 function! CopyMatches(reg)

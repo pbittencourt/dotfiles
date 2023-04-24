@@ -8,10 +8,3 @@ set listchars=eol:¬,trail:░,space:·,extends:»,precedes:«
 nnoremap <leader>1 :set list!<CR>
 " (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
 set list " inicia ligado por padrão
-
-" highlight word under cursor
-" source: https://vi.stackexchange.com/a/25687
-augroup highlight_current_word
-  au!
-  au CursorHold * :exec 'match Search /\V\<' . substitute(expand('<cword>'), '[\*\/]', '', 'g') . '\>/'
-augroup END
