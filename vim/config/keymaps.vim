@@ -13,7 +13,6 @@ nno Q :q<CR>
 nno <leader>q :q<CR>
 nno <leader>x :x<CR>
 nno <leader>a :q!<CR>
-nno <leader>u :update<CR>   " só salva se o buffer foi modificado
 
 " yank/paste -- ctrlC ctrlV conflita com terminal, então evitemos
 vno <C-y> "+y
@@ -23,18 +22,18 @@ nno <C-p> "+gp
 nno <leader>ev :edit $MYVIMRC<CR>
 nno <leader>sv :source $MYVIMRC<CR>
 
+" split navigations
+nno <C-H> <C-W><C-H>
+nno <C-J> <C-W><C-J>
+nno <C-K> <C-W><C-K>
+nno <C-L> <C-W><C-L>
+
 " movendo linhas
 " source: https://vim.fandom.com/wiki/Moving_lines_up_or_down
 nno <A-j> :m .+1<CR>==
 nno <A-k> :m .-2<CR>==
 vno <A-j> :m '>+1<CR>gv=gv
 vno <A-k> :m '<-2<CR>gv=gv
-
-" split navigations
-nno <C-H> <C-W><C-H>
-nno <C-J> <C-W><C-J>
-nno <C-K> <C-W><C-K>
-nno <C-L> <C-W><C-L>
 
 " insere linha abaixo/acima do cursor, sem movê-lo ou entrar no modo insert
 " source: https://stackoverflow.com/a/16136133/6064933
@@ -49,6 +48,15 @@ xno $ g_
 nno H H zz
 nno M M zz
 nno L L zz
+nno } }zzj
+nno { k{zzj
+
+" liga/desliga caracteres não imprimíveis
+nno <leader>i :set list!<CR>
+
+" liga/desliga destaque em linha e coluna sob cursor
+nmap <leader>l :set cursorline!<CR>
+nmap <leader>c :set cursorcolumn!<CR>
 
 " autoclose and position cursor to write text inside
 ino ' ''<left>
@@ -66,7 +74,7 @@ ino (<tab> ()
 ino [<tab> []
 ino {<tab> {}
 
-" autoclose 2 lines below and position cursor in the middle 
+" autoclose 2 lines below and position cursor in the middle
 ino '<CR> '<CR>'<ESC>O
 ino `<CR> `<CR>`<ESC>O
 ino "<CR> "<CR>"<ESC>O
@@ -77,3 +85,8 @@ ino {<CR> {<CR>}<ESC>O
 " fecha todos os outros buffers
 " https://stackoverflow.com/a/42071865
 nno <leader>d :%bd\|e#<CR>
+
+" funções
+nmap <leader>8 :call ToggleCC()<CR>
+nmap <leader>w :call ToggleHighlightWord()<CR>
+nmap <leader>tw :call ToggleTW()<CR>

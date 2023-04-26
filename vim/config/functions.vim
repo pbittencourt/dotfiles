@@ -11,7 +11,6 @@ fun! ToggleTW()
         echo 'DESLIGOU quebra de texto na 79ª coluna'
     endif
 endfun
-nmap <leader>tw :call ToggleTW()<CR>
 
 " cor da 80ª coluna
 " source https://vi.stackexchange.com/a/6989
@@ -24,21 +23,6 @@ fun! ToggleCC()
         echo 'DESLIGOU destaque de cor na 80ª coluna'
     endif
 endfun
-nmap <leader>8 :call ToggleCC()<CR>
-
-" destaque de linha e coluna atuais
-fun! ToggleLineColumn()
-    if !exists('b:lc_mode')
-        let b:lc_mode = 1
-        set cursorcolumn
-        set cursorline
-    else
-        unlet b:lc_mode
-        set nocursorcolumn
-        set nocursorline
-    endif
-endfun
-nmap <leader>lc :call ToggleLineColumn()<CR>
 
 " destaca texto sob o cursor
 " source: https://vi.stackexchange.com/a/25687
@@ -52,13 +36,11 @@ fun! ToggleHighlightWord()
     else
         echo 'DESATIVA o match de palavras!'
         unlet b:hw_mode
-        " ainda precisa fazer essa parte; PENSAR ... "
         augroup highlight_current_word
           au! CursorHold
         augroup END
     endif
 endfun
-nmap <leader>hi :call ToggleHighlightWord()<CR>
 
 " copia correspondências para o registro
 " source: https://vi.stackexchange.com/questions/7357/copying-just-the-matches-to-a-register

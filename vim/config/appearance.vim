@@ -3,8 +3,22 @@
 set matchpairs+=<:>,「:」
 
 " caracteres não imprimíveis
-" source https://gist.github.com/adinapoli/4723877
 set listchars=eol:¬,trail:░,space:·,extends:»,precedes:«
-nnoremap <leader>1 :set list!<CR>
-" (o número `1` é o similar mais próximo de `l`, junto ao <leader>)
-set list " inicia ligado por padrão
+" inicia ligado por padrão
+set list
+
+" caracteres para preencher texto da dobra e separator vertical
+set fillchars+=fold:\ ,vert:┊
+
+" custom folding
+" source: https://jdhao.github.io/2019/08/16/nvim_config_folding
+function! MyFoldText()
+    let line = getline(v:foldstart)
+    let folded_line_num = v:foldend - v:foldstart
+    let line_text = trim(substitute(line, '^"{\+', '', 'g'))
+    " let fillcharcount = &textwidth - len(line_text) - len(folded_line_num)
+    let fillcharcount = &textwidth - len(line_text) - 10
+    " return '§'. line_text . repeat('⋅', fillcharcount) . ' (' . folded_line_num . ' L) '
+    return '↪ '. line_text . ' (' . folded_line_num . ' L) ' . repeat('⋅', fillcharcount)
+endfunction
+set foldtext=MyFoldText()
