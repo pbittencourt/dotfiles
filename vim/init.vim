@@ -57,7 +57,6 @@ Plugin           'honza/vim-snippets'
 Plugin           'mhinz/vim-startify'
 Plugin           'tpope/vim-surround'
 Plugin      'jmcantrell/vim-virtualenv'
-Plugin          'gelguy/wilder.nvim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
