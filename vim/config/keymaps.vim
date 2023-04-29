@@ -4,12 +4,18 @@ ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
 nno <leader>v :Lexplore<CR>
-nno <leader>f :FZF!<CR>
-nno <leader>b :Buffers!<CR>
 nno <leader>t :tabnew<CR>
 
-" modos mais rápidos de salvar e sair
-nno Q :q<CR>
+" FZF related
+nno <leader>f :FZF<CR>
+nno <leader>b :Buffers<CR>
+" inicia pesquisa no diretório do buffer ativo
+nno <leader>h :Files %:h<CR>
+" inicia pesquisa na home (pesadaum!)
+nno <leader>p :Files ~<CR>
+
+" modos mais rápidos de salvar e de sair
+nno <leader>w :w<CR>
 nno <leader>q :q<CR>
 nno <leader>x :x<CR>
 nno <leader>a :q!<CR>
@@ -50,6 +56,8 @@ nno M M zz
 nno L L zz
 nno } }zzj
 nno { k{zzj
+nno n nzz
+nno N Nzz
 
 " liga/desliga caracteres não imprimíveis
 nno <leader>i :set list!<CR>
@@ -88,5 +96,11 @@ nno <leader>d :%bd\|e#<CR>
 
 " funções
 nmap <leader>8 :call ToggleCC()<CR>
-nmap <leader>w :call ToggleHighlightWord()<CR>
+nmap <leader>m :call ToggleHighlightWord()<CR>
 nmap <leader>tw :call ToggleTW()<CR>
+
+" REPL
+nnoremap <leader>/ :REPLToggle<Cr>
+nnoremap <leader>. :REPLSendSession<Cr>
+let g:sendtorepl_invoke_key = "<leader>;"
+" esse, a rigor, não é um KEYMAP, mas estar aqui é mais sustentável
