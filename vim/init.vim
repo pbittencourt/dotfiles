@@ -28,6 +28,7 @@ endif
 Plugin  'prabirshrestha/asyncomplete.vim'
 Plugin  'prabirshrestha/asyncomplete-lsp.vim'
 Plugin        'lilydjwg/colorizer'
+Plugin         'sainnhe/everforest'
 Plugin        'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin        'junegunn/fzf.vim'
 Plugin        'junegunn/goyo.vim'
