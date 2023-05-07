@@ -24,5 +24,6 @@ set complete+=kspell            " sugere palavras à medida em que digita
 set wildmenu                    " na linha de comando, exibir todas as 
                                 " correspondências no autocomplete com <tab>
 set wildoptions=pum             " exibe as correspondências num popup
+set wildignorecase              " ignora caixa ao autocompletar
 set path+=**                    " pesquisa em subdiretórios
 set noshowmode                  " vim-airline já mostra
