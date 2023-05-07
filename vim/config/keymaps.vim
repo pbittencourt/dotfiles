@@ -6,14 +6,6 @@ ino <C-L> <Esc>la
 nno <leader>v :Lexplore<CR>
 nno <leader>t :tabnew<CR>
 
-" FZF related
-nno <leader>f :FZF<CR>
-nno <leader>b :Buffers<CR>
-" inicia pesquisa no diretório do buffer ativo
-nno <leader>h :Files %:h<CR>
-" inicia pesquisa na home (pesadaum!)
-nno <leader>p :Files ~<CR>
-
 " modos mais rápidos de salvar e de sair
 nno <leader>w :w<CR>
 nno <leader>q :q<CR>
@@ -43,8 +35,8 @@ vno <A-k> :m '<-2<CR>gv=gv
 
 " insere linha abaixo/acima do cursor, sem movê-lo ou entrar no modo insert
 " source: https://stackoverflow.com/a/16136133/6064933
-nnoremap <expr> <leader><Down> 'm`' . v:count1 . 'o<Esc>``'
-nnoremap <expr> <leader><Up> 'm`' . v:count1 . 'O<Esc>``'
+nno <expr> <leader><Down> 'm`' . v:count1 . 'o<Esc>``'
+nno <expr> <leader><Up> 'm`' . v:count1 . 'O<Esc>``'
 
 " melhora movimentos
 nno ç ^
@@ -99,8 +91,21 @@ nmap <leader>8 :call ToggleCC()<CR>
 nmap <leader>m :call ToggleHighlightWord()<CR>
 nmap <leader>tw :call ToggleTW()<CR>
 
+" FZF
+nno <leader>f :FZF<CR>
+nno <leader>b :Buffers<CR>
+" inicia pesquisa no diretório do buffer ativo
+nno <leader>h :Files %:h<CR>
+" inicia pesquisa na home
+nno <leader><F1> :Files ~<CR>
+" arquivos recentes -- versão bonita de :browse old
+nno <leader>o :History<CR>
+
 " REPL
-nnoremap <leader>/ :REPLToggle<Cr>
-nnoremap <leader>. :REPLSendSession<Cr>
+nno <leader>/ :REPLToggle<Cr>
+nno <leader>. :REPLSendSession<Cr>
 let g:sendtorepl_invoke_key = "<leader>;"
 " esse, a rigor, não é um KEYMAP, mas estar aqui é mais sustentável
+
+" markdown-preview
+nno <leader><F5> <Plug>MarkdownPreviewToggle
