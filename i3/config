@@ -15,21 +15,21 @@ set $editor gvim
 font pango:Iosevka 8
 
 # border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 3
-new_float pixel 3
+new_window pixel 1
+new_float pixel 1
 
 # window border settings
-default_border          pixel 3
-default_floating_border pixel 3
+default_border          pixel 1
+default_floating_border pixel 1
 
 # hide borders <both|none>
 hide_edge_borders none
 
 # change borders
 bindsym $mod+n border normal 0
-bindsym $mod+y border pixel 1
-bindsym $mod+u border pixel 3
-bindsym $mod+i border none
+bindsym $mod+y border none
+bindsym $mod+u border pixel 1
+bindsym $mod+i border pixel 2
 
 # change focus
 bindsym $mod+Left   focus left
@@ -104,7 +104,7 @@ bindsym $mod+Shift+s sticky toggle
 #set $workspace7 "7"
 #set $workspace8 "8"
 set $workspace1 "1 "
-set $workspace2 "2 " 
+set $workspace2 "2 "
 #set $workspace2 "2 "
 set $workspace3 "3 "
 set $workspace4 "4 "
@@ -271,17 +271,17 @@ bar {
     font pango:Font Awesome, Iosevka 9
 
     colors {
- background $background
- statusline $foreground
- separator  $white2 #454947
-        # class             border  backg   text
-        focused_workspace   $green $green $background
-        active_workspace    $magenta $magenta $background
-        inactive_workspace  $white1 $white1 $foreground
-        binding_mode        $magenta $magenta $background
-        urgent_workspace    $magenta $magenta $background
+        background $background
+        statusline $foreground
+        separator  $white2 #454947
+            # class            border   backg    text
+            focused_workspace  $green   $green   $background
+            active_workspace   $magenta $magenta $background
+            inactive_workspace $white1  $white1  $foreground
+            binding_mode       $magenta $magenta $background
+            urgent_workspace   $magenta $magenta $background
     }
-    
+
     # only show bar on system's suspend and resize
     # (to use with polybar without problems)
     #mode            hide
@@ -359,15 +359,15 @@ bindsym $mod+0 mode "$mode_system"
 # I3 GAPS #
 ###########
 
-gaps inner     15
-gaps outer     0
-smart_gaps     on
+gaps inner    15
+gaps outer    0
+smart_gaps    on
 smart_borders on
 
 # Press $mod+Shift+g to enter the gap mode.
 # Choose o or i for modifying outer/inner gaps.
-# Press one of + / - (in-/decrement for current workspace) 
-# or 0 (remove gaps for current workspace). If you also press 
+# Press one of + / - (in-/decrement for current workspace)
+# or 0 (remove gaps for current workspace). If you also press
 # Shift with these keys, the change will be global for all workspaces.
 
 set $mode_gaps Gaps: (o) outer, (i) inner
@@ -376,34 +376,34 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 
@@ -440,8 +440,8 @@ exec sleep 15; dropbox start
 exec sleep 15; google-drive-ocamlfuse -label drivepedro ~/"Drive PEDRO"
 
 # mount personal onedrive
-exec sleep 20 systemctl --user enable onedrive
-exec sleep 25 systemctl --user start onedrive
+#exec sleep 20 systemctl --user enable onedrive
+#exec sleep 25 systemctl --user start onedrive
 
 # telegram
 #exec sleep 30; $HOME/Telegram/Telegram
@@ -466,8 +466,8 @@ bindcode 73 exec notify-send "CAPS LOUCO pressionado!"  # tecla F7
 
 # fetch from .Xresources
 # actually, only BLACK and WHITE are different
-set_from_resource $background background
-set_from_resource $foreground foreground
+set_from_resource $background   background
+set_from_resource $foreground   foreground
 set_from_resource $black1       color0        # black
 set_from_resource $white1       color7        # white
 set_from_resource $black2       color8        # black
@@ -480,10 +480,10 @@ set_from_resource $magenta      color5        # magenta
 set_from_resource $cyan         color6        # cyan
 
 
-# DEFINE theme colors       border      backgr.     text        indic.      child_border
-client.focused              $background $background $foreground $yellow     $green
-client.focused_inactive     $background $background $foreground $magenta    $foreground
-client.unfocused            $background $background $white1     $cyan       $foreground
-client.urgent               $magenta    $magenta    $foreground $red        $red
-client.placeholder          $magenta    $black2     $white2     $red        $magenta
+# DEFINE theme colors       border      backgr.     text        indic.   child_border
+client.focused              $background $background $foreground $yellow  $green
+client.focused_inactive     $background $background $foreground $magenta $foreground
+client.unfocused            $background $background $white1     $cyan    $foreground
+client.urgent               $magenta    $magenta    $foreground $red     $red
+client.placeholder          $magenta    $black2     $white2     $red     $magenta
 client.background           $background
