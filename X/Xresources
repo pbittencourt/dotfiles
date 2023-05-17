@@ -3,4 +3,4 @@
 ! config can be added there or also here below.
 ! For comments use "!"
 
-#include "Xresources-themes/light/ashes-light.Xresources"
+#include "/home/monolito/dotfiles/X/themes/everforest-light-hard.Xresources"
