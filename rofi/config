@@ -10,5 +10,5 @@ rofi.font: Iosevka 18
 rofi.bw: 4
 rofi.eh: 1
 rofi.separator-style: solid
-rofi.hide-scrollbar: false
+rofi.hide-scrollbar: true
 rofi.auto-select: false
