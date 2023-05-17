@@ -5,6 +5,28 @@
 # use win key
 set $mod Mod4
 
+# fetch colors from .Xresources
+set_from_resource $background   background #000000
+set_from_resource $foreground   foreground #ffffff
+set_from_resource $black1       color0     #000000
+set_from_resource $white1       color7     #ffffff
+set_from_resource $black2       color8     #222222
+set_from_resource $white2       color15    #dddddd
+set_from_resource $red          color1     #ff0000
+set_from_resource $green        color2     #00ff00
+set_from_resource $yellow       color3     #ffff00
+set_from_resource $blue         color4     #0000ff
+set_from_resource $magenta      color5     #df69ba
+set_from_resource $cyan         color6     #7fbbb3
+
+# define theme colors    border      backgr.     text        indic.      child_border
+client.focused          $green      $green      $background $background $green
+client.focused_inactive $background $background $magenta    $background $background
+client.unfocused        $background $background $cyan       $background $background
+client.urgent           $magenta    $magenta    $foreground $magenta    $magenta
+client.placeholder      $magenta    $black2     $white2     $red        $magenta
+client.background       $background
+
 # default applications
 set $texteditor mousepad
 set $terminal kitty
@@ -12,21 +34,22 @@ set $browser brave-browser
 set $editor gvim
 
 # font for window titles and bar
-font pango:Iosevka 8
+#font pango:Iosevka Nerd Font 8
+font pango:Hack 8
 
 # border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
-new_float pixel 1
+new_window pixel 2
+new_float pixel 2
 
 # window border settings
-default_border          pixel 1
-default_floating_border pixel 1
+default_border          pixel 2
+default_floating_border pixel 2
 
 # hide borders <both|none>
 hide_edge_borders none
 
 # change borders
-bindsym $mod+n border normal 0
+bindsym $mod+n border normal 2
 bindsym $mod+y border none
 bindsym $mod+u border pixel 1
 bindsym $mod+i border pixel 2
@@ -105,13 +128,13 @@ bindsym $mod+Shift+s sticky toggle
 #set $workspace8 "8"
 set $workspace1 "1 "
 set $workspace2 "2 "
-#set $workspace2 "2 "
 set $workspace3 "3 "
 set $workspace4 "4 "
 set $workspace5 "5 "
 set $workspace6 "6 "
 set $workspace7 "7 "
-set $workspace8 "8 "
+#set $workspace8 "8 "
+set $workspace8 "8 "
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -182,7 +205,7 @@ bindsym $mod+F4                         exec xcalc
 bindsym $mod+F5                         exec $texteditor
 bindsym $mod+F6                         exec pavucontrol
 bindsym $mod+F8 workspace $workspace8;  exec teams
-bindsym $mod+Print                      exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Imagens/captures'
+bindsym $mod+Print                      exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Imagens/captures'; exec notify-send "Screenshot" "Capturado com sucesso!"
 bindsym Print                           exec flameshot gui
 
 # assign program to workspace
@@ -268,12 +291,13 @@ bar {
     separator_symbol  "."
     workspace_buttons  yes
     strip_workspace_numbers no
-    font pango:Font Awesome, Iosevka 9
+    workspace_min_width 50
+    font pango:Font Awesome, Hack 8
 
     colors {
         background $background
         statusline $foreground
-        separator  $white2 #454947
+        separator  $red
             # class            border   backg    text
             focused_workspace  $green   $green   $background
             active_workspace   $magenta $magenta $background
@@ -289,9 +313,9 @@ bar {
     #modifier        Mod1
     # colors commented to use i3bar, again
     #colors {
- #background $red #222D31
- #statusline $white1 #F9FAF9
- #separator  $white2 #454947
+ #background $red
+ #statusline $white1
+ #separator  $white2
     #    # class             border  backg   text
     #    focused_workspace   $green $green $background
     #    active_workspace    $green $background $green
@@ -460,30 +484,5 @@ exec ~/dotfiles/hjkl.sh
 bindsym $mod+m exec ~/dotfiles/hjkl.sh
 bindcode 73 exec notify-send "CAPS LOUCO pressionado!"  # tecla F7
 
-#################
-# COLOR PALETTE #
-#################
-
-# fetch from .Xresources
-# actually, only BLACK and WHITE are different
-set_from_resource $background   background
-set_from_resource $foreground   foreground
-set_from_resource $black1       color0        # black
-set_from_resource $white1       color7        # white
-set_from_resource $black2       color8        # black
-set_from_resource $white2       color15       # white
-set_from_resource $red          color1        # red
-set_from_resource $green        color2        # green
-set_from_resource $yellow       color3        # yellow
-set_from_resource $blue         color4        # blue
-set_from_resource $magenta      color5        # magenta
-set_from_resource $cyan         color6        # cyan
-
-
-# DEFINE theme colors       border      backgr.     text        indic.   child_border
-client.focused              $background $background $foreground $yellow  $green
-client.focused_inactive     $background $background $foreground $magenta $foreground
-client.unfocused            $background $background $white1     $cyan    $foreground
-client.urgent               $magenta    $magenta    $foreground $red     $red
-client.placeholder          $magenta    $black2     $white2     $red     $magenta
-client.background           $background
+# teste
+bindsym $mod+x title_format "Important | %title"
