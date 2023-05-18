@@ -4,7 +4,7 @@ ino jk <Esc>
 xno jk <Esc>
 ino <C-L> <Esc>la
 nno <leader>v :Lexplore<CR>
-nno <leader>t :tabnew<CR>
+nno <leader>t :tabnew<CR>:Startify<CR>
 
 " modos mais rápidos de salvar e de sair
 nno <leader>w :w<CR>

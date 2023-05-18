@@ -16,5 +16,3 @@ let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['   Favoritos']              },
       \ { 'type': 'commands',  'header': ['   Comandos']               },
       \ ]
-
-let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
