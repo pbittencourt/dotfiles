@@ -31,31 +31,37 @@ man)
 	# Search on man
 	append_new_term
   mantoread=$(echo "$input" | cut -c 4- | xargs)
-  exec rxvt-unicode -e "man $mantoread"
+  exec kitty -e "man $mantoread"
   ;;
 d)
 	# Search on DuckDuckGo
 	append_new_term
   mantoread=$(echo "$input" | cut -c 2- | xargs)
-  exec firefox "https://duckduckgo.com/?q=$mantoread" &> /dev/null &
+  exec brave-browser "https://duckduckgo.com/?q=$mantoread" &> /dev/null &
   ;;
 g)
 	# Search on Google
 	append_new_term
   mantoread=$(echo "$input" | cut -c 2- | xargs)
-  exec firefox "https://www.google.com/search?q=$mantoread" &> /dev/null &
+  exec brave-browser "https://www.google.com/search?q=$mantoread" &> /dev/null &
+  ;;
+b)
+	# Search on Brave
+	append_new_term
+  mantoread=$(echo "$input" | cut -c 2- | xargs)
+  exec brave-browser "https://search.brave.com/search?q=$mantoread" &> /dev/null &
   ;;
 s)
 	# Search on stack overflow
 	append_new_term
   mantoread=$(echo "$input" | cut -c 2- | xargs)
-  exec firefox "https://stackoverflow.com/search?q=$mantoread" &> /dev/null &
+  exec brave-browser "https://stackoverflow.com/search?q=$mantoread" &> /dev/null &
   ;;
 med)
 	# Search on Medium
 	append_new_term
   mantoread=$(echo "$input" | cut -c 4- | xargs)
-  exec firefox "https://medium.com/search?q=$mantoread" &> /dev/null &
+  exec brave-browser "https://medium.com/search?q=$mantoread" &> /dev/null &
   ;;
 *)
   # Open zeal only if there's text input
