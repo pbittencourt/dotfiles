@@ -1,9 +1,7 @@
-sw_volume: 100
+sw_volume: 46
 audio_device_state:1:pulse audio
 audio_device_state:1:FIFO
-state: pause
-current: 26
-time: 200.295000
+state: stop
 random: 0
 repeat: 0
 single: 0
@@ -12,39 +10,15 @@ crossfade: 0
 mixrampdb: 0.000000
 mixrampdelay: -1.000000
 playlist_begin
-0:[2017] In The Passing Light Of Day/01 - On a Tuesday.mp3
-1:[2017] In The Passing Light Of Day/02 - Tongue of God.mp3
-2:[2017] In The Passing Light Of Day/03 - Meaningless.mp3
-3:[2017] In The Passing Light Of Day/04 - Silent Gold.mp3
-4:[2017] In The Passing Light Of Day/05 - Full Throttle Tribe.mp3
-5:[2017] In The Passing Light Of Day/06 - Reasons.mp3
-6:[2017] In The Passing Light Of Day/07 - Angels of Broken Things.mp3
-7:[2017] In The Passing Light Of Day/08 - The Taming of a Beast.mp3
-8:[2017] In The Passing Light Of Day/09 - If This Is the End.mp3
-9:[2017] In The Passing Light Of Day/10 - The Passing Light of Day.mp3
-10:[2010] Road Salt One/01. No Way.mp3
-11:[2010] Road Salt One/01. No Way.mp3
-12:[2010] Road Salt One/02. She Likes To Hide.mp3
-13:[2010] Road Salt One/03. Sisters.mp3
-14:[2010] Road Salt One/04. Of Dust.mp3
-15:[2010] Road Salt One/05. Tell Me You Don't Know.mp3
-16:[2010] Road Salt One/06. Sleeping Under The Stars.mp3
-17:[2010] Road Salt One/07. Darkness Of Mine.mp3
-18:[2010] Road Salt One/08. Linoleum.mp3
-19:[2010] Road Salt One/09. Curiosity.mp3
-20:[2010] Road Salt One/10. Where It Hurts.mp3
-21:[2010] Road Salt One/11. Road Salt.mp3
-22:[2010] Road Salt One/12. Innocence.mp3
-23:[2011] Road Salt Two/01 - Road Salt Theme.mp3
-24:[2011] Road Salt Two/02 - Solftly She Cries.mp3
-25:[2011] Road Salt Two/03 - Conditioned.mp3
-26:[2011] Road Salt Two/04 - Healing Now.mp3
-27:[2011] Road Salt Two/05 - To the Shoreline.mp3
-28:[2011] Road Salt Two/06 - Eleven.mp3
-29:[2011] Road Salt Two/07 - 1979.mp3
-30:[2011] Road Salt Two/08 - The Deeper Cut.mp3
-31:[2011] Road Salt Two/09 - Mortar Grind.mp3
-32:[2011] Road Salt Two/10 - Through the Distance.mp3
-33:[2011] Road Salt Two/11 - The Physics of Gridlock.mp3
-34:[2011] Road Salt Two/12 - End Credits.mp3
+0:A Forest of Stars/[2008] The Corpse Of Rebirth/01 God.mp3
+1:A Forest of Stars/[2008] The Corpse Of Rebirth/02 Female.mp3
+2:A Forest of Stars/[2008] The Corpse Of Rebirth/03 Male.mp3
+3:A Forest of Stars/[2008] The Corpse Of Rebirth/05 Microcosm.mp3
+4:Agalloch/[2008] The White (EP)/01. The Isle Of Summer.mp3
+5:Agalloch/[2008] The White (EP)/02. Birch Black.mp3
+6:Agalloch/[2008] The White (EP)/03. Hollow Stone.mp3
+7:Agalloch/[2008] The White (EP)/04. Pantheist.mp3
+8:Agalloch/[2008] The White (EP)/05. Birch White.mp3
+9:Agalloch/[2008] The White (EP)/06. Sowilo Rune.mp3
+10:Agalloch/[2008] The White (EP)/07. Summerisle Reprise.mp3
 playlist_end

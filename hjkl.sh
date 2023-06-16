@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
-xmodmap ~/.xmodmap;
+setxkbmap -layout us -variant intl
+xmodmap ~/dotfiles/xmodmap;
 xcape -e 'Mode_switch=Escape';
-notify-send "HJKL" "Conectado com sucesso!";
+notify-send -u low -t 900 "HJKL" "Conectado com sucesso!";
