@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case $MPD_PLAYER_STATE in
+    stop)
+    state="Music stopped"
+    ;;
+    pause)
+    state="Music paused"
+    ;;
+    play)
+    state="Now playing"
+    ;;
+esac
+notify-send -u low -t 1500 "${state}" "$(mpc --format '%title% \n%artist% \n%album%' current)"

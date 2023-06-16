@@ -1,0 +1,26 @@
+! VIM EVERYWHERE! 
+! CapsLock <- Escape
+! Caps + hjkl <- arrows
+! Caps + yuio <- 'big' arrows
+! Caps + pç <- Backspace / delete
+! source:
+! https://unix.stackexchange.com/a/434143
+
+! Caps_Lock
+! keycode 66 = Mode_switch
+
+! keysym h = h H Left
+! keysym l = l L Right
+! keysym k = k K Up
+! keysym j = j J Down
+
+! keysym y = y Y Prior
+! keysym u = u U End
+! keysym i = i I Home
+! keysym o = o O Next
+
+! keycode 33 = p P BackSpace P thorn THORN thorn THORN
+! keycode 47 = ccedilla Ccedilla Delete Ccedilla dead_acute dead_doubleacute dead_acute dead_doubleacute
+
+! precisamos emular caps lock de outra maneira
+! keysym c = c C CapsLock
