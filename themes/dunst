@@ -1,0 +1,16 @@
+[urgency_low]
+ background = ""
+ foreground = ""
+ frame_color = ""
+ timeout = 5
+ [urgency_normal]
+ background = ""
+ foreground = ""
+ frame_color = ""
+ timeout = 5
+ [urgency_critical]
+ background = ""
+ foreground = ""
+ frame_color = ""
+ timeout = 0
+

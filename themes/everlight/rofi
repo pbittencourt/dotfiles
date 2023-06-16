@@ -1,0 +1,17 @@
+* {
+    backgroundcolor:          #fffbef;
+    backgroundcoloralternate: #f8f5e4;
+    separatorcolor:           #bec5b2;
+    foregroundcolor:          #5c6a72;
+    foregroundcolorinverse:   #5c6a72;
+    selectioncolor:           #e8e5d5;
+    activecolor:              #e8e5d5;
+    font-size:                1px;
+    border-color:             @separatorcolor;
+    background-color:         @backgroundcolor;
+    text-color:               @foregroundcolor;
+    margin:                   0;
+    margin-bottom:            0;
+    margin-top:               0;
+    spacing:                  0;
+}
