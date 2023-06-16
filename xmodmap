@@ -1,26 +1,23 @@
-! VIM EVERYWHERE! 
-! CapsLock <- Escape
-! Caps + hjkl <- arrows
-! Caps + yuio <- 'big' arrows
-! Caps + pç <- Backspace / delete
-! source:
+! Ergo keyboard
+! inspiration:
 ! https://unix.stackexchange.com/a/434143
 
-! Caps_Lock
-! keycode 66 = Mode_switch
+! Caps_Lock torna-se "escape" + modificador
+keycode 66 = Mode_switch
 
-! keysym h = h H Left
-! keysym l = l L Right
-! keysym k = k K Up
-! keysym j = j J Down
+! Escape recebe a função de caps_lock
+keycode 9 = Caps_Lock
 
-! keysym y = y Y Prior
-! keysym u = u U End
-! keysym i = i I Home
-! keysym o = o O Next
+keysym h = h H Left
+keysym l = l L Right
+keysym k = k K Up
+keysym j = j J Down
 
-! keycode 33 = p P BackSpace P thorn THORN thorn THORN
-! keycode 47 = ccedilla Ccedilla Delete Ccedilla dead_acute dead_doubleacute dead_acute dead_doubleacute
+keysym y = y Y Home
+keysym u = u U Next
+keysym i = i I Prior
+keysym o = o O End
 
-! precisamos emular caps lock de outra maneira
-! keysym c = c C CapsLock
+keycode 33 = p P BackSpace P thorn THORN thorn THORN
+keycode 47 = semicolon colon Delete colon paragraph degree paragraph degree
+!keycode 47 = semicolon colon semicolon colon paragraph degree paragraph degree
