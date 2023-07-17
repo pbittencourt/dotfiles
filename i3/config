@@ -78,7 +78,7 @@ workspace_auto_back_and_forth no
 workspace_layout default
 
 # open applications in floating mode and define borders
-for_window [urgent=latest] focus
+for_window [urgent=latest]              focus
 for_window [title="alsamixer"]          floating enable
 for_window [title="Autokey"]            floating enable
 for_window [title="feh"]                floating enable
@@ -93,8 +93,7 @@ for_window [class="Nitrogen"]           floating enable
 for_window [class="Pavucontrol"]        floating enable
 for_window [class="skypeforlinux"]      floating enable
 for_window [class="Telegram"]           floating enable
-for_window [class="Mousepad"]           floating enable
-for_window [class="Mousepad"]           move absolute position center
+for_window [class="Mousepad"]           floating enable, resize set 640 480, move absolute position center
 
 # }}} -------------------------------------------------------------------------
 
@@ -105,6 +104,9 @@ for_window [class="Mousepad"]           move absolute position center
 
 # network icon on tray
 exec nm-applet
+
+# keyboard improvements
+exec ~/dotfiles/hjkl.sh
 
 # conky
 exec conky -c ~/.config/conky/conky.conf
@@ -129,9 +131,6 @@ exec sleep 45; flameshot
 
 # backup
 exec sleep 60; deja-dup --backup
-
-# keyboard improvements
-exec_always ~/dotfiles/hjkl.sh
 
 # }}} -------------------------------------------------------------------------
 
