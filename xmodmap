@@ -1,23 +1,20 @@
 ! Ergo keyboard
 ! inspiration:
 ! https://unix.stackexchange.com/a/434143
+! https://unix.stackexchange.com/a/163675
+! https://unix.stackexchange.com/q/435142
 
-! Caps_Lock torna-se "escape" + modificador
-keycode 66 = Mode_switch
+! Caps_Lock torna-se escape + modificador (vide hjkl.sh)
+keycode  66 = Mode_switch
 
-! Escape recebe a função de caps_lock
-keycode 9 = Caps_Lock
-
-keysym h = h H Left
-keysym l = l L Right
-keysym k = k K Up
-keysym j = j J Down
-
-keysym y = y Y Home
-keysym u = u U Next
-keysym i = i I Prior
-keysym o = o O End
-
-keycode 33 = p P BackSpace P thorn THORN thorn THORN
-keycode 47 = semicolon colon Delete colon paragraph degree paragraph degree
-!keycode 47 = semicolon colon semicolon colon paragraph degree paragraph degree
+keycode  29 = y Y Home Y leftarrow yen leftarrow
+keycode  30 = u U Next U downarrow uparrow downarrow
+keycode  31 = i I Prior I rightarrow idotless rightarrow
+keycode  32 = o O End O oslash Oslash oslash
+keycode  33 = p P Delete P thorn THORN thorn THORN
+keycode  43 = h H Left H hstroke Hstroke hstroke
+keycode  44 = j J Down J dead_hook dead_horn dead_hook
+keycode  45 = k K Up K kra ampersand kra
+keycode  46 = l L Right L lstroke Lstroke lstroke
+keycode  47 = semicolon colon BackSpace colon paragraph degree paragraph degree
+keycode  54 = c C Caps_Lock C copyright copyright copyright
