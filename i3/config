@@ -81,8 +81,7 @@ workspace_layout default
 for_window [urgent=latest]              focus
 for_window [title="alsamixer"]          floating enable
 for_window [title="Autokey"]            floating enable
-for_window [title="feh"]                floating enable
-for_window [title="feh"]                move absolute position center
+for_window [title="feh"]                floating enable, resize set 640 480, move absolute position center
 for_window [title="File Transfer*"]     floating enable
 for_window [class="flameshot"]          floating enable
 for_window [class="gnome-calculator"]   floating enable
@@ -94,6 +93,7 @@ for_window [class="Pavucontrol"]        floating enable
 for_window [class="skypeforlinux"]      floating enable
 for_window [class="Telegram"]           floating enable
 for_window [class="Mousepad"]           floating enable, resize set 640 480, move absolute position center
+for_window [instance="floating"]        floating toggle resize set 640 480, move absolute position center
 
 # }}} -------------------------------------------------------------------------
 
@@ -101,36 +101,15 @@ for_window [class="Mousepad"]           floating enable, resize set 640 480, mov
 
 # launch thunar in daemon mode to let it handle automatic mounting
 #exec thunar --daemon
-
-# network icon on tray
+exec ~/dotfiles/bin/hjkl.sh
+exec_always ~/dotfiles/bin/conky_launcher.sh
 exec nm-applet
-
-# keyboard improvements
-exec ~/dotfiles/hjkl.sh
-
-# conky
-exec conky -c ~/.config/conky/conky.conf
-
-# redshift: better light! oh, my eyes!
 exec redshift -b 1.0:0.7 -t 5500:4000
-
-# dunst to send notifications
 exec dunst
-
-# wallpaper
-exec nitrogen --restore
-
-# greenclip
+exec nitrogen --random --set-zoom-fill ~/Imagens/Wallpapers/
 exec greenclip daemon
-
-# dropbox
-exec sleep 15; dropbox start
-
-# flameshot
-exec sleep 45; flameshot
-
-# backup
-exec sleep 60; deja-dup --backup
+exec sleep 10; flameshot
+#exec sleep 15; dropbox start
 
 # }}} -------------------------------------------------------------------------
 
@@ -200,24 +179,40 @@ bar {
 
 # }}} -------------------------------------------------------------------------
 
-# {{{ GENERAL KEYBINDINGS -----------------------------------------------------
+# {{{ KEYBINDINGS -----------------------------------------------------
 # Ao invés de organizar por 'comportamento', estamos organizando pelo layout do
-# teclado, pois assim fica mais fácil mapear teclas disponíveis e, assim,
-# acabar por agrupá-las, quando possível, por comportamento.
+# teclado; assim fica mais fácil mapear teclas disponíveis, acabando por
+# agrupá-las, quando possível, por comportamento.
 
 bindsym $mod+F1 workspace $ws1; exec $browser
 bindsym $mod+F2 workspace $ws2; exec $editor
-bindsym $mod+F3                 exec thunar
-bindsym $mod+F4                 exec xcalc
-bindsym $mod+F5                 exec $texteditor
-bindsym $mod+F6                 exec pavucontrol
+#bindsym $mod+F3
+#bindsym $mod+F4
+bindsym $mod+F5 exec $terminal --name floating ~/dotfiles/bin/mpdstart.sh
+#bindsym $mod+F6
 #bindsym $mod+F7
-bindsym $mod+F8 workspace $ws8; exec teams
+#bindsym $mod+F8
 #bindsym $mod+F9
 #bindsym $mod+F10
 bindsym $mod+F11 fullscreen toggle
-#bindsym $mod+F12
+bindsym $mod+F12 exec pavucontrol
 bindsym Print exec flameshot gui
+
+#bindsym XF86Explorer
+bindsym XF86HomePage              exec thunar
+#bindsym XF86Mail
+bindsym XF86Calculator            exec xcalc
+bindsym XF86Tools workspace $ws4; exec $terminal --name floating ncmpcpp
+bindsym XF86AudioStop             exec mpc stop
+bindsym XF86AudioPrev             exec mpc prev
+bindsym XF86AudioPlay             exec mpc toggle
+bindsym XF86AudioNext             exec mpc next
+bindsym XF86AudioMute             exec pactl set-sink-mute 0 toggle; \
+                                  exec ~/dotfiles/bin/volume_indicator.sh
+bindsym XF86AudioLowerVolume      exec pactl set-sink-volume 0 -5%; \
+                                  exec ~/dotfiles/bin/volume_indicator.sh
+bindsym XF86AudioRaiseVolume      exec pactl set-sink-volume 0 +5%; \
+                                  exec ~/dotfiles/bin/volume_indicator.sh
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -240,7 +235,7 @@ bindsym $mod+e layout toggle all
 bindsym $mod+r mode "$mode_resize"
 bindsym $mod+t exec ~/dotfiles/themes/theme_switcher.sh
 #bindsym $mod+y
-#bindsym $mod+u
+bindsym $mod+u exec ~/dotfiles/bin/rofi_zeal.sh
 bindsym $mod+i mode "$mode_i3"
 #bindsym $mod+o
 bindsym $mod+p exec rofi -modi ":greenclip print" \
@@ -259,7 +254,7 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 bindsym $mod+semicolon exec $terminal ranger
-#bindsym $mod+dead_acute
+bindsym $mod+dead_acute exec $terminal --name floating
 bindsym $mod+Return exec $terminal
 
 #bindsym $mod+z
@@ -282,7 +277,8 @@ bindsym $mod+Print exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e  \
                    'mv $f ~/Imagens/captures'; exec notify-send \
                    "Screenshot" "Capturado com sucesso!"
 
-bindsym $mod+Shift+f mode "$mode_float_move"
+bindsym $mod+Shift+F5    exec $terminal --name floating ~/dotfiles/bin/minidlna.sh
+bindsym $mod+Shift+f     mode "$mode_float_move"
 bindsym $mod+Ctrl+1      move container to workspace $ws1; workspace $ws1
 bindsym $mod+Ctrl+2      move container to workspace $ws2; workspace $ws2
 bindsym $mod+Ctrl+3      move container to workspace $ws3; workspace $ws3
@@ -312,7 +308,7 @@ bindsym $mod+Shift+Tab   move container to workspace back_and_forth; \
 
 bindsym --release Caps_Lock \
 exec pkill -SIGRTMIN+11 i3blocks; \
-exec ~/.config/i3/capslock.sh
+exec ~/dotfiles/bin/capslock.sh
 bindsym --release Num_Lock \
 exec pkill -SIGRTMIN+11 i3blocks; \
 exec notify-send -i ~/.icons/Papirus/24x24@2x/devices/input-keyboard.svg \
@@ -336,16 +332,7 @@ mode "$mode_i3" {
 }
 
 # audio control
-bindsym XF86AudioRaiseVolume \
-exec pactl set-sink-volume 0 +5%; \
-exec ~/dotfiles/volume_indicator.sh
-bindsym XF86AudioLowerVolume \
-exec pactl set-sink-volume 0 -5%; \
-exec ~/dotfiles/volume_indicator.sh
-bindsym XF86AudioMute \
-exec pactl set-sink-mute 0 toggle; \
-exec ~/dotfiles/volume_indicator.sh
-set $mode_audio audio control
+set $mode_audio audio control (j) down (k) up (m)ute
 mode "$mode_audio" {
     bindsym k exec pactl set-sink-volume 0 +5%; \
               exec ~/dotfiles/volume_indicator.sh
@@ -358,12 +345,12 @@ mode "$mode_audio" {
 }
 
 # border style
-set $mode_border borders
+set $mode_border borders (hjkl) none px1 px2 nrm2
 mode "$mode_border" {
-    bindsym h border none
-    bindsym j border pixel 1
-    bindsym k border pixel 2
-    bindsym l border normal 2
+    bindsym h border none; mode "default"
+    bindsym j border pixel 1; mode "default"
+    bindsym k border pixel 2; mode "default"
+    bindsym l border normal 2; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
