@@ -1,5 +1,5 @@
 configuration {
-    theme: "/home/monolito/dotfiles/themes/everlight/rofi";
+    theme: "/home/monolito/dotfiles/themes/gruvlight/rofi";
     modi:           "drun,run,window";
     width:          25;
     lines:          5;
