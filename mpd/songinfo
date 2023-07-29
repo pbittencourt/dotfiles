@@ -9,6 +9,15 @@ case $MPD_PLAYER_STATE in
     ;;
     play)
     state="Now playing"
+    config_file="/home/monolito/.ncmpcpp/config"
+    music_dir=$(cat $config_file | sed -n "/^mpd_music_dir/p" | awk 'BEGIN{FS=" = "} {print $2}' | sed "s/\"//g")
+    current_rel_dir=$(ncmpcpp --current-song="%D")
+    current_abs_dir="$music_dir/$current_rel_dir"
+    cover_name=$(ls "$current_abs_dir" | grep -Ei "albumart|cover|folder" | head -1)
+    cover_path="$current_abs_dir/$cover_name"
+    rm "/home/monolito/.cover/albumart.jpg"
+    cp "$cover_path" "/home/monolito/.cover/"
+    mv "/home/monolito/.cover/$cover_name" "/home/monolito/.cover/albumart.jpg"
     ;;
 esac
-notify-send -u low -t 1500 "${state}" "$(mpc --format '%title% \n%artist% \n%album%' current)"
+notify-send -u low -t 3500 "${state}" "$(mpc --format '%title% \n%artist% \n%album%' current)"
