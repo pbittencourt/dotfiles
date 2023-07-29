@@ -223,14 +223,14 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 #bindsym $mod+9
-bindsym $mod+0 exec ~/.config/i3/system.sh
+bindsym $mod+0 exec ~/dotfiles/bin/system.sh
 bindsym $mod+minus move scratchpad
 bindsym $mod+equal scratchpad show
 #bindsym $mod+backspace
 
 bindsym $mod+Tab  workspace back_and_forth
 bindsym $mod+q kill
-bindsym $mod+w exec ~/.config/i3/keymap.sh
+bindsym $mod+w exec ~/dotfiles/bin/keymap.sh
 bindsym $mod+e layout toggle all
 bindsym $mod+r mode "$mode_resize"
 bindsym $mod+t exec ~/dotfiles/themes/theme_switcher.sh
@@ -263,7 +263,7 @@ bindsym $mod+Return exec $terminal
 #bindsym $mod+v
 bindsym $mod+b mode $mode_border
 #bindsym $mod+n
-bindsym $mod+m exec ~/dotfiles/hjkl.sh
+bindsym $mod+m exec ~/dotfiles/bin/hjkl.sh
 #bindsym $mod+comma
 #bindsym $mod+period
 bindsym $mod+slash exec rofi -show run
@@ -335,11 +335,11 @@ mode "$mode_i3" {
 set $mode_audio audio control (j) down (k) up (m)ute
 mode "$mode_audio" {
     bindsym k exec pactl set-sink-volume 0 +5%; \
-              exec ~/dotfiles/volume_indicator.sh
+              exec ~/dotfiles/bin/volume_indicator.sh
     bindsym j exec pactl set-sink-volume 0 -5%; \
-              exec ~/dotfiles/volume_indicator.sh
+              exec ~/dotfiles/bin/volume_indicator.sh
     bindsym m exec pactl set-sink-mute 0 toggle; \
-              exec ~/dotfiles/volume_indicator.sh
+              exec ~/dotfiles/bin/volume_indicator.sh
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
