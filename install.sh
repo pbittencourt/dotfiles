@@ -10,9 +10,13 @@ echo "---------------------------\n"
 echo "Daremos início à instalação do ambiente."
 read -p "Deseja continuar? (y/n) __ " yn
 case $yn in
-    [^yYsS] )
+    [yYsS] )
+        echo "Muito bem, mestre, prosseguiremos com a instalação!\n"
+        ;;
+    * )
         echo "\nGoodbye!"
         exit 1
+        ;;
 esac
 
 # initial update
@@ -22,11 +26,15 @@ sudo xbps-install -Su
 sudo xbps-install -Sy void-repo-nonfree
 
 # apps
-sudo xbps-install -y i3-gaps i3lock i3status i3blocks \
+apps="i3-gaps i3lock i3status i3blocks \
     git vim gvim kitty qutebrowser rsync \
     scrot feh flameshot nitrogen lxappearance inkscape \
     nm-applet redshift dunst rofi greenclip xcalc \
-    mpd mpc mpv vlc ncmpcpp minidlna ranger
+    mpd mpc mpv vlc ncmpcpp minidlna ranger"
+for app in $apps
+do
+    sudo xbps-install -Syv $app
+done
 
 # clone dotfiles
 dotfiles="$HOME/dotfiles"
@@ -47,6 +55,12 @@ fi
 
 # symlinks
 # ... TODO finalizar
-sudo ln -s "$dotfiles/i3/config" "$HOME/.config/i3/config/"
+origem="$dotfiles/i3/config"
+destino="$HOME/.config/i3/config/config"
+if [ -f $destino ]; then
+    echo "Arquivo $destino existe. Vamos sobrescrevê-lo"
+    rm $destino
+fi
+sudo ln -s $origem $destino
 
 echo "\nENJOY!"
