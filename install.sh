@@ -16,17 +16,17 @@ case $yn in
 esac
 
 # initial update
-#sudo xbps-install -Su
+sudo xbps-install -Su
 
 # nonfree repo
-#sudo xbps-install -Sy void-repo-nonfree
+sudo xbps-install -Sy void-repo-nonfree
 
 # apps
-#sudo xbps-install -y i3-gaps i3lock i3status i3blocks \
-#    git vim gvim kitty qutebrowser rsync \
-#    scrot feh flameshot nitrogen lxappearance inkscape \
-#    nm-applet redshift dunst rofi greenclip xcalc \
-#    mpd mpc mpv vlc ncmpcpp minidlna ranger
+sudo xbps-install -y i3-gaps i3lock i3status i3blocks \
+    git vim gvim kitty qutebrowser rsync \
+    scrot feh flameshot nitrogen lxappearance inkscape \
+    nm-applet redshift dunst rofi greenclip xcalc \
+    mpd mpc mpv vlc ncmpcpp minidlna ranger
 
 # clone dotfiles
 dotfiles="$HOME/dotfiles"
@@ -47,6 +47,6 @@ fi
 
 # symlinks
 # ... TODO finalizar
-sudo ln -s "$dotfiles/rofi/" "$HOME/.config"
+sudo ln -s "$dotfiles/i3/config" "$HOME/.config/i3/config/"
 
 echo "\nENJOY!"
