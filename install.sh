@@ -69,6 +69,8 @@ if [ -d $dotfiles ]; then
     cd $dotfiles
     if [ -d .git ]; then
         echo "Esse diretório é um repositório git. Vamos atualizá-lo." 2>&1 | tee -a $logfile
+        git status 2>&1 | tee -a $logfile
+        git restore 2>&1 | tee -a $logfile
         git pull 2>&1 | tee -a $logfile
     else
         echo "Esse diretório não é um repositório git. Verifique!" 2>&1 | tee -a $logfile
