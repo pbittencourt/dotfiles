@@ -5,17 +5,17 @@
 
 # {{{ SPLASH SCREEN ----------------------------------------------------------
 
-echo "---------------------------"
-echo " WELCOME BACK, MR MONOLITO "
-echo "---------------------------\n"
-echo "Daremos início à instalação do ambiente."
+echo "---------------------------" 2>&1 | tee -a $logfile
+echo " WELCOME BACK, MR MONOLITO " 2>&1 | tee -a $logfile
+echo "---------------------------\n" 2>&1 | tee -a $logfile
+echo "Daremos início à instalação do ambiente." 2>&1 | tee -a $logfile
 read -p "Deseja continuar? (y/n) __ " yn
 case $yn in
     [yYsS] )
-        echo "Muito bem, mestre, prosseguiremos com a instalação!\n"
+        echo "Muito bem, mestre, prosseguiremos com a instalação!\n" 2>&1 | tee -a $logfile
         ;;
     * )
-        echo "\nGoodbye!"
+        echo "\nGoodbye!" 2>&1 | tee -a $logfile
         exit 1
         ;;
 esac
@@ -28,24 +28,35 @@ esac
 ahora=$(date +"%Y-%m-%d-%H-%M-%S")
 logfile="$HOME/install-$ahora.log"
 touch $logfile
-echo "Instalação iniciada em $logfile" 2>&1 | tee -a $logfile
+echo "Processo iniciado em $ahora\n\n" 2>&1 | tee -a $logfile
 
-# initial update
-sudo xbps-install -Suv 2>&1 | tee -a $logfile
+read -p "Deseja instalar pacotes? (y/n) __ " yn
+case $yn in
+    [yYsS] )
+        echo "Pacotes serão instalados!\n" 2>&1 | tee -a $logfile
 
-# nonfree repo
-sudo xbps-install -Syv void-repo-nonfree 2>&1 | tee -a $logfile
+        # initial update
+        sudo xbps-install -Suv 2>&1 | tee -a $logfile
 
-# apps
-apps="i3-gaps i3lock i3status i3blocks \
-    git vim gvim kitty qutebrowser rsync \
-    scrot feh flameshot nitrogen lxappearance inkscape \
-    nm-applet redshift dunst rofi xcalc \
-    mpd mpc mpv vlc ncmpcpp minidlna ranger zathura"
-for app in $apps
-do
-    sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
-done
+        # nonfree repo
+        sudo xbps-install -Syv void-repo-nonfree 2>&1 | tee -a $logfile
+
+        # apps
+        apps="i3-gaps i3lock i3status i3blocks xorg xcape \
+            git vim-huge gvim-huge kitty qutebrowser rsync conky \
+            scrot feh flameshot nitrogen lxappearance inkscape \
+            nm-applet redshift dunst rofi dmenu xcalc \
+            mpd mpc mpv vlc ncmpcpp minidlna ranger zathura"
+        for app in $apps
+        do
+            sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
+        done
+        ;;
+    * )
+        echo "Pularemos para a próxima etapa.\n" 2>&1 | tee -a $logfile
+        ;;
+esac
+
 
 # }}} ------------------------------------------------------------------------
 
@@ -141,6 +152,19 @@ sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 file="songinfo"
 sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
+# ranger
+source_path="$dotfiles/ranger"
+target_path="$config/ranger"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="rc.conf"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="rifle.conf"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="scope.sh"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
 # rofi
 source_path="$dotfiles/rofi"
 target_path="$config/rofi"
@@ -168,6 +192,23 @@ file="snippets"
 sudo ln -vsf "$source_path/$file" "$target_path/UltiSnips" 2>&1 | tee -a $logfile
 file="base"
 cp -v "$source_path/$file" "$HOME/.vimrc" 2>&1 | tee -a $logfile
+
+# vim vundle
+vundle="$HOME/.vim/bundle/Vundle.vim"
+if [ -d $vundle ]; then
+    echo "O diretório $vundle já existe." 2>&1 | tee -a $logfile
+    cd $vundle
+    if [ -d .git ]; then
+        echo "Esse diretório é um repositório git. Vamos atualizá-lo." 2>&1 | tee -a $logfile
+        git pull 2>&1 | tee -a $logfile
+    else
+        echo "Esse diretório não é um repositório git. Verifique!" 2>&1 | tee -a $logfile
+        exit 1
+    fi
+else
+    echo "O diretório $vundle não existe. Vamos clonar o repositório." 2>&1 | tee -a $logfile
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
 
 # X
 source_path="$dotfiles/X"
