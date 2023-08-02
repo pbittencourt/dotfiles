@@ -43,7 +43,7 @@ case $yn in
 
         # apps
         apps="i3-gaps i3lock i3status i3blocks xorg xcape \
-            git vim-huge gvim-huge kitty qutebrowser rsync conky \
+            git vim-huge gvim-huge kitty alacritty qutebrowser rsync conky \
             scrot feh flameshot nitrogen lxappearance inkscape \
             nm-applet redshift dunst rofi dmenu xcalc \
             mpd mpc mpv vlc ncmpcpp minidlna ranger zathura"
@@ -89,6 +89,15 @@ config="$HOME/.config"
 if [ ! -d $config ]; then
     mkdir -v $config 2>&1 | tee -a $logfile
 fi
+
+# alacritty
+source_path="$dotfiles/alacritty"
+target_path="$config/alacritty"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="alacritty.yml"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # conky
 source_path="$dotfiles/conky"

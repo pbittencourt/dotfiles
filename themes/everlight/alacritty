@@ -1,0 +1,23 @@
+# alacritty theme everlight
+colors:
+  primary:
+    background: '0xfffbef'
+    foreground: '0x5c6a72'
+  normal:
+    black: '0x1c2023'
+    red: '0xE67E80'
+    green: '0x93B259'
+    yellow: '0xdfa000'
+    blue: '0x7fbbb3'
+    magenta: '0xd699b6'
+    cyan: '0x35a77c'
+    white: '0xecf5ed'
+  bright:
+    black: '0x747c84'
+    red: '0xf85552'
+    green: '0x8da101'
+    yellow: '0xF57D26'
+    blue: '0x3a94c5'
+    magenta: '0xdf69ba'
+    cyan: '0x35a77c'
+    white: '0xfffbef'

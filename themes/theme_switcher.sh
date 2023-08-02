@@ -1,21 +1,17 @@
 #!/usr/bin/env sh
 
 full_path=$(realpath $0)
-#echo $full_path
 dir_path=$(dirname $full_path)
-#echo $dir_path
-
 themes_list=$(cd $dir_path; echo */ | sed -e 's/\///g')
-#echo $themes_list
 theme=$(echo $themes_list | sed -e 's/\s/\n/g' | rofi -dmenu -l 4 -p "")
-#echo $theme
+config="$HOME/.config"
 
 if [ ! -z "$theme" ]; then
     notify-send -u normal -t 1500 "Tema boladão" "Aplicando tema $theme ..."
 
     # xresources
-    echo "#include \"$dir_path/$theme/xresources\"" > ~/.Xresources
-    xrdb ~/.Xresources
+    echo "#include \"$dir_path/$theme/xresources\"" > "$HOME/.Xresources"
+    xrdb "$HOME/.Xresources"
     background=$(cat "$dir_path/$theme/xresources" | grep "^\*background:.*" | awk '{ print $2}')
     foreground=$(cat "$dir_path/$theme/xresources" | grep "^\*foreground:.*" | awk '{ print $2}')
     black=$(cat "$dir_path/$theme/xresources" | grep "^\*color0:.*" | awk '{ print $2}')
@@ -36,34 +32,42 @@ if [ ! -z "$theme" ]; then
     dark_white=$(cat "$dir_path/$theme/xresources" | grep "^\*color15:.*" | awk '{ print $2}')
 
     # gtk
-    cat "$dir_path/$theme/gtk" > ~/.gtkrc-2.0
+    cat "$dir_path/$theme/gtk" > "$HOME/.gtkrc-2.0"
 
     # kitty
     kitty="include $dir_path/$theme/kitty"
     escaped_kitty=$(printf '%s\n' "$kitty" | sed -e 's/[\/&]/\\&/g')
-    sed -i -e 's/^include.*/'"${escaped_kitty}"'/g' ~/.config/kitty/kitty.conf
+    sed -i -e 's/^include.*/'"${escaped_kitty}"'/g' "$config/kitty/kitty.conf"
+
+    # alacritty
+    part1="$HOME/dotfiles/alacritty/alacritty.yml"
+    part2="$dir_path/$theme/alacritty"
+    file="$config/alacritty/alacritty.yml"
+    cat $part1 $part2 > $file
 
     # vim
-    cat ~/dotfiles/vim/base "$dir_path/$theme/vim" > ~/.vimrc
+    cat "$HOME/dotfiles/vim/base" "$dir_path/$theme/vim" > "$HOME/.vimrc"
 
     # rofi
     rofi="theme: \"$dir_path/$theme/rofi\";"
     escaped_rofi=$(printf '%s\n' "$rofi" | sed -e 's/[\/&]/\\&/g')
-    sed -i -e 's/theme.*/'"${escaped_rofi}"'/g' ~/.config/rofi/config.rasi
+    target="$HOME/dotfiles/rofi/config.rasi"
+    destination="$config/rofi/config.rasi"
+    sed -e 's/theme.*/'"${escaped_rofi}"'/g' $target > $destination
 
     # conky
-    target="/home/monolito/dotfiles/conky/conky.conf"
-    destination="/home/monolito/.config/conky/conky.conf"
+    target="$HOME/dotfiles/conky/conky.conf"
+    destination="$config/conky/conky.conf"
     sed -e "s/color2.*=.*'.*'/color2 = '${yellow}'/g" $target > $destination
     sed -i -e "s/color1.*=.*'.*'/color1 = '${dark_yellow}'/g" $destination
     sed -i -e "s/default_color.*=.*'.*'/default_color = '${foreground}'/g" $destination
-    target="/home/monolito/dotfiles/conky/music.conf"
-    destination="/home/monolito/.config/conky/music.conf"
+    target="$HOME/dotfiles/conky/music.conf"
+    destination="$config/conky/music.conf"
     sed -e "s/color2.*=.*'.*'/color2 = '${yellow}'/g" $target > $destination
     sed -i -e "s/color1.*=.*'.*'/color1 = '${dark_yellow}'/g" $destination
     sed -i -e "s/default_color.*=.*'.*'/default_color = '${foreground}'/g" $destination
-    target="/home/monolito/dotfiles/conky/system.conf"
-    destination="/home/monolito/.config/conky/system.conf"
+    target="$HOME/dotfiles/conky/system.conf"
+    destination="$config/conky/system.conf"
     sed -e "s/color2.*=.*'.*'/color2 = '${yellow}'/g" $target > $destination
     sed -i -e "s/color1.*=.*'.*'/color1 = '${dark_yellow}'/g" $destination
     sed -i -e "s/default_color.*=.*'.*'/default_color = '${foreground}'/g" $destination
@@ -71,26 +75,19 @@ if [ ! -z "$theme" ]; then
 
     # i3
     # i3blocks main
-    target="/home/monolito/dotfiles/i3/i3blocks.conf"
-    destination="/home/monolito/.config/i3/i3blocks.conf"
-    #sed -i -e "s/.*title_color/color=${yellow} \#title_color/g" ~/.config/i3/i3blocks.conf
-    #sed -i -e "s/.*alt_color/color=${blue} \#alt_color/g" ~/.config/i3/i3blocks.conf
-    #sed -i -e "s/.*kb_color/color=${green} \#kb_color/g" ~/.config/i3/i3blocks.conf
+    target="$HOME/dotfiles/i3/i3blocks.conf"
+    destination="$config/i3/i3blocks.conf"
     sed -e "s/.*title_color/color=${yellow} \#title_color/g" $target > $destination
     sed -i -e "s/.*alt_color/color=${blue} \#alt_color/g" $destination
     sed -i -e "s/.*kb_color/color=${green} \#kb_color/g" $destination
     # i3blocks keyindicator
-    target="/home/monolito/dotfiles/i3/i3blocks/keyindicator"
-    destination="/home/monolito/.config/i3/i3blocks/keyindicator"
-    #sed -i -e 's/my \$color_on.*/my \$color_on  = \"'"${magenta}"'\";/g' ~/.config/i3/i3blocks/keyindicator
-    #sed -i -e 's/my \$color_off.*/my \$color_off = \"'"${background}"'\";/g' ~/.config/i3/i3blocks/keyindicator
+    target="$HOME/dotfiles/i3/i3blocks/keyindicator"
+    destination="$config/i3/i3blocks/keyindicator"
     sed -e 's/my \$color_on.*/my \$color_on  = \"'"${magenta}"'\";/g' $target > $destination
     sed -i -e 's/my \$color_off.*/my \$color_off = \"'"${background}"'\";/g' $destination
     # i3blocks cpu_usage
-    target="/home/monolito/dotfiles/i3/i3blocks/cpu_usage"
-    destination="/home/monolito/.config/i3/i3blocks/cpu_usage"
-    #sed -i -e 's/.*crit_color.*/    print \"'"${red}"'\\n\"; #crit_color/g' ~/.config/i3/i3blocks/cpu_usage
-    #sed -i -e 's/.*alt_color.*/    print \"'"${yellow}"'\\n\"; #alt_color/g' ~/.config/i3/i3blocks/cpu_usage
+    target="$HOME/dotfiles/i3/i3blocks/cpu_usage"
+    destination="$config/i3/i3blocks/cpu_usage"
     sed -e 's/.*crit_color.*/    print \"'"${red}"'\\n\"; #crit_color/g' $target > $destination
     sed -i -e 's/.*alt_color.*/    print \"'"${yellow}"'\\n\"; #alt_color/g' $destination
     i3-msg restart
@@ -99,41 +96,23 @@ if [ ! -z "$theme" ]; then
     xsetroot -solid "$background"
     case $theme in
         everlight)
-            #nitrogen --set-zoom-fill ~/Imagens/Wallpapers/ben-neale-29w9FiMWSr8-unsplash_flip.jpg
+            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/ben-neale-29w9FiMWSr8-unsplash_flip.jpg"
             ;;
         everdark)
-            #nitrogen --set-zoom-fill ~/Imagens/Wallpapers/roads.png
+            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/roads.png"
             ;;
         gruvlight)
-            #nitrogen --set-zoom-fill ~/Imagens/Wallpapers/colorwalls.jpg
+            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/colorwalls.jpg"
             ;;
         gruvdark)
-            #nitrogen --set-color=#070705 --set-centered ~/Imagens/Wallpapers/ascent1500.jpg
+            #nitrogen --set-color=#070705 --set-centered "$HOME/Imagens/Wallpapers/ascent1500.jpg"
             ;;
     esac
 
     # dunst
-    #dunst="
-    #[urgency_low]\n
-    #    background = \"${background}\"\n
-    #    foreground = \"${green}\"\n
-    #    frame_color = \"${green}\"\n
-    #    timeout = 5\n
-    #[urgency_normal]\n
-    #    background = \"${background}\"\n
-    #    foreground = \"${yellow}\"\n
-    #    frame_color = \"${yellow}\"\n
-    #    timeout = 5\n
-    #[urgency_critical]\n
-    #    background = \"${red}\"\n
-    #    foreground = \"${white}\"\n
-    #    frame_color = \"${white}\"\n
-    #    timeout = 0\n
-    #"
-    #echo $dunst > "$dir_path/$theme/dunst"
-    cat ~/dotfiles/dunst/dunstrc-base "$dir_path/$theme/dunst" > ~/.config/dunst/dunstrc
+    cat "$HOME/dotfiles/dunst/dunstrc-base" "$dir_path/$theme/dunst" > "$config/dunst/dunstrc"
     pkill dunst
-    dunst -config ~/.config/dunst/dunstrc &
+    dunst -config "$config/dunst/dunstrc" &
 
     notify-send -u low -t 1500 "Tema boladão" "Tema $theme aplicado com sucesso!"
 fi
