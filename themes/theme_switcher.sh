@@ -32,7 +32,8 @@ if [ ! -z "$theme" ]; then
     dark_white=$(cat "$dir_path/$theme/xresources" | grep "^\*color15:.*" | awk '{ print $2}')
 
     # gtk
-    cat "$dir_path/$theme/gtk" > "$HOME/.gtkrc-2.0"
+    cat "$dir_path/$theme/gtk2" > "$HOME/.gtkrc-2.0"
+    cat "$dir_path/$theme/gtk3" > "$config/gtk-3.0/settings.ini"
 
     # kitty
     kitty="include $dir_path/$theme/kitty"
@@ -93,21 +94,8 @@ if [ ! -z "$theme" ]; then
     i3-msg restart
 
     # wallpaper
-    xsetroot -solid "$background"
-    case $theme in
-        everlight)
-            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/ben-neale-29w9FiMWSr8-unsplash_flip.jpg"
-            ;;
-        everdark)
-            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/roads.png"
-            ;;
-        gruvlight)
-            #nitrogen --set-zoom-fill "$HOME/Imagens/Wallpapers/colorwalls.jpg"
-            ;;
-        gruvdark)
-            #nitrogen --set-color=#070705 --set-centered "$HOME/Imagens/Wallpapers/ascent1500.jpg"
-            ;;
-    esac
+    #xsetroot -solid "$background"
+    nitrogen --set-zoom-fill --random "$dir_path/$theme/wallpapers"
 
     # dunst
     cat "$HOME/dotfiles/dunst/dunstrc-base" "$dir_path/$theme/dunst" > "$config/dunst/dunstrc"

@@ -5,6 +5,11 @@
 
 # {{{ SPLASH SCREEN ----------------------------------------------------------
 
+# create log file
+ahora=$(date +"%Y-%m-%d-%H-%M-%S")
+logfile="$HOME/install-$ahora.log"
+touch $logfile
+
 echo "---------------------------" 2>&1 | tee -a $logfile
 echo " WELCOME BACK, MR MONOLITO " 2>&1 | tee -a $logfile
 echo "---------------------------\n" 2>&1 | tee -a $logfile
@@ -12,7 +17,7 @@ echo "Daremos início à instalação do ambiente." 2>&1 | tee -a $logfile
 read -p "Deseja continuar? (y/n) __ " yn
 case $yn in
     [yYsS] )
-        echo "Muito bem, mestre, prosseguiremos com a instalação!\n" 2>&1 | tee -a $logfile
+        echo "Processo iniciado em $ahora\n\n" 2>&1 | tee -a $logfile
         ;;
     * )
         echo "\nGoodbye!" 2>&1 | tee -a $logfile
@@ -23,12 +28,6 @@ esac
 # }}} ------------------------------------------------------------------------
 
 # {{{ XPBS-INSTALL -----------------------------------------------------------
-
-# create log file
-ahora=$(date +"%Y-%m-%d-%H-%M-%S")
-logfile="$HOME/install-$ahora.log"
-touch $logfile
-echo "Processo iniciado em $ahora\n\n" 2>&1 | tee -a $logfile
 
 read -p "Deseja instalar pacotes? (y/n) __ " yn
 case $yn in
@@ -53,6 +52,7 @@ case $yn in
         done
         ;;
     * )
+        echo "Não instalaremos pacotes." 2>&1 | tee -a $logfile
         echo "Pularemos para a próxima etapa.\n" 2>&1 | tee -a $logfile
         ;;
 esac

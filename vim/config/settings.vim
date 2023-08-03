@@ -27,3 +27,4 @@ set wildoptions=pum             " exibe as correspondências num popup
 set wildignorecase              " ignora caixa ao autocompletar
 set path+=**                    " pesquisa em subdiretórios
 set noshowmode                  " vim-airline já mostra
+set showcmd                     " não é padrão no unix e acho útil
