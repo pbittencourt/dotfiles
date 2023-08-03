@@ -259,11 +259,12 @@ bindsym $mod+Return exec $terminal
 
 #bindsym $mod+z
 #bindsym $mod+x
+bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
 #bindsym $mod+c
 #bindsym $mod+v
 bindsym $mod+b mode $mode_border
 #bindsym $mod+n
-bindsym $mod+m exec ~/dotfiles/bin/hjkl.sh
+#bindsym $mod+m
 #bindsym $mod+comma
 #bindsym $mod+period
 bindsym $mod+slash exec rofi -show run
