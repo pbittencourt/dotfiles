@@ -16,6 +16,9 @@ nno <leader>a :q!<CR>
 vno <C-y> "+y
 nno <C-p> "+gp
 
+# equivalente a Ctrl+A Ctrl+C - copia todo o buffer pro registro
+nno <leader>y :%y+<CR>
+
 " edit/source vimrc
 nno <leader>ev :edit $MYVIMRC<CR>
 nno <leader>sv :source $MYVIMRC<CR>
@@ -50,6 +53,10 @@ nno } }zzj
 nno { k{zzj
 nno n nzz
 nno N Nzz
+
+# abertura/fechamento de folds mais ergonômica
+nno z[ za
+nno z] zA
 
 " liga/desliga caracteres não imprimíveis
 nno <leader>i :set list!<CR>
@@ -104,8 +111,13 @@ nno <leader>o :History<CR>
 " REPL
 nno <leader>/ :REPLToggle<Cr>
 nno <leader>. :REPLSendSession<Cr>
-let g:sendtorepl_invoke_key = "<leader>;"
 " esse, a rigor, não é um KEYMAP, mas estar aqui é mais sustentável
+let g:sendtorepl_invoke_key = "<leader>;"
 
 " markdown-preview
 nno <leader><F5> <Plug>MarkdownPreviewToggle
+
+" md2clipboard
+augroup copymdimage
+    autocmd FileType markdown nno <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+augroup END
