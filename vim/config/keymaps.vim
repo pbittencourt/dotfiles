@@ -16,7 +16,7 @@ nno <leader>a :q!<CR>
 vno <C-y> "+y
 nno <C-p> "+gp
 
-# equivalente a Ctrl+A Ctrl+C - copia todo o buffer pro registro
+" equivalente a Ctrl+A Ctrl+C - copia todo o buffer pro registro
 nno <leader>y :%y+<CR>
 
 " edit/source vimrc
@@ -54,7 +54,7 @@ nno { k{zzj
 nno n nzz
 nno N Nzz
 
-# abertura/fechamento de folds mais ergonômica
+" abertura/fechamento de folds mais ergonômica
 nno z[ za
 nno z] zA
 
