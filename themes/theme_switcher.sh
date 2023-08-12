@@ -5,13 +5,19 @@ dir_path=$(dirname $full_path)
 themes_list=$(cd $dir_path; echo */ | sed -e 's/\///g')
 theme=$(echo $themes_list | sed -e 's/\s/\n/g' | rofi -dmenu -l 4 -p "")
 config="$HOME/.config"
+logfile="$HOME/theme.log"
+touch $logfile
 
 if [ ! -z "$theme" ]; then
+    echo "Escolhido tema $theme!" 2>&1 | tee -a $logfile
     notify-send -u normal -t 1500 "Tema boladão" "Aplicando tema $theme ..."
 
     # xresources
+    echo "Alterando arquivo Xresources ..." 2>&1 | tee -a $logfile
     echo "#include \"$dir_path/$theme/xresources\"" > "$HOME/.Xresources"
+    echo "... arquivo Xresources alterado!" 2>&1 | tee -a $logfile
     xrdb "$HOME/.Xresources"
+    echo "Comando xrdb executado." 2>&1 | tee -a $logfile
     background=$(cat "$dir_path/$theme/xresources" | grep "^\*background:.*" | awk '{ print $2}')
     foreground=$(cat "$dir_path/$theme/xresources" | grep "^\*foreground:.*" | awk '{ print $2}')
     black=$(cat "$dir_path/$theme/xresources" | grep "^\*color0:.*" | awk '{ print $2}')
@@ -32,31 +38,44 @@ if [ ! -z "$theme" ]; then
     dark_white=$(cat "$dir_path/$theme/xresources" | grep "^\*color15:.*" | awk '{ print $2}')
 
     # gtk
+    echo "Alterando arquivo GTK2 ..." 2>&1 | tee -a $logfile
     cat "$dir_path/$theme/gtk2" > "$HOME/.gtkrc-2.0"
+    echo "... arquivo GTK2 alterado!" 2>&1 | tee -a $logfile
+    echo "Alterando arquivo GTK3 ..." 2>&1 | tee -a $logfile
     cat "$dir_path/$theme/gtk3" > "$config/gtk-3.0/settings.ini"
+    echo "... arquivo GTK3 alterado!" 2>&1 | tee -a $logfile
 
     # kitty
+    echo "Alterando configurações para kitty ..." 2>&1 | tee -a $logfile
     kitty="include $dir_path/$theme/kitty"
     escaped_kitty=$(printf '%s\n' "$kitty" | sed -e 's/[\/&]/\\&/g')
     sed -i -e 's/^include.*/'"${escaped_kitty}"'/g' "$config/kitty/kitty.conf"
+    echo "... kitty configurado!" 2>&1 | tee -a $logfile
 
     # alacritty
+    echo "Alterando configurações para alacritty ..." 2>&1 | tee -a $logfile
     part1="$HOME/dotfiles/alacritty/alacritty.yml"
     part2="$dir_path/$theme/alacritty"
     file="$config/alacritty/alacritty.yml"
     cat $part1 $part2 > $file
+    echo "... alacritty configurado!" 2>&1 | tee -a $logfile
 
     # vim
+    echo "Alterando configurações para vim ..." 2>&1 | tee -a $logfile
     cat "$HOME/dotfiles/vim/base" "$dir_path/$theme/vim" > "$HOME/.vimrc"
+    echo "... vim configurado!" 2>&1 | tee -a $logfile
 
     # rofi
+    echo "Alterando configurações para rofi ..." 2>&1 | tee -a $logfile
     rofi="theme: \"$dir_path/$theme/rofi\";"
     escaped_rofi=$(printf '%s\n' "$rofi" | sed -e 's/[\/&]/\\&/g')
     target="$HOME/dotfiles/rofi/config.rasi"
     destination="$config/rofi/config.rasi"
     sed -e 's/theme.*/'"${escaped_rofi}"'/g' $target > $destination
+    echo "... rofi configurado!" 2>&1 | tee -a $logfile
 
     # conky
+    echo "Alterando configurações para conky..." 2>&1 | tee -a $logfile
     target="$HOME/dotfiles/conky/conky.conf"
     destination="$config/conky/conky.conf"
     sed -e "s/color2.*=.*'.*'/color2 = '${yellow}'/g" $target > $destination
@@ -73,8 +92,10 @@ if [ ! -z "$theme" ]; then
     sed -i -e "s/color1.*=.*'.*'/color1 = '${dark_yellow}'/g" $destination
     sed -i -e "s/default_color.*=.*'.*'/default_color = '${foreground}'/g" $destination
     sed -i -e "s/exploded\/\w*/exploded\/$theme/g" $destination
+    echo "... conky configurado!" 2>&1 | tee -a $logfile
 
     # i3
+    echo "Alterando configurações para i3..." 2>&1 | tee -a $logfile
     # i3blocks main
     target="$HOME/dotfiles/i3/i3blocks.conf"
     destination="$config/i3/i3blocks.conf"
@@ -91,16 +112,22 @@ if [ ! -z "$theme" ]; then
     destination="$config/i3/i3blocks/cpu_usage"
     sed -e 's/.*crit_color.*/    print \"'"${red}"'\\n\"; #crit_color/g' $target > $destination
     sed -i -e 's/.*alt_color.*/    print \"'"${yellow}"'\\n\"; #alt_color/g' $destination
+    echo "... i3 configurado!" 2>&1 | tee -a $logfile
     i3-msg restart
 
     # wallpaper
+    echo "Alterando wallpaper..." 2>&1 | tee -a $logfile
     #xsetroot -solid "$background"
     nitrogen --set-zoom-fill --random "$dir_path/$theme/wallpapers"
+    echo "... wallpaper configurado!" 2>&1 | tee -a $logfile
 
     # dunst
+    echo "Alterando configurações para dunst..." 2>&1 | tee -a $logfile
     cat "$HOME/dotfiles/dunst/dunstrc-base" "$dir_path/$theme/dunst" > "$config/dunst/dunstrc"
     pkill dunst
     dunst -config "$config/dunst/dunstrc" &
+    echo "... dunst configurado!" 2>&1 | tee -a $logfile
 
     notify-send -u low -t 1500 "Tema boladão" "Tema $theme aplicado com sucesso!"
+    echo "Tema $theme aplicado com sucesso!" 2>&1 | tee -a $logfile
 fi

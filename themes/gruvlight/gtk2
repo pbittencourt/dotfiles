@@ -1,7 +1,7 @@
-gtk-theme-name="Pop-gruvbox-master"
-gtk-icon-theme-name="breeze"
+gtk-theme-name="oomox-gruvlight"
+gtk-icon-theme-name="oomox-gruvlight"
 gtk-font-name="Hack 9"
-gtk-cursor-theme-name="Vimix-white-cursors"
+gtk-cursor-theme-name="Vimix-cursors"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
