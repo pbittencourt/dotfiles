@@ -10,7 +10,7 @@ set $mod Mod4
 # default applications
 set $texteditor mousepad
 set $terminal kitty
-set $browser brave-browser
+set $browser qutebrowser
 set $editor gvim
 
 # workspaces names
@@ -44,6 +44,7 @@ set_from_resource $cyan         color6     #7fbbb3
 # assign specific workspace for certain applications
 assign [class="Firefox"]            $ws1
 assign [class="Brave-browser"]      $ws1
+assign [class="qutebrowser"]        $ws1
 assign [class="RStudio"]            $ws2
 assign [class="Inkscape"]           $ws5
 assign [class="Deja-dup"]           $ws7
@@ -326,7 +327,7 @@ exec notify-send -i ~/.icons/Papirus/24x24@2x/devices/input-keyboard.svg \
 set $mode_i3 i3 configuration (e)dit, re(l)oad, (r)estart
 mode "$mode_i3" {
     bindsym e \
-            exec -u low -t 800 notify-send "Configuração i3" "Abrindo para edição ..."; \
+            exec notify-send -u low -t 800 "Configuração i3" "Abrindo para edição ..."; \
             exec $editor '.config/i3/config'; \
             mode "default"
     bindsym l reload; exec notify-send "Configuração i3" "Recarregando ..."
