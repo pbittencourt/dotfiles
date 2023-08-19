@@ -41,11 +41,12 @@ case $yn in
         sudo xbps-install -Syv void-repo-nonfree 2>&1 | tee -a $logfile
 
         # apps
-        apps="i3-gaps i3lock i3status i3blocks xorg xcape \
-            git vim-huge gvim-huge kitty alacritty qutebrowser rsync conky \
-            scrot feh flameshot nitrogen lxappearance inkscape \
+        apps="i3-gaps i3lock i3status i3blocks xorg xcape rsync \
+            git vim-huge gvim-huge neovim kitty alacritty qutebrowser \
+            conky scrot feh flameshot nitrogen lxappearance inkscape \
             nm-applet redshift dunst rofi dmenu xcalc \
-            mpd mpc mpv vlc ncmpcpp minidlna ranger zathura"
+            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger zathura
+            fzf gvfs trash-cli pulseaudio transmission xsel"
         for app in $apps
         do
             sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
