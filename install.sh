@@ -177,6 +177,9 @@ sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 file="scope.sh"
 sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
+# ranger devicons
+git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+
 # rofi
 source_path="$dotfiles/rofi"
 target_path="$config/rofi"
