@@ -1,85 +1,133 @@
 configuration {
-    theme: "/home/monolito/dotfiles/themes/gruvlight/rofi";
     modi:           "drun,run,window";
-    width:          25;
-    lines:          5;
-    columns:        1;
     font:           "Iosevka Nerd Font 9";
-    show-icons:     true;
-    sidebar-mode:   false;
     display-drun:   "";
     display-run:    "";
     display-window: "";
 }
 
-#listview {
-    spacing:   0;
-    scrollbar: false;
-    margin:    0;
-    dynamic:   true;
+@theme "default"
+@import "gruvlight"
+
+* {
+    active-background:           @color0;
+    active-foreground:           @color1;
+    normal-background:           @color0;
+    normal-foreground:           @color1;
+    urgent-background:           @color0;
+    urgent-foreground:           @color1;
+    selected-active-background:  @color2;
+    selected-active-foreground:  @color1;
+    selected-normal-background:  @color2;
+    selected-normal-foreground:  @color1;
+    selected-urgent-background:  @color2;
+    selected-urgent-foreground:  @color1;
+    alternate-active-background: @color0;
+    alternate-active-foreground: @color1;
+    alternate-normal-background: @color0;
+    alternate-normal-foreground: @color1;
+    alternate-urgent-background: @color0;
+    alternate-urgent-foreground: @color1;
 }
 
-#window {
-    background-color: @backgroundcolor;
-    border-color:     @separatorcolor;
+window {
+    background-color: @color0;
+    border-color:     @color3;
     border:           1;
     border-radius:    0;
-}
-
-#element {
-    background-color: @backgroundcoloralternate;
-    padding:          12;
-    border:           0;
-}
-
-#element.selected.normal {
-    background-color: @selectioncolor;
-    text-color:       @foregroundcolorinverse;
-    border:           0;
-}
-
-#element.alternate.normal {
-    background-color: @backgroundcoloralternate;
-}
-
-#element.normal.active {
-    background-color: @selectioncolor;
-}
-
-#element.alternate.active {
-    background-color: @selectioncolor;
-}
-
-#element.selected.active {
-    background-color: @activecolor;
-    text-color:       @foregroundcolorinverse;
-    border-radius:    0px;
-    border:           0;
-}
-
-#inputbar {
-    background-color: @separatorcolor;
-    text-color:       @foregroundcolor;
-    border:           0;
-    margin:           0;
-    spacing:          0;
     padding:          0;
 }
 
-#prompt {
+mainbox {
+    padding: 0px;
+    border:  0px;
+    spacing: 0px;
     background-color: inherit;
-    text-color:       inherit;
-    padding:          16;
+}
+
+listview {
+    lines:        5;
+    padding:      0px;
+    border:       0px;
+    spacing:      0px;
+    scrollbar:    false;
+    background-color: inherit;
+}
+
+entry {
+    placeholder: "Pesquisae mein";
+}
+
+element {
+    children:           [ element-text ];
+    orientation:        horizontal;
+    background-color:   @normal-background;
+    spacing:            1em;
+    padding:            12px;
+    border:             0;
+}
+element normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+element normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+element selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+element selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+element alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+element alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+element alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+
+entry, element-text {
+    vertical-align: 0.5;
+}
+
+element-icon {
+    background-color: @color3;
+}
+
+inputbar {
+    children:   [ "prompt", "entry" ];
+    background-color: @color3;
+    text-color:       @color1;
     border:           0;
+    spacing:          0px;
+    padding:          8px;
 }
 
-#entry {
+prompt {
     background-color: inherit;
-    text-color:       inherit;
-    padding:          16 0;
-    margin:           0;
+    padding: 8px 6px 8px 4px;
+    border: 0;
 }
 
-case-indicator {
-    enabled: false;
+entry {
+    background-color: inherit;
+    padding: 8px;
+    border: 0;
 }

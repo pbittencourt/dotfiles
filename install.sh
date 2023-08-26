@@ -45,8 +45,9 @@ case $yn in
             git vim-huge gvim-huge neovim kitty alacritty qutebrowser \
             conky scrot feh flameshot nitrogen lxappearance inkscape \
             nm-applet redshift dunst rofi dmenu xcalc \
-            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger zathura
-            fzf gvfs trash-cli pulseaudio transmission xsel"
+            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger \
+            fzf gvfs trash-cli transmission xsel breeze-icons \
+            python3-pip zip unzip make zathura zathura-pdf-poppler"
         for app in $apps
         do
             sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
@@ -99,6 +100,17 @@ if [ ! -d $target_path ]; then
 fi
 file="alacritty.yml"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
+# bin
+source_path="$dotfiles/bin"
+target_path="$HOME/.local/bin"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="set_wallpaper"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="selcol"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # conky
 source_path="$dotfiles/conky"
@@ -187,7 +199,7 @@ if [ ! -d $target_path ]; then
     mkdir -v $target_path 2>&1 | tee -a $logfile
 fi
 file="config.rasi"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # vim
 source_path="$dotfiles/vim"
@@ -236,6 +248,29 @@ source_path="$dotfiles"
 target_path="$HOME/.config"
 file="zathura"
 sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
+# }}} ------------------------------------------------------------------------
+
+# {{{ OTHER RESOURCES ---------------------------------------------------------
+
+echo "Baixando cursores vimix ..." 2>&1 | tee -a $logfile
+git clone https://github.com/vinceliuice/Vimix-cursors 2>&1 | tee -a $logfile
+echo "Instalando cursores vimix ..." 2>&1 | tee -a $logfile
+$HOME/Vimix-cursors./install.sh 2>&1 | tee -a $logfile
+
+echo "Instalando temas e ícones GTK ..." 2>&1 | tee -a $logfile
+themes_list=$(cd $source_path; echo */ | sed -e 's/\///g')
+source_path="$HOME/dotfiles/themes"
+target_path="$HOME/.themes"
+for theme in $themes_list; do
+    echo "Vamos extrair tema $theme ..." 2>&1 | tee -a $logfile
+    tar -xzf "$source_path/$theme/theme.tar.gz" -C "$target_path" 2>&1 | tee -a $logfile
+done
+target_path="$HOME/.icons"
+for theme in $themes_list; do
+    echo "Vamos extrair ícones $theme ..." 2>&1 | tee -a $logfile
+    tar -xzf "$source_path/$theme/icons.tar.gz" -C "$target_path" 2>&1 | tee -a $logfile
+done
 
 # }}} ------------------------------------------------------------------------
 

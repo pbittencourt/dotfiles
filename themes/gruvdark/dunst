@@ -1,16 +1,18 @@
 [urgency_low]
- background = "#282828"
- foreground = "#98971a"
- frame_color = "#98971a"
- timeout = 5
- [urgency_normal]
- background = "#282828"
- foreground = "#d79921"
- frame_color = "#d79921"
- timeout = 5
- [urgency_critical]
- background = "#cc241d"
- foreground = "#a89984"
- frame_color = "#a89984"
- timeout = 0
-
+    background = "#282828"
+    foreground = "#98971a"
+    frame_color = "#98971a"
+    highlight = "#98971a"
+    timeout = 10
+[urgency_normal]
+    background = "#282828"
+    foreground = "#d79921"
+    frame_color = "#d79921"
+    highlight = "#d79921"
+    timeout = 10
+[urgency_critical]
+    background = "#d3869b"
+    foreground = "#ebdbb2"
+    frame_color = "#ebdbb2"
+    highlight = "#ebdbb2"
+    timeout = 0

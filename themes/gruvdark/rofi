@@ -1,17 +1,1 @@
-* {
-    backgroundcolor:          #282828;
-    backgroundcoloralternate: #282828;
-    separatorcolor:           #504945;
-    foregroundcolor:          #ebdbb2;
-    foregroundcolorinverse:   #ebdbb2;
-    selectioncolor:           #3c3836;
-    activecolor:              #d79921;
-    font-size:                1px;
-    border-color:             @separatorcolor;
-    background-color:         @backgroundcolor;
-    text-color:               @foregroundcolor;
-    margin:                   0;
-    margin-bottom:            0;
-    margin-top:               0;
-    spacing:                  0;
-}
+/home/monolito/dotfiles/rofi/themes/gruvdark.rasi

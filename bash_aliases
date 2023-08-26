@@ -1,3 +1,16 @@
+# {{{ ALIASES ----------------------------------------------------------------
+
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+
+# }}} ------------------------------------------------------------------------
+
+# {{{ FUNCTIONS --------------------------------------------------------------
+
 # combine 'mkdir' and 'cd'
 mkcd ()
 {
@@ -50,3 +63,15 @@ gitf () {
     git push &&
     git status
 }
+
+# xbps
+xq () {
+    xbps-query -Rs "$1"
+}
+xi () {
+    sudo xbps-install -Sv "$1"
+}
+
+# }}} ------------------------------------------------------------------------
+
+# vim:fileencoding=utf-8:foldmethod=marker

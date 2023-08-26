@@ -9,12 +9,12 @@ set $mod Mod4
 
 # default applications
 set $texteditor mousepad
-set $terminal kitty
+set $terminal xfce4-terminal
 set $browser qutebrowser
-set $editor gvim
+set $editor gvim-huge
 
 # workspaces names
-set $ws1 "1  "
+set $ws1 "1  "
 set $ws2 "2  "
 set $ws3 "3   "
 set $ws4 "4   "
@@ -43,18 +43,14 @@ set_from_resource $cyan         color6     #7fbbb3
 
 # assign specific workspace for certain applications
 assign [class="Firefox"]            $ws1
-assign [class="Brave-browser"]      $ws1
 assign [class="qutebrowser"]        $ws1
-assign [class="RStudio"]            $ws2
 assign [class="Inkscape"]           $ws5
-assign [class="Deja-dup"]           $ws7
-assign [class="TelegramDesktop"]    $ws8
 
 # }}} -------------------------------------------------------------------------
 
 # {{{ APPEARANCE --------------------------------------------------------------
 
-font pango:Hack 8
+font pango:VictorMono Nerd Font SemiBold Italic 9
 
 # class                  border      backgr.     text        indic.      child_border
 client.focused          $yellow     $yellow     $background $magenta    $yellow
@@ -68,15 +64,15 @@ client.background       $background
 
 # {{{ WINDOWS -----------------------------------------------------------------
 
-default_border          pixel 2
-default_floating_border pixel 2
-default_orientation auto
-floating_modifier $mod
-hide_edge_borders none
-show_marks yes
-title_align center
-workspace_auto_back_and_forth no
-workspace_layout default
+default_border                  pixel 2
+default_floating_border         pixel 2
+default_orientation             auto
+floating_modifier               $mod
+hide_edge_borders               none
+show_marks                      yes
+title_align                     center
+workspace_auto_back_and_forth   no
+workspace_layout                default
 
 # open applications in floating mode and define borders
 for_window [urgent=latest]              focus
@@ -95,20 +91,19 @@ for_window [class="skypeforlinux"]      floating enable
 for_window [class="Telegram"]           floating enable
 for_window [class="Mousepad"]           floating enable, resize set 640 480, move absolute position center
 for_window [instance="floating"]        floating toggle resize set 640 480, move absolute position center
+for_window [title="floating"]        floating toggle resize set 640 480, move absolute position center
 
 # }}} -------------------------------------------------------------------------
 
 # {{{ STARTUP -----------------------------------------------------------------
 
-# launch thunar in daemon mode to let it handle automatic mounting
-#exec thunar --daemon
 exec ~/dotfiles/bin/hjkl.sh
-exec_always ~/dotfiles/bin/conky_launcher.sh
+#exec_always ~/dotfiles/bin/conky_launcher.sh
 exec nm-applet
-exec redshift -b 1.0:0.7 -t 5500:4000
+exec ~/.local/bin/redshift_mine
 exec dunst
-exec nitrogen --random --set-zoom-fill ~/Imagens/Wallpapers/
-exec greenclip daemon
+exec ~/.local/bin/set_wallpaper
+#exec greenclip daemon
 exec sleep 10; flameshot
 #exec sleep 15; dropbox start
 
@@ -156,15 +151,15 @@ mode "$mode_gaps_outer" {
 # {{{ BAR ---------------------------------------------------------------------
 
 bar {
-    status_command  i3blocks -c ~/.config/i3/i3blocks.conf
-    bindsym button4  yes
-    bindsym button5  yes
-    position   bottom
-    separator_symbol  "."
-    workspace_buttons  yes
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    bindsym button4 yes
+    bindsym button5 yes
+    position bottom
+    separator_symbol "."
+    workspace_buttons yes
     strip_workspace_numbers no
     workspace_min_width 50
-    font pango:Iosevka Nerd Font 8
+    font pango:VictorMono Nerd Font Bold 8
     colors {
         background $background
         statusline $foreground
@@ -189,7 +184,7 @@ bindsym $mod+F1 workspace $ws1; exec $browser
 bindsym $mod+F2 workspace $ws2; exec $editor
 #bindsym $mod+F3
 #bindsym $mod+F4
-bindsym $mod+F5 exec $terminal --name floating ~/dotfiles/bin/mpdstart.sh
+bindsym $mod+F5 exec kitty --name floating ~/dotfiles/bin/mpdstart.sh
 #bindsym $mod+F6
 #bindsym $mod+F7
 #bindsym $mod+F8
@@ -235,7 +230,7 @@ bindsym $mod+w exec ~/dotfiles/bin/keymap.sh
 bindsym $mod+e layout toggle all
 bindsym $mod+r mode "$mode_resize"
 bindsym $mod+t exec ~/dotfiles/themes/theme_switcher.sh
-#bindsym $mod+y
+bindsym $mod+y exec ~/dotfiles/bin/estoria
 bindsym $mod+u exec ~/dotfiles/bin/rofi_zeal.sh
 bindsym $mod+i mode "$mode_i3"
 #bindsym $mod+o
@@ -254,14 +249,15 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-bindsym $mod+semicolon exec $terminal ranger
-bindsym $mod+dead_acute exec $terminal --name floating
+bindsym $mod+semicolon exec $terminal -e 'ranger'
+bindsym $mod+dead_acute exec $terminal --title=floating
 bindsym $mod+Return exec $terminal
 
 #bindsym $mod+z
 #bindsym $mod+x
 bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
-#bindsym $mod+c
+# TODO o de baixo ainda ta zoado ...
+bindsym $mod+c exec ~/dotfiles/bin/selcol
 #bindsym $mod+v
 bindsym $mod+b mode $mode_border
 #bindsym $mod+n
@@ -279,7 +275,7 @@ bindsym $mod+Print exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e  \
                    'mv $f ~/Imagens/captures'; exec notify-send \
                    "Screenshot" "Capturado com sucesso!"
 
-bindsym $mod+Shift+F5    exec $terminal --name floating ~/dotfiles/bin/minidlna.sh
+bindsym $mod+Shift+F5    exec kitty --name floating ~/dotfiles/bin/minidlna.sh
 bindsym $mod+Shift+f     mode "$mode_float_move"
 bindsym $mod+Ctrl+1      move container to workspace $ws1; workspace $ws1
 bindsym $mod+Ctrl+2      move container to workspace $ws2; workspace $ws2
@@ -307,10 +303,8 @@ bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 bindsym $mod+Shift+Tab   move container to workspace back_and_forth; \
                          workspace back_and_forth
-# void drawbacks
-bindsym $mod+Shift+Return exec i3-sensible-terminal
-bindsym $mod+Shift+slash  exec i3-dmenu-desktop
 
+# TODO isso precisa ser totalmente reconfigurado no novo sistema
 bindsym --release Caps_Lock \
 exec pkill -SIGRTMIN+11 i3blocks; \
 exec ~/dotfiles/bin/capslock.sh
@@ -327,11 +321,18 @@ exec notify-send -i ~/.icons/Papirus/24x24@2x/devices/input-keyboard.svg \
 set $mode_i3 i3 configuration (e)dit, re(l)oad, (r)estart
 mode "$mode_i3" {
     bindsym e \
-            exec notify-send -u low -t 800 "Configuração i3" "Abrindo para edição ..."; \
-            exec $editor '.config/i3/config'; \
+            exec notify-send -u low -t 1600 -i "fix" \
+            "Configuração i3" "Abrindo para edição ..."; \
+            exec $terminal -e 'vim .config/i3/config'; \
             mode "default"
-    bindsym l reload; exec notify-send "Configuração i3" "Recarregando ..."
-    bindsym r restart; exec notify-send "Configuração i3" "Reiniciando ..."
+    bindsym l \
+            reload; \
+            exec notify-send -u normal -t 1600 -i "reload" \
+           "Configuração i3" "Recarregando ..."
+    bindsym r \
+            restart; \
+            exec notify-send -u normal -t 1600 -i "plugin" \
+            "Configuração i3" "Reiniciando ..."
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -389,26 +390,6 @@ mode "$mode_float_move" {
     bindsym z floating enable; resize set 940 520; move absolute position 20 540; mode "default"
     bindsym x floating enable; resize set 940 520; move absolute position 480 540; mode "default"
     bindsym c floating enable; resize set 940 520; move absolute position 960 540; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-# system suspend
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-    #bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym l exec --no-startup-id lock
-    #bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit
-    #bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend
-    #bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate
-    #bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym h exec --no-startup-id systemctl reboot
-    #bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }

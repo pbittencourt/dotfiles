@@ -1,36 +1,31 @@
+! everforest light
 ! special
-*foreground:   #5c6a72
-*background:   #fffbef
-*cursorColor:  #5c6a72
-
+*background:  #fffbef
+*foreground:  #5c6a72
+*cursorColor: #5c6a72
+*fading:      40
+*fadeColor:   #272e33
 ! black
-*color0:       #1c2023
-*color8:       #747c84
-
+*color0:      #747c84
+*color8:      #1c2023
 ! red
-*color1:       #E67E80
-*color9:       #f85552
-
+*color1:      #f85552
+*color9:      #f85552
 ! green
-*color2:       #93B259
-*color10:      #8da101
-
+*color2:      #8da101
+*color10:     #8da101
 ! yellow
-*color3:       #dfa000
-*color11:      #F57D26
-
+*color3:      #dfa000
+*color11:     #dfa000
 ! blue
-*color4:       #7fbbb3
-*color12:      #3a94c5
-
+*color4:      #3a94c5
+*color12:     #3a94c5
 ! magenta
-*color5:       #d699b6
-*color13:      #df69ba
-
+*color5:      #df69ba
+*color13:     #df69ba
 ! cyan
-*color6:       #35a77c
-*color14:      #35a77c
-
+*color6:      #35a77c
+*color14:     #35a77c
 ! white
-*color7:       #ecf5ed
-*color15:      #fffbef
+*color7:      #ecf5ed
+*color15:     #fffbef

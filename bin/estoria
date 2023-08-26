@@ -1,0 +1,11 @@
+#! /bin/bash
+
+nb="#272e33"
+nf="#d3c6aa"
+sb="#dbbc7f"
+sf="#272e33"
+
+cat ~/.bash_history | sort | uniq | dmenu -l 20 \
+-fn 'Iosevka Nerd Font-12' \
+-nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" | \
+xsel -b

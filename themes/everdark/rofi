@@ -1,17 +1,1 @@
-* {
-    backgroundcolor:          #272e33;
-    backgroundcoloralternate: #2e383c;
-    separatorcolor:           #4f5b58;
-    foregroundcolor:          #d3c6aa;
-    foregroundcolorinverse:   #d3c6aa;
-    selectioncolor:           #495156;
-    activecolor:              #495156;
-    font-size:                1px;
-    border-color:             @separatorcolor;
-    background-color:         @backgroundcolor;
-    text-color:               @foregroundcolor;
-    margin:                   0;
-    margin-bottom:            0;
-    margin-top:               0;
-    spacing:                  0;
-}
+/home/monolito/dotfiles/rofi/themes/everdark.rasi

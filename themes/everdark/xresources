@@ -1,3 +1,4 @@
+! everforest dark
 ! special
 *background:  #272e33
 *foreground:  #d3c6aa
@@ -5,7 +6,7 @@
 *fading:      40
 *fadeColor:   #272e33
 ! black
-*color0:      #7a8478
+*color0:      #9da9a0
 *color8:      #7a8478
 ! red
 *color1:      #e67e80
@@ -27,4 +28,4 @@
 *color14:     #83c092
 ! white
 *color7:      #d3c6aa
-*color15:     #d3c6aa
+*color15:     #a6b0a0
