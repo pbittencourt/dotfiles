@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+nb="#272e33"
+nf="#d3c6aa"
+sb="#dbbc7f"
+sf="#272e33"
+fn="Iosevka Nerd Font-11"
+
+dmenu -i -fn "$fn" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" "$@"

@@ -7,7 +7,7 @@ configuration {
 }
 
 @theme "default"
-@import "gruvlight"
+@import "everdark"
 
 * {
     active-background:           @color0;
@@ -31,6 +31,7 @@ configuration {
 }
 
 window {
+    width:            480px;
     background-color: @color0;
     border-color:     @color3;
     border:           1;

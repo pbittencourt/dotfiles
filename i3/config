@@ -97,14 +97,16 @@ for_window [title="floating"]        floating toggle resize set 640 480, move ab
 
 # {{{ STARTUP -----------------------------------------------------------------
 
-exec ~/dotfiles/bin/hjkl.sh
-#exec_always ~/dotfiles/bin/conky_launcher.sh
-exec nm-applet
-exec ~/.local/bin/redshift_mine
 exec dunst
-exec ~/.local/bin/set_wallpaper
-#exec greenclip daemon
+exec set_wallpaper
+exec nm-applet
+exec redshift_mine
+exec ~/dotfiles/bin/hjkl.sh
 exec sleep 10; flameshot
+exec sleep 15 ~/dotfiles/bin/mpdstart.sh
+#exec mpd --no-daemon ~/.config/mpd/mpd.conf
+#exec mpdscribble
+#exec greenclip daemon
 #exec sleep 15; dropbox start
 
 # }}} -------------------------------------------------------------------------
@@ -117,8 +119,8 @@ smart_gaps    on
 smart_borders on
 
 set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_outer Outer Gaps: k|j|0 (local), Shift k|j|0 (global)
+set $mode_gaps_inner Inner Gaps: k|j|0 (local), Shift k|j|0 (global)
 mode "$mode_gaps" {
     bindsym o      mode "$mode_gaps_outer"
     bindsym i      mode "$mode_gaps_inner"
@@ -126,22 +128,22 @@ mode "$mode_gaps" {
     bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-    bindsym plus  gaps inner current plus 5
-    bindsym minus gaps inner current minus 5
-    bindsym 0     gaps inner current set 0
-    bindsym Shift+plus  gaps inner all plus 5
-    bindsym Shift+minus gaps inner all minus 5
-    bindsym Shift+0     gaps inner all set 0
+    bindsym k        gaps inner current plus 5
+    bindsym j        gaps inner current minus 5
+    bindsym 0        gaps inner current set 0
+    bindsym Shift+k  gaps inner all plus 5
+    bindsym Shift+j  gaps inner all minus 5
+    bindsym Shift+0  gaps inner all set 0
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-    bindsym plus  gaps outer current plus 5
-    bindsym minus gaps outer current minus 5
-    bindsym 0     gaps outer current set 0
-    bindsym Shift+plus  gaps outer all plus 5
-    bindsym Shift+minus gaps outer all minus 5
-    bindsym Shift+0     gaps outer all set 0
+    bindsym k        gaps outer current plus 5
+    bindsym j        gaps outer current minus 5
+    bindsym 0        gaps outer current set 0
+    bindsym Shift+k  gaps outer all plus 5
+    bindsym Shift+j  gaps outer all minus 5
+    bindsym Shift+0  gaps outer all set 0
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -198,7 +200,7 @@ bindsym Print exec flameshot gui
 bindsym XF86HomePage              exec thunar
 #bindsym XF86Mail
 bindsym XF86Calculator            exec xcalc
-bindsym XF86Tools workspace $ws4; exec $terminal --name floating ncmpcpp
+bindsym XF86Tools workspace $ws4; exec $terminal --title=floating -e 'ncmpcpp'
 bindsym XF86AudioStop             exec mpc stop
 bindsym XF86AudioPrev             exec mpc prev
 bindsym XF86AudioPlay             exec mpc toggle
@@ -230,7 +232,7 @@ bindsym $mod+w exec ~/dotfiles/bin/keymap.sh
 bindsym $mod+e layout toggle all
 bindsym $mod+r mode "$mode_resize"
 bindsym $mod+t exec ~/dotfiles/themes/theme_switcher.sh
-bindsym $mod+y exec ~/dotfiles/bin/estoria
+bindsym $mod+y exec estoria
 bindsym $mod+u exec ~/dotfiles/bin/rofi_zeal.sh
 bindsym $mod+i mode "$mode_i3"
 #bindsym $mod+o
@@ -257,10 +259,10 @@ bindsym $mod+Return exec $terminal
 #bindsym $mod+x
 bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
 # TODO o de baixo ainda ta zoado ...
-bindsym $mod+c exec ~/dotfiles/bin/selcol
+#bindsym $mod+c exec ~/dotfiles/bin/selcol
 #bindsym $mod+v
 bindsym $mod+b mode $mode_border
-#bindsym $mod+n
+bindsym $mod+n exec ~/dotfiles/bin/choose_wallpaper
 #bindsym $mod+m
 #bindsym $mod+comma
 #bindsym $mod+period
@@ -272,7 +274,8 @@ bindsym $mod+Left  focus left
 bindsym $mod+Right focus right
 bindsym $mod+Up    focus up
 bindsym $mod+Print exec scrot '%Y-%m-%d_%H-%M-%S_$wx$h.png' -e  \
-                   'mv $f ~/Imagens/captures'; exec notify-send \
+                   'mv $f ~/Imagens/captures'; exec sleep 6 ; \
+                   exec notify-send -i "cheese" \
                    "Screenshot" "Capturado com sucesso!"
 
 bindsym $mod+Shift+F5    exec kitty --name floating ~/dotfiles/bin/minidlna.sh
@@ -303,6 +306,10 @@ bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 bindsym $mod+Shift+Tab   move container to workspace back_and_forth; \
                          workspace back_and_forth
+
+# drawbacks
+bindsym $mod+Shift+Enter exec i3-sensible-terminal
+bindsym $mod+Shift+slash exec dmenu_run
 
 # TODO isso precisa ser totalmente reconfigurado no novo sistema
 bindsym --release Caps_Lock \

@@ -1,13 +1,13 @@
 ! everforest light
 ! special
-*background:  #fffbef
+*background:  #f3ead3
 *foreground:  #5c6a72
 *cursorColor: #5c6a72
 *fading:      40
 *fadeColor:   #272e33
 ! black
-*color0:      #747c84
-*color8:      #1c2023
+*color0:      #5b6972
+*color8:      #5b6972
 ! red
 *color1:      #f85552
 *color9:      #f85552
@@ -27,5 +27,5 @@
 *color6:      #35a77c
 *color14:     #35a77c
 ! white
-*color7:      #ecf5ed
-*color15:     #fffbef
+*color7:      #ddd8bd
+*color15:     #ddd8bd

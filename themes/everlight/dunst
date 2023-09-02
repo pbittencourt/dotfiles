@@ -1,18 +1,21 @@
+[global]
+    icon_theme = "everlight, breeze"
+
 [urgency_low]
-    background = "#fffbef"
+    background = "#f3ead3"
     foreground = "#8da101"
     frame_color = "#8da101"
     highlight = "#8da101"
     timeout = 10
 [urgency_normal]
-    background = "#fffbef"
+    background = "#f3ead3"
     foreground = "#dfa000"
     frame_color = "#dfa000"
     highlight = "#dfa000"
     timeout = 10
 [urgency_critical]
     background = "#E67E80"
-    foreground = "#fffbef"
-    frame_color = "#fffbef"
-    highlight = "#fffbef"
+    foreground = "#f3ead3"
+    frame_color = "#f3ead3"
+    highlight = "#f3ead3"
     timeout = 0

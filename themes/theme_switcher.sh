@@ -6,8 +6,8 @@ dir_path=$(dirname $full_path)
 echo "dirpath: $dir_path"
 themes_list=$(cd $dir_path; echo */ | sed -e 's/\///g')
 echo "themeslist: $themes_list"
-#theme=$(echo $themes_list | sed -e 's/\s/\n/g' | dmenu -l 5)
-theme=$(echo $themes_list | sed -e 's/\s/\n/g' | rofi -dmenu -l 4 -p "")
+theme=$(echo $themes_list | sed -e 's/\s/\n/g' | mydmenu -p "  theme:")
+#theme=$(echo $themes_list | sed -e 's/\s/\n/g' | rofi -dmenu -l 4 -p "")
 echo "theme: $theme"
 config="$HOME/.config"
 logfile="$HOME/theme.log"
@@ -15,7 +15,7 @@ touch $logfile
 
 if [ ! -z "$theme" ]; then
     echo "Escolhido tema $theme!" 2>&1 | tee -a $logfile
-    notify-send -u low -t 3600 -i "applications-painting" \
+    notify-send -u low -t 3600 -i "applications-graphics" \
     "Tema boladão" "Aplicando tema $theme ..."
 
     # xresources
@@ -97,6 +97,15 @@ if [ ! -z "$theme" ]; then
     sed -e 's/@import.*/@import \"'${theme}'\"/g' $target > $destination
     echo "... rofi configurado!" 2>&1 | tee -a $logfile
 
+    # mydmenu
+    echo "Alterando configurações para mydmenu ..." 2>&1 | tee -a $logfile
+    target="$HOME/.local/bin/mydmenu"
+    sed -i -e 's/nb=\".*"/nb=\"'${background}'\"/g' $target
+    sed -i -e 's/nf=\".*"/nf=\"'${foreground}'\"/g' $target
+    sed -i -e 's/sb=\".*"/sb=\"'${yellow}'\"/g' $target
+    sed -i -e 's/sf=\".*"/sf=\"'${background}'\"/g' $target
+    echo "... mydmenu configurado!" 2>&1 | tee -a $logfile
+
     # conky
     echo "Alterando configurações para conky..." 2>&1 | tee -a $logfile
     target="$HOME/dotfiles/conky/conky.conf"
@@ -122,9 +131,9 @@ if [ ! -z "$theme" ]; then
     # i3blocks main
     target="$HOME/dotfiles/i3/i3blocks.conf"
     destination="$config/i3/i3blocks.conf"
-    sed -e "s/.*title_color/color=${yellow} \#title_color/g" $target > $destination
-    sed -i -e "s/.*alt_color/color=${blue} \#alt_color/g" $destination
-    sed -i -e "s/.*kb_color/color=${green} \#kb_color/g" $destination
+    sed -e "s/.*color1/color=${blue} \#color1/g" $target > $destination
+    sed -i -e "s/.*color2/color=${green} \#color2/g" $destination
+    sed -i -e "s/.*kb_color/color=${cyan} \#kb_color/g" $destination
     # i3blocks keyindicator
     target="$HOME/dotfiles/i3/i3blocks/keyindicator"
     destination="$config/i3/i3blocks/keyindicator"
@@ -140,12 +149,10 @@ if [ ! -z "$theme" ]; then
 
     # wallpaper
     echo "Alterando wallpaper..." 2>&1 | tee -a $logfile
-    #xsetroot -solid "$background"
-    #nitrogen --set-zoom-fill --random "$dir_path/$theme/wallpapers"
     target="$HOME/dotfiles/bin/set_wallpaper"
     destination="$HOME/.local/bin/set_wallpaper"
     sed -e 's/theme=.*/theme=\"'${theme}'\"/g' $target > $destination
-    feh --no-fehbg --recursive --bg-fill --randomize "$HOME/dotfiles/themes/$theme/wallpapers" &
+    feh --no-fehbg --bg-fill "$HOME/dotfiles/themes/$theme/wallpapers/default.jpg" &
     echo "... wallpaper configurado!" 2>&1 | tee -a $logfile
 
     # dunst
@@ -155,7 +162,7 @@ if [ ! -z "$theme" ]; then
     dunst -config "$config/dunst/dunstrc" &
     echo "... dunst configurado!" 2>&1 | tee -a $logfile
 
-    notify-send -u low -t 3600 -i "applications-painting" \
+    notify-send -u low -t 3600 -i "applications-graphics" \
     "Tema boladão" "Tema $theme aplicado com sucesso!"
     echo "Tema $theme aplicado com sucesso!" 2>&1 | tee -a $logfile
 fi

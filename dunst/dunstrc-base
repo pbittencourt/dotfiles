@@ -47,7 +47,7 @@
 
     # Set the progress bar height. This includes the frame, so make sure
     # it's at least twice as big as the frame width.
-    progress_bar_height = 5
+    progress_bar_height = 4
 
     # Set the frame width of the progress bar
     progress_bar_frame_width = 1
@@ -191,10 +191,10 @@
     stack_duplicates = true
 
     # Hide the count of stacked notifications with the same content
-    hide_duplicate_count = false
+    hide_duplicate_count = true
 
     # Display indicators for URLs (U) and actions (A).
-    show_indicators = yes
+    show_indicators = no
 
     ### Icons ###
 
@@ -205,7 +205,7 @@
     # Set icon theme (only used for recursive icon lookup)
     #icon_theme = "breeze"
     # You can also set multiple icon themes, with the leftmost one being used first.
-    icon_theme = "oomox-everdark, breeze"
+    #icon_theme = "oomox-everdark, breeze"
 
     # Align icons left/right/top/off
     icon_position = left

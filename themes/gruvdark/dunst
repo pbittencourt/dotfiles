@@ -1,3 +1,6 @@
+[global]
+    icon_theme = "gruvdark, breeze"
+
 [urgency_low]
     background = "#282828"
     foreground = "#98971a"

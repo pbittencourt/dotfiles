@@ -42,9 +42,9 @@ case $yn in
 
         # apps
         apps="i3-gaps i3lock i3status i3blocks xorg xcape rsync \
-            git vim-huge gvim-huge neovim kitty alacritty qutebrowser \
-            conky scrot feh flameshot nitrogen lxappearance inkscape \
-            nm-applet redshift dunst rofi dmenu xcalc \
+            git github-cli vim-huge gvim-huge neovim kitty alacritty \
+            qutebrowser conky scrot feh flameshot nitrogen lxappearance \
+            inkscape nm-applet redshift dunst rofi dmenu xcalc bat \
             mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger \
             fzf gvfs trash-cli transmission xsel breeze-icons \
             python3-pip zip unzip make zathura zathura-pdf-poppler"

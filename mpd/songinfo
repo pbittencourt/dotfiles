@@ -15,9 +15,9 @@ case $MPD_PLAYER_STATE in
     current_abs_dir="$music_dir/$current_rel_dir"
     cover_name=$(ls "$current_abs_dir" | grep -Ei "albumart|cover|folder" | head -1)
     cover_path="$current_abs_dir/$cover_name"
-    rm "/home/monolito/.cover/albumart.jpg"
-    cp "$cover_path" "/home/monolito/.cover/"
-    mv "/home/monolito/.cover/$cover_name" "/home/monolito/.cover/albumart.jpg"
+    rm "/home/monolito/.tmp/albumart.jpg"
+    cp "$cover_path" "/home/monolito/.tmp/"
+    mv "/home/monolito/.tmp/$cover_name" "/home/monolito/.tmp/albumart.jpg"
     ;;
 esac
 notify-send -u low -t 3500 "${state}" "$(mpc --format '%title% \n%artist% \n%album%' current)"
