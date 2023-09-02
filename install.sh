@@ -92,6 +92,23 @@ if [ ! -d $config ]; then
     mkdir -v $config 2>&1 | tee -a $logfile
 fi
 
+# bin executables
+source_path="$dotfiles/bin"
+target_path="$HOME/.local/bin"
+if [ ! -d $target_path ]; then
+    mkdir -pv $target_path 2>&1 | tee -a $logfile
+fi
+file="estoria"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="rxfetch"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="selcol"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="set_wallpaper"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="mydmenu"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
 # alacritty
 source_path="$dotfiles/alacritty"
 target_path="$config/alacritty"
@@ -237,7 +254,16 @@ else
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-# X
+# xfce4-terminal
+source_path="$dotfiles/xfce4-terminal"
+target_path="$config/xfce4/terminal"
+if [ ! -d $target_path ]; then
+    mkdir -pv $target_path 2>&1 | tee -a $logfile
+fi
+file="terminalrc"
+cp -v "$source_path/$file" "$HOME/.Xresources" 2>&1 | tee -a $logfile
+
+# Xresources
 source_path="$dotfiles/X"
 target_path="$HOME"
 file="Xresources"
@@ -259,9 +285,9 @@ echo "Instalando cursores vimix ..." 2>&1 | tee -a $logfile
 $HOME/Vimix-cursors./install.sh 2>&1 | tee -a $logfile
 
 echo "Instalando temas e ícones GTK ..." 2>&1 | tee -a $logfile
-themes_list=$(cd $source_path; echo */ | sed -e 's/\///g')
 source_path="$HOME/dotfiles/themes"
 target_path="$HOME/.themes"
+themes_list=$(cd $source_path; echo */ | sed -e 's/\///g')
 for theme in $themes_list; do
     echo "Vamos extrair tema $theme ..." 2>&1 | tee -a $logfile
     tar -xzf "$source_path/$theme/theme.tar.gz" -C "$target_path" 2>&1 | tee -a $logfile

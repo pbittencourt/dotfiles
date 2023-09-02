@@ -24,7 +24,7 @@
     - **browser**: [qutebrowser](https://www.qutebrowser.org)
     - **pdf reader**: [zathura](https://pwmt.org/projects/zathura/)
     - **image viewer**: [feh](https://github.com/derf/feh)
-    - **music player**: [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) with [mpd](https://github.com/MusicPlayerDaemon/MPD) and [mpdscribble](https://github.com/MusicPlayerDaemon/mpdscribble)
+    - **music player**: [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) with [mpd](https://github.com/MusicPlayerDaemon/MPD) and [mpdscribble](https://github.com/MusicPlayerDaemon/mpdscribble) —  [last.fm](https://www.last.fm/user/pedrobitten) for the win!
     - **notifications**: [dunst](https://dunst-project.org/)
     - _more_ **terminals**: [alacritty](https://alacritty.org/) and [kitty](https://sw.kovidgoyal.net/kitty/)
 
