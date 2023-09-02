@@ -103,6 +103,8 @@ file="git-prompt.sh"
 sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
 file="inputrc"
 sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+file="xsessionrc"
+sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
 
 # alacritty
 source_path="$dotfiles/alacritty"

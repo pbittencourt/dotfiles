@@ -1,0 +1,6 @@
+# i3 uses sh to launch stuff, and does not source $PATH from ~/.bashrc;
+# we have to do it by ourselves
+# source: https://askubuntu.com/a/920572
+if [ -d "/home/monolito/.local/bin" ] ; then
+    PATH="/home/monolito/.local/bin:$PATH"
+fi
