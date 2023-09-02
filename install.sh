@@ -99,6 +99,8 @@ file="bash_aliases"
 sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
 file="bashrc"
 sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+file="git-prompt.sh"
+sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
 file="inputrc"
 sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
 
