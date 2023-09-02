@@ -72,7 +72,7 @@ if [ -d $dotfiles ]; then
     if [ -d .git ]; then
         echo "Esse diretório é um repositório git. Vamos atualizá-lo." 2>&1 | tee -a $logfile
         git status 2>&1 | tee -a $logfile
-        git restore 2>&1 | tee -a $logfile
+        git restore . 2>&1 | tee -a $logfile
         git pull 2>&1 | tee -a $logfile
     else
         echo "Esse diretório não é um repositório git. Verifique!" 2>&1 | tee -a $logfile
@@ -92,7 +92,26 @@ if [ ! -d $config ]; then
     mkdir -v $config 2>&1 | tee -a $logfile
 fi
 
-# bin executables
+# ~
+source_path="$dotfiles"
+target_path="$HOME"
+file="bash_aliases"
+sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+file="bashrc"
+sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+file="inputrc"
+sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+
+# alacritty
+source_path="$dotfiles/alacritty"
+target_path="$config/alacritty"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="alacritty.yml"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
+# bin
 source_path="$dotfiles/bin"
 target_path="$HOME/.local/bin"
 if [ ! -d $target_path ]; then
@@ -108,26 +127,6 @@ file="set_wallpaper"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 file="mydmenu"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-
-# alacritty
-source_path="$dotfiles/alacritty"
-target_path="$config/alacritty"
-if [ ! -d $target_path ]; then
-    mkdir -v $target_path 2>&1 | tee -a $logfile
-fi
-file="alacritty.yml"
-cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-
-# bin
-source_path="$dotfiles/bin"
-target_path="$HOME/.local/bin"
-if [ ! -d $target_path ]; then
-    mkdir -v $target_path 2>&1 | tee -a $logfile
-fi
-file="set_wallpaper"
-cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-file="selcol"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # conky
 source_path="$dotfiles/conky"
