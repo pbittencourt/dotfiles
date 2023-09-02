@@ -220,6 +220,7 @@ if [ ! -d $target_path ]; then
 fi
 file="config.rasi"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+sudo ln -vsf "$source_path/themes/*" $target_path 2>&1 | tee -a $logfile
 
 # vim
 source_path="$dotfiles/vim"
