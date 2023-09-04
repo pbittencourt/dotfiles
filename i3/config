@@ -205,12 +205,9 @@ bindsym XF86AudioStop             exec mpc stop
 bindsym XF86AudioPrev             exec mpc prev
 bindsym XF86AudioPlay             exec mpc toggle
 bindsym XF86AudioNext             exec mpc next
-bindsym XF86AudioMute             exec pactl set-sink-mute 0 toggle; \
-                                  exec ~/dotfiles/bin/volume_indicator.sh
-bindsym XF86AudioLowerVolume      exec pactl set-sink-volume 0 -5%; \
-                                  exec ~/dotfiles/bin/volume_indicator.sh
-bindsym XF86AudioRaiseVolume      exec pactl set-sink-volume 0 +5%; \
-                                  exec ~/dotfiles/bin/volume_indicator.sh
+bindsym XF86AudioMute             exec volset mute
+bindsym XF86AudioLowerVolume      exec volset down
+bindsym XF86AudioRaiseVolume      exec volset up
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -347,12 +344,9 @@ mode "$mode_i3" {
 # audio control
 set $mode_audio audio control (j) down (k) up (m)ute
 mode "$mode_audio" {
-    bindsym k exec pactl set-sink-volume 0 +5%; \
-              exec ~/dotfiles/bin/volume_indicator.sh
-    bindsym j exec pactl set-sink-volume 0 -5%; \
-              exec ~/dotfiles/bin/volume_indicator.sh
-    bindsym m exec pactl set-sink-mute 0 toggle; \
-              exec ~/dotfiles/bin/volume_indicator.sh
+    bindsym k exec volset up
+    bindsym j exec volset down
+    bindsym m exec volset mute
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }

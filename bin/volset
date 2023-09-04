@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+action="$1"
+
+urgency="normal"
+case "$action" in
+    mute )
+        pactl set-sink-mute 0 "toggle"
+        ismuted=$(pactl get-sink-mute 0 | grep -o "sim")
+        if [ ! -z $ismuted ]; then
+            prefix="Mute ON"
+            urgency="critical"
+        else
+            prefix="Mute OFF\n"
+            urgency="low"
+        fi
+    ;;
+    up )
+        pactl set-sink-volume 0 +5%
+    ;;
+    down )
+        pactl set-sink-volume 0 -5%
+    ;;
+esac
+
+ismuted=$(pactl get-sink-mute 0 | grep -o "sim")
+level=$(pactl get-sink-volume 0 | grep -o "[0-9]*%" | uniq | sed 's/%//g')
+volume="$level%"
+bar="-h int:value:${level}"
+if [ ! -z $ismuted ]; then
+    icon="audio-volume-muted"
+    volume=""
+    bar=""
+elif [ $level -le 25 ]; then
+    icon="audio-volume-low-zero"
+elif [ $level -le 50 ]; then
+    icon="audio-volume-low"
+elif [ $level -le 75 ]; then
+    icon="audio-volume-medium"
+else
+    icon="audio-volume-high"
+fi
+notify-send -i "$icon" -t 2000 -u $urgency $bar "Volume" "$prefix$volume"
