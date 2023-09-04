@@ -8,7 +8,7 @@ set listchars=eol:¬,trail:░,space:·,extends:»,precedes:«
 set list
 
 " caracteres para preencher texto da dobra e separator vertical
-set fillchars+=fold:\ ,vert:┊
+set fillchars+=fold:\ ,vert:│
 
 " custom folding
 " source: https://jdhao.github.io/2019/08/16/nvim_config_folding
