@@ -196,6 +196,17 @@ sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 file="songinfo"
 sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
+# qutebrowser
+source_path="$dotfiles/qutebrowser"
+target_path="$config/qutebrowser"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="config.py"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="palette.py"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+
 # ranger
 source_path="$dotfiles/ranger"
 target_path="$config/ranger"
@@ -274,10 +285,13 @@ file="Xresources"
 cp -v "$source_path/$file" "$HOME/.Xresources" 2>&1 | tee -a $logfile
 
 # zathura
-source_path="$dotfiles"
-target_path="$HOME/.config"
-file="zathura"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+source_path="$dotfiles/zathura"
+target_path="$HOME/.config/zathura"
+if [ ! -d $target_path ]; then
+    mkdir -v $target_path 2>&1 | tee -a $logfile
+fi
+file="zathurarc"
+cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # }}} ------------------------------------------------------------------------
 
