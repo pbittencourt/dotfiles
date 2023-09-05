@@ -45,7 +45,7 @@ case $yn in
             git github-cli vim-huge gvim-huge neovim kitty alacritty \
             qutebrowser conky scrot feh flameshot nitrogen lxappearance \
             inkscape nm-applet redshift dunst rofi dmenu xcalc bat \
-            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger \
+            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger w3m-img \
             fzf gvfs trash-cli transmission xsel breeze-icons \
             python3-pip zip unzip make zathura zathura-pdf-poppler"
         for app in $apps
@@ -220,7 +220,7 @@ if [ ! -d $target_path ]; then
 fi
 file="config.rasi"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-sudo ln -vsf "$source_path/themes/*" $target_path 2>&1 | tee -a $logfile
+sudo ln -vsf "$source_path/themes/"* $target_path 2>&1 | tee -a $logfile
 
 # vim
 source_path="$dotfiles/vim"
@@ -283,10 +283,12 @@ sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # {{{ OTHER RESOURCES ---------------------------------------------------------
 
-echo "Baixando cursores vimix ..." 2>&1 | tee -a $logfile
-git clone https://github.com/vinceliuice/Vimix-cursors 2>&1 | tee -a $logfile
-echo "Instalando cursores vimix ..." 2>&1 | tee -a $logfile
-$HOME/Vimix-cursors./install.sh 2>&1 | tee -a $logfile
+if [ ! -d "$HOME/.local/share/icons/Vimix-cursors" ]; then
+    echo "Baixando cursores vimix ..." 2>&1 | tee -a $logfile
+    git clone https://github.com/vinceliuice/Vimix-cursors 2>&1 | tee -a $logfile
+    echo "Instalando cursores vimix ..." 2>&1 | tee -a $logfile
+    $HOME/Vimix-cursors./install.sh 2>&1 | tee -a $logfile
+fi
 
 echo "Instalando temas e ícones GTK ..." 2>&1 | tee -a $logfile
 source_path="$HOME/dotfiles/themes"

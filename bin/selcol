@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 icon="$HOME/.tmp/selcol"
-color=$($HOME/.local/bin/colorpicker --short --one-shot --preview)
+color=$($HOME/.local/bin/colorpicker --short --one-shot)
 sed -i 's/fill=\"#[0-9a-f]\{6\}\"/fill=\"'${color}'\"/Ig' $icon;
 notify-send -i "${icon}" "colorpicker" "${color}";
 echo $color | xsel -b;

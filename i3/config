@@ -103,7 +103,7 @@ exec nm-applet
 exec redshift_mine
 exec ~/dotfiles/bin/hjkl.sh
 exec sleep 10; flameshot
-exec sleep 15 ~/dotfiles/bin/mpdstart.sh
+exec sleep 15; ~/dotfiles/bin/mpdstart.sh
 #exec mpd --no-daemon ~/.config/mpd/mpd.conf
 #exec mpdscribble
 #exec greenclip daemon
