@@ -104,10 +104,11 @@ exec redshift_mine
 exec ~/dotfiles/bin/hjkl.sh
 exec sleep 10; flameshot
 exec sleep 15; ~/dotfiles/bin/mpdstart.sh
+exec sleep 30; dropbox start
+#exec sleep 30; rclone mount --daemon --vfs-cache-mode full gdrive:/ ./google_drive/
 #exec mpd --no-daemon ~/.config/mpd/mpd.conf
 #exec mpdscribble
 #exec greenclip daemon
-#exec sleep 15; dropbox start
 
 # }}} -------------------------------------------------------------------------
 
