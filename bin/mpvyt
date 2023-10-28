@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+notify-send \
+    -u low -t 4000 -i "smplayer" \
+    "MPV" "Opening:\n$1"
+
+mpv --force-window=immediate "$1"

@@ -1,0 +1,98 @@
+#!/usr/bin/bash
+
+usage="Usage $(basename "$0") [-i -h] [-r /foo/bar]
+Media (photos and videos) organizer. Move files from working directory to user
+photo repository.
+
+where:
+    -i   show info from current dir, without moving files
+    -h   show this help text
+    -r   set repository of media; default is
+         /run/media/monolito/TOSHIBA EXT/wayback machine/gaveta"
+
+destino="/run/media/monolito/TOSHIBA EXT/wayback machine/gaveta"
+agora=$(date +"%Y-%m-%d-%H-%M-%S")
+logfile="$destino/logs/morgan-$agora.log"
+infonly=0
+
+while getopts 'ihr:' OPTION; do
+    case "$OPTION" in
+        h)
+            echo "$usage"
+            exit
+            ;;
+        i)
+            infonly=1
+            logfile="morgan-$agora.log"
+            echo "Running information diagnosys. Log will be saved on:"
+            echo "$logfile"
+            ;;
+        r)
+            echo "Set repository to:"
+            echo "$OPTARG"
+            destino="$OPTARG"
+            logfile="$destino/morgan-$agora.log"
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            echo "$USAGE" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+touch "$logfile"
+echo "Organização de mídia do diretório:" > "$logfile"
+pwd >> "$logfile"
+echo "" >> "$logfile"
+midias=()
+nao_processados=()
+
+OLDIFS=$IFS
+IFS=$'\n'
+for item in $(find . -name "*" -type f)
+do
+    tipo=$(file -i "$item")
+    case "$tipo" in
+        *image* | *video* )
+        timestamp=$(exiftool "$item" |
+                    grep -oiE -m 1 "^create date.*" |
+                    grep -o "[0-9]*")
+        read -d "\n" ano mes dia hora minuto segundo <<<$(echo "$timestamp")
+        if [ "$ano" = "0000" ] || [ "$timestamp" = "" ]; then
+            timestamp=$(exiftool "$item" |
+                        grep -oiE -m 1 ".*modification.*" |
+                        awk -F ' : ' '{print $NF}' |
+                        grep -o "[0-9]*")
+            read -d "\n" ano mes dia hora minuto segundo delta_h delta_m <<<$(echo "$timestamp")
+        fi
+        extensao=$(exiftool "$item" |
+                   grep -Ei ".*extension.*" |
+                   awk -F ' : ' '{print $NF}')
+        newdir="$destino/$ano/$mes/$dia"
+        newfile="$hora-$minuto-$segundo.$extensao"
+        if [ $infonly -eq 1 ]; then
+            if [ ! -d $newdir ]; then
+                echo "mkdir: criaremos diretório '$newdir'" 2>&1 | tee -a "$logfile"
+            fi
+            echo "cp $item -> $newdir/$newfile" 2>&1 | tee -a "$logfile"
+        else
+            mkdir -pv "$newdir" 2>&1 | tee -a "$logfile"
+            cp -nv "$item" "$newdir/$newfile" 2>&1 | tee -a "$logfile"
+        fi
+        midias[${#midias[@]}]="$item"
+        ;;
+        * )
+        nao_processados[${#nao_processados[@]}]="$item"
+        ;;
+    esac
+done
+IFS=$OLDIFS
+
+echo "Processamos ${#midias[@]} arquivos de mídia." 2>&1 | tee -a "$logfile"
+echo "Não processamos ${#nao_processados[@]} arquivos de outros tipos:" 2>&1 | tee -a "$logfile"
+for item in "${nao_processados[@]}"
+do
+    echo "$item" 2>&1 | tee -a "$logfile"
+done

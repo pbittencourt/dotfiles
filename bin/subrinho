@@ -1,0 +1,101 @@
+#!/usr/bin/bash
+
+usage="Usage $(basename "$0") [OPTIONS] [<file1>, <file2>, ... <fileN>]
+Embed subtitles (hardsubs) on video files <file1>, <file2>, ..., <fileN> given
+as parameters.
+
+EXTENSIONS
+    Works on video extensions: mp4, mkv.
+
+OPTIONS
+    -a   execute on every video file within current working dir;
+    -h   show this help text
+    -i   interactive, ie, ask before every step; default: None
+    -v   verbose messages"
+
+if [ $# -eq 0 ]; then
+    echo "$usage"
+    exit
+fi
+
+verbose=0
+interactive=0
+overwrite="-y"
+videos=("$@")
+
+while getopts 'haiv' OPTION; do
+    case "$OPTION" in
+        h)
+            echo "$usage"
+            exit
+            ;;
+        a)
+            echo "Looping through all video files within current directory."
+            readarray -d '' videos < <(find . -regextype posix-egrep -regex '.*\.mp4|.*\.mkv' -print0)
+            ;;
+        v)
+            echo "Verbose mode."
+            verbose=1
+            ;;
+        i)
+            echo "Interactive mode. We will ask before every step."
+            interactive=1
+            overwrite=""
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            echo "$USAGE" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+for video in "${videos[@]}"
+do
+    printf "\nAnalyzing %s ...\n" "$video"
+    if [ $interactive -eq 1 ]; then
+        read -p "Continue? (y/n/a/c) __ " yn
+    else
+        yn="a"
+    fi
+    case $yn in
+        [yYsS] )
+            ;;
+        [aA] )
+            interactive=0
+            ;;
+        [cC] )
+            echo "Process terminated by user."
+            exit
+            ;;
+        * )
+            echo "Skipping."
+            continue
+            ;;
+    esac
+    filename=$(basename -- "$video")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+    subtitle="$filename.srt"
+    if [ -f "$subtitle" ]; then
+        echo "├─   Subtitle found! Converting to ass format ..."
+        # https://superuser.com/a/1540850
+        if ffmpeg -sub_charenc ISO-8859-1 "$overwrite" -i "$subtitle" "$filename.ass" ; then
+            echo "├────   conversion finished!"
+        else
+            echo "└────   conversion failed!"
+            echo "      Skipping."
+            continue
+        fi
+        echo "├─   Hardcoding subtitles! This process should take a time ..."
+        if ffmpeg "$overwrite" -i "$video" -vf ass="$filename.ass" -c:v libx264 -crf 20 -c:a aac -b:a 192k "HS_$filename.$extension"; then
+            echo "└────   embedding finished!"
+        else
+            echo "└────   embedding failed!"
+        fi
+    else
+        echo "└─   Subtitle $subtitle do not exists."
+        echo "      Skipping."
+    fi
+done
