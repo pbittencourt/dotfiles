@@ -50,3 +50,6 @@ c.colors.downloads.start.bg = color3
 c.colors.downloads.start.fg = background
 c.colors.downloads.stop.bg = color2
 c.colors.downloads.stop.fg = background
+
+# open links with mpv
+config.bind(';m', 'hint links spawn --verbose --detach mpvyt {hint-url}')
