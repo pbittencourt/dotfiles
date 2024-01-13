@@ -20,7 +20,7 @@ nno <C-p> "+gp
 nno <leader>y :%y+<CR>
 
 " edit/source vimrc
-nno <leader>ev :edit $MYVIMRC<CR>
+nno <leader>ev :split $MYVIMRC<CR>
 nno <leader>sv :source $MYVIMRC<CR>
 
 " split navigations
