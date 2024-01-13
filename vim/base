@@ -10,10 +10,6 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9, 'xoffset': 0.5, 'y
 let $FZF_DEFAULT_OPTS = "--preview 'bat --color=always {}'"
 
 nno <leader>s :w !sh<CR>
-nno <leader>fh :call system('kitty @ set-font-size 10')<CR>
-nno <leader>fj :call system('kitty @ set-font-size 12')<CR>
-nno <leader>fk :call system('kitty @ set-font-size 14')<CR>
-nno <leader>fl :call system('kitty @ set-font-size 16')<CR>
 
 if has('termguicolors')
   set termguicolors
