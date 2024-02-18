@@ -37,11 +37,11 @@ c.colors.statusbar.url.success.http.fg = color6
 c.colors.statusbar.url.success.https.fg = color2
 c.colors.statusbar.url.warn.fg = color1
 
-c.colors.webpage.darkmode.algorithm = darkmode_algorithm
-c.colors.webpage.darkmode.contrast = darkmode_contrast
-c.colors.webpage.darkmode.enabled = darkmode_enabled
-c.colors.webpage.darkmode.grayscale.images = darkmode_grayscale_images
-c.colors.webpage.preferred_color_scheme = preferred_color_scheme
+#c.colors.webpage.darkmode.enabled = darkmode_enabled
+#c.colors.webpage.darkmode.policy.page = 'always'
+#c.colors.webpage.darkmode.algorithm = darkmode_algorithm
+#c.colors.webpage.darkmode.contrast = darkmode_contrast
+#c.colors.webpage.preferred_color_scheme = preferred_color_scheme
 
 c.colors.downloads.bar.bg = background
 c.colors.downloads.error.bg = color1

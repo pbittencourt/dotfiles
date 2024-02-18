@@ -17,8 +17,8 @@ color14    = '#83c092'
 color7     = '#d3c6aa'
 color15    = '#d3c6aa'
 
+darkmode_enabled = True
 darkmode_algorithm = 'lightness-hsl'
 darkmode_contrast = 0.5
-darkmode_enabled = True
 darkmode_grayscale_images = 0.5
 preferred_color_scheme = 'dark'
