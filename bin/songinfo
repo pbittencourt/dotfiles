@@ -2,25 +2,46 @@
 
 status=$(mpc current 2>/dev/null)
 if [ -n "$status" ]; then
+    # -----------
+    # information
+    config_file="$HOME/.config/mpd/mpd.conf"
+    music_dir=$(grep "^music_directory" $config_file | grep -o '".*"' | sed 's/"//g' 2>/dev/null)
+    rel_dir=$(ncmpcpp --current-song="%D" 2>/dev/null)
+    abs_dir="$music_dir/$rel_dir"
+    artist=$(mpc --format '%artist%' current 2>/dev/null)
+    title=$(mpc --format '%title%' current 2>/dev/null)
+    # -----------
+    # play status
     playing=$(mpc | grep playing 2>/dev/null)
     if [ -n "$playing" ]; then
         state="Now playing"
     else
         state="Music paused"
     fi
-    config_file="$HOME/.config/mpd/mpd.conf"
-    music_dir=$(grep "^music_directory" $config_file | grep -o '".*"' | sed 's/"//g' 2>/dev/null)
-    current_rel_dir=$(ncmpcpp --current-song="%D" 2>/dev/null)
-    current_abs_dir="$music_dir/$current_rel_dir"
-    cover_name=$(ls "$current_abs_dir" | grep -Ei "albumart|cover|folder|front" | head -1 2>/dev/null)
+    # ---------
+    # album art
+    cover_name=$(ls "$abs_dir" | grep -Ei "albumart|cover|folder|front" | head -1 2>/dev/null)
     if [ -n "$cover_name" ]; then
-        cover_path="$current_abs_dir/$cover_name"
+        cover_path="$abs_dir/$cover_name"
         cp -f "$cover_path" "$HOME/.tmp/albumart"
         art="$HOME/.tmp/albumart"
     else
+        # TODO fetch cover
         art="preferences-desktop-sound"
     fi
     pctime=$(mpc status "%percenttime%" | grep -o "[0-9]*")
     notify-send -u low -t 5400 -i "$art" -h "int:value:${pctime}" \
     "${state}" "<b>$(mpc --format '%title%' current)</b>\n$(mpc --format '%artist%\n%album%' current)"
+    # ------
+    # lyrics
+    filename=$(ncmpcpp --current-song="%f" 2>/dev/null)
+    filename="${filename%.*}"
+    lyrics="$abs_dir/$filename.txt"
+    if test ! -e "$lyrics"; then
+        notify-send -u low -t 4800 -i "system-search" "lyrics" \
+            "Fetching lyrics for\n<b>${artist}</b> - <b>${title}</b> ..."
+        glyrc lyrics -a "${artist}" -t "${title}" -w "$lyrics" -v 0
+        notify-send -u normal -t 5400 -i "tools-check-spelling" "lyrics" \
+            "Lyrics sucessfully fetched!"
+    fi
 fi
