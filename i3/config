@@ -109,7 +109,7 @@ exec sleep 30; ~/dotfiles/bin/cloud.sh
 #exec sleep 30; rclone mount --daemon --vfs-cache-mode full gdrive:/ ./google_drive/
 #exec mpd --no-daemon ~/.config/mpd/mpd.conf
 #exec mpdscribble
-#exec greenclip daemon
+exec greenclip daemon
 
 # }}} -------------------------------------------------------------------------
 
@@ -235,8 +235,7 @@ bindsym $mod+y exec estoria
 bindsym $mod+u exec ~/dotfiles/bin/rofi_zeal.sh
 bindsym $mod+i mode "$mode_i3"
 #bindsym $mod+o
-bindsym $mod+p exec rofi -modi ":greenclip print" \
-                    -show  -run-command '{cmd}'
+bindsym $mod+p exec bwmenu -c 30 --show-password
 bindsym $mod+bracketleft move workspace to output left
 bindsym $mod+bracketright move workspace to output right
 bindsym $mod+backslash split toggle
@@ -257,8 +256,8 @@ bindsym $mod+Return exec $terminal
 #bindsym $mod+z
 #bindsym $mod+x
 bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
-# TODO o de baixo ainda ta zoado ...
-#bindsym $mod+c exec ~/dotfiles/bin/selcol
+bindsym $mod+c exec rofi -modi ":greenclip print" \
+                    -show  -run-command '{cmd}'
 #bindsym $mod+v
 bindsym $mod+b mode $mode_border
 bindsym $mod+n exec ~/dotfiles/bin/choose_wallpaper
