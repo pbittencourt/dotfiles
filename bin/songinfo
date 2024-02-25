@@ -34,14 +34,19 @@ if [ -n "$status" ]; then
     "${state}" "<b>$(mpc --format '%title%' current)</b>\n$(mpc --format '%artist%\n%album%' current)"
     # ------
     # lyrics
-    filename=$(ncmpcpp --current-song="%f" 2>/dev/null)
-    filename="${filename%.*}"
-    lyrics="$abs_dir/$filename.txt"
-    if test ! -e "$lyrics"; then
-        notify-send -u low -t 4800 -i "system-search" "lyrics" \
-            "Fetching lyrics for\n<b>${artist}</b> - <b>${title}</b> ..."
-        glyrc lyrics -a "${artist}" -t "${title}" -w "$lyrics" -v 0
-        notify-send -u normal -t 5400 -i "tools-check-spelling" "lyrics" \
-            "Lyrics sucessfully fetched!"
-    fi
+    #filename=$(ncmpcpp --current-song="%f" 2>/dev/null)
+    #filename="${filename%.*}"
+    #lyrics="$abs_dir/$filename.txt"
+    #if test ! -e "$lyrics"; then
+    #    notify-send -u low -t 4800 -i "system-search" "lyrics" \
+    #        "Fetching lyrics for\n<b>${artist}</b> - <b>${title}</b> ..."
+    #    glyrc lyrics -a "${artist}" -t "${title}" -w "$lyrics" -v 0
+    #    if test -e "$lyrics"; then
+    #        notify-send -u normal -t 5400 -i "tools-check-spelling" "lyrics" \
+    #            "Lyrics sucessfully fetched!"
+    #    else
+    #        notify-send -u critical -t 5400 -i "tools-check-spelling" "lyrics" \
+    #            "We could not find lyrics for this song."
+    #    fi
+    #fi
 fi
