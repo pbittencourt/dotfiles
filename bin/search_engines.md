@@ -1,0 +1,12 @@
+- `du`: duckduckgo
+- `gh`: github
+- `go`: google
+- `im`: imdb
+- `ma`: manual
+- `me`: medium
+- `os`: opensubtitles
+- `rd`: reddit
+- `so`: stack overflow
+- `tl`: tldr
+- `yt`: youtube
+──────────────────────
