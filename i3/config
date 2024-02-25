@@ -9,9 +9,9 @@ set $mod Mod4
 
 # default applications
 set $texteditor mousepad
-set $terminal xfce4-terminal
+set $terminal alacritty
 set $browser qutebrowser
-set $editor gvim-huge
+set $editor alacritty -e 'vim'
 
 # workspaces names
 set $ws1 "1  "
@@ -188,7 +188,7 @@ bindsym $mod+F1 workspace $ws1; exec $browser
 bindsym $mod+F2 workspace $ws2; exec $editor
 #bindsym $mod+F3
 #bindsym $mod+F4
-bindsym $mod+F5 exec kitty --name floating ~/dotfiles/bin/mpdstart.sh
+bindsym $mod+F5 exec $terminal --title 'floating' ~/dotfiles/bin/mpdstart.sh
 #bindsym $mod+F6
 #bindsym $mod+F7
 #bindsym $mod+F8
@@ -202,7 +202,7 @@ bindsym Print exec flameshot gui
 bindsym XF86HomePage              exec thunar
 #bindsym XF86Mail
 bindsym XF86Calculator            exec xcalc
-bindsym XF86Tools workspace $ws4; exec $terminal --title=floating -e 'ncmpcpp'
+bindsym XF86Tools workspace $ws4; exec $terminal --title 'floating' -e 'ncmpcpp'
 bindsym XF86AudioStop             exec mpc stop
 bindsym XF86AudioPrev             exec mpc prev
 bindsym XF86AudioPlay             exec mpc toggle
@@ -232,7 +232,7 @@ bindsym $mod+e layout toggle all
 bindsym $mod+r mode "$mode_resize"
 bindsym $mod+t exec ~/dotfiles/themes/theme_switcher.sh
 bindsym $mod+y exec estoria
-bindsym $mod+u exec ~/dotfiles/bin/rofi_zeal.sh
+bindsym $mod+u exec ~/dotfiles/bin/search.sh
 bindsym $mod+i mode "$mode_i3"
 #bindsym $mod+o
 bindsym $mod+p exec bwmenu -c 30 --show-password
@@ -250,11 +250,10 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 bindsym $mod+semicolon exec $terminal -e 'ranger'
-bindsym $mod+dead_acute exec $terminal --title=floating
+bindsym $mod+dead_acute exec $terminal --title 'floating'
 bindsym $mod+Return exec $terminal
 
 #bindsym $mod+z
-#bindsym $mod+x
 bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
 bindsym $mod+c exec rofi -modi ":greenclip print" \
                     -show  -run-command '{cmd}'

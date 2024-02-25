@@ -3,7 +3,7 @@ from palette import *
 config.load_autoconfig()
 
 c.tabs.position = 'top'
-c.fonts.default_family = 'Iosevka Nerd Font'
+c.fonts.default_family = 'JetBrainsMono Nerd Font'
 
 c.colors.tabs.bar.bg = background
 c.colors.tabs.even.bg = background
@@ -37,11 +37,15 @@ c.colors.statusbar.url.success.http.fg = color6
 c.colors.statusbar.url.success.https.fg = color2
 c.colors.statusbar.url.warn.fg = color1
 
-#c.colors.webpage.darkmode.enabled = darkmode_enabled
-#c.colors.webpage.darkmode.policy.page = 'always'
-#c.colors.webpage.darkmode.algorithm = darkmode_algorithm
-#c.colors.webpage.darkmode.contrast = darkmode_contrast
-#c.colors.webpage.preferred_color_scheme = preferred_color_scheme
+c.colors.webpage.darkmode.algorithm = darkmode_algorithm
+c.colors.webpage.darkmode.contrast = darkmode_contrast
+c.colors.webpage.darkmode.enabled = darkmode_enabled
+c.colors.webpage.darkmode.policy.images = 'smart-simple'
+c.colors.webpage.darkmode.policy.page = 'smart'
+c.colors.webpage.darkmode.threshold.background = 100
+c.colors.webpage.darkmode.threshold.foreground = 100
+c.colors.webpage.preferred_color_scheme = preferred_color_scheme
+#c.content.user_stylesheets = '~/.config/qutebrowser/stylesheets/everdark.css'
 
 c.colors.downloads.bar.bg = background
 c.colors.downloads.error.bg = color1
@@ -53,3 +57,6 @@ c.colors.downloads.stop.fg = background
 
 # open links with mpv
 config.bind(';m', 'hint links spawn --verbose --detach mpvyt {hint-url}')
+
+# download images
+config.bind(';i', 'hint images download')

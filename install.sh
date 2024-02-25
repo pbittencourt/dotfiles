@@ -112,8 +112,10 @@ target_path="$config/alacritty"
 if [ ! -d $target_path ]; then
     mkdir -v $target_path 2>&1 | tee -a $logfile
 fi
-file="alacritty.yml"
+file="alacritty.toml"
 cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+file="colors.toml"
+sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # bin
 source_path="$dotfiles/bin"

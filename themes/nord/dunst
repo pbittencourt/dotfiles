@@ -1,0 +1,21 @@
+[global]
+     icon_theme = "nord, breeze"
+
+[urgency_low]
+     background = "#2e3440"
+     foreground = "#a3be8c"
+     frame_color = "#a3be8c"
+     highlight = "#a3be8c"
+     timeout = 10
+[urgency_normal]
+     background = "#2e3440"
+     foreground = "#ebcb8b"
+     frame_color = "#ebcb8b"
+     highlight = "#ebcb8b"
+     timeout = 10
+[urgency_critical]
+     background = "#b48ead"
+     foreground = "#2e3440"
+     frame_color = "#2e3440"
+     highlight = "#2e3440"
+     timeout = 10

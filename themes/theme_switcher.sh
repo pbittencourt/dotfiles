@@ -65,9 +65,9 @@ if [ ! -z "$theme" ]; then
 
     # alacritty
     echo "Alterando configurações para alacritty ..." 2>&1 | tee -a $logfile
-    part1="$HOME/dotfiles/alacritty/alacritty.yml"
-    part2="$dir_path/$theme/alacritty"
-    file="$config/alacritty/alacritty.yml"
+    part1="$HOME/dotfiles/alacritty/alacritty.toml"
+    part2="$dir_path/$theme/colors.toml"
+    file="$config/alacritty/alacritty.toml"
     cat $part1 $part2 > $file
     echo "... alacritty configurado!" 2>&1 | tee -a $logfile
 
@@ -154,7 +154,6 @@ if [ ! -z "$theme" ]; then
     sed -e 's/theme=.*/theme=\"'${theme}'\"/g' $target > $destination
     feh --no-fehbg --bg-fill "$HOME/dotfiles/themes/$theme/wallpapers/default.jpg" &
     echo "... wallpaper configurado!" 2>&1 | tee -a $logfile
-
 
     # qutebrowser
     target="$config/qutebrowser/palette.py"

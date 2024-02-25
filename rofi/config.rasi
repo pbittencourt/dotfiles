@@ -1,6 +1,6 @@
 configuration {
     modi:           "drun,run,window";
-    font:           "Iosevka Nerd Font 9";
+    font:           "JetBrainsMono Nerd Font 10";
     display-drun:   "";
     display-run:    "";
     display-window: "";
@@ -31,7 +31,7 @@ configuration {
 }
 
 window {
-    width:            480px;
+    width:            720px;
     background-color: @color0;
     border-color:     @color3;
     border:           1;
@@ -56,7 +56,7 @@ listview {
 }
 
 entry {
-    placeholder: "Pesquisae mein";
+    placeholder: "...";
 }
 
 element {
@@ -131,4 +131,5 @@ entry {
     background-color: inherit;
     padding: 8px;
     border: 0;
+    font: "VictorMono Nerd Font Bold Italic 10";
 }
