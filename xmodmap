@@ -19,3 +19,6 @@ keycode  46 = l L Right L lstroke Lstroke lstroke
 keycode  47 = semicolon colon BackSpace colon paragraph degree paragraph degree
 keycode  54 = c C Caps_Lock C copyright copyright copyright
 keycode  58 = m M Menu M mu mu mu
+
+! AltGr também vira Super key (i3 mais confortável ...)
+keycode 108 = Super_L NoSymbol Super_L
