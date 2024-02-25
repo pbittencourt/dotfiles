@@ -28,3 +28,4 @@ set wildignorecase              " ignora caixa ao autocompletar
 set path+=**                    " pesquisa em subdiretórios
 set noshowmode                  " vim-airline já mostra
 set showcmd                     " não é padrão no unix e acho útil
+set autochdir                   " cd para o buffer atual

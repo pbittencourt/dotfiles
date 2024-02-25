@@ -20,7 +20,7 @@ nno <C-p> "+gp
 nno <leader>y :%y+<CR>
 
 " edit/source vimrc
-nno <leader>ev :split $MYVIMRC<CR>
+nno <leader>ev :vsplit $MYVIMRC<CR>
 nno <leader>sv :source $MYVIMRC<CR>
 
 " split navigations
@@ -42,15 +42,15 @@ nno <expr> <leader><Down> 'm`' . v:count1 . 'o<Esc>``'
 nno <expr> <leader><Up> 'm`' . v:count1 . 'O<Esc>``'
 
 " melhora movimentos
-nno ç ^
-xno ç ^
-nno $ g_
-xno $ g_
+"nno ç ^
+"xno ç ^
+"nno $ g_
+"xno $ g_
 nno H H zz
 nno M M zz
 nno L L zz
-nno } }zzj
-nno { k{zzj
+nno } }ztj
+nno { k{ztj
 nno n nzz
 nno N Nzz
 
@@ -92,6 +92,16 @@ ino {<CR> {<CR>}<ESC>O
 " fecha todos os outros buffers
 " https://stackoverflow.com/a/42071865
 nno <leader>d :%bd\|e#<CR>
+
+" manipulação de texto
+ino <c-u> <esc>viwgUea
+iabbrev ibullet ∙
+iabbrev itodo ∘
+iabbrev idone ×
+iabbrev ievent ▫
+iabbrev inote ▪
+iabbrev imoved ▹
+iabbrev i-- —
 
 " funções
 nmap <leader>8 :call ToggleCC()<CR>
