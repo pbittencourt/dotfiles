@@ -157,24 +157,24 @@ if [ ! -z "$theme" ]; then
 
     # qutebrowser
     target="$config/qutebrowser/palette.py"
-    sed -i "/background/s/#[a-f0-9]*/${background}/" $target
-    sed -i "/foreground/s/#[a-f0-9]*/${foreground}/" $target
-    sed -i "/color0/s/#[a-f0-9]*/${black}/" $target
-    sed -i "/color1/s/#[a-f0-9]*/${red}/" $target
-    sed -i "/color2/s/#[a-f0-9]*/${green}/" $target
-    sed -i "/color3/s/#[a-f0-9]*/${yellow}/" $target
-    sed -i "/color4/s/#[a-f0-9]*/${blue}/" $target
-    sed -i "/color5/s/#[a-f0-9]*/${magenta}/" $target
-    sed -i "/color6/s/#[a-f0-9]*/${cyan}/" $target
-    sed -i "/color7/s/#[a-f0-9]*/${white}/" $target
-    sed -i "/color8/s/#[a-f0-9]*/${dark_black}/" $target
-    sed -i "/color9/s/#[a-f0-9]*/${dark_red}/" $target
-    sed -i "/color10/s/#[a-f0-9]*/${dark_green}/" $target
-    sed -i "/color11/s/#[a-f0-9]*/${dark_yellow}/" $target
-    sed -i "/color12/s/#[a-f0-9]*/${dark_blue}/" $target
-    sed -i "/color13/s/#[a-f0-9]*/${dark_magenta}/" $target
-    sed -i "/color14/s/#[a-f0-9]*/${dark_cyan}/" $target
-    sed -i "/color15/s/#[a-f0-9]*/${dark_white}/" $target
+    sed -i "/background/s/#[a-fA-F0-9]*/${background}/" $target
+    sed -i "/foreground/s/#[a-fA-F0-9]*/${foreground}/" $target
+    sed -i "/color0/s/#[a-fA-F0-9]*/${black}/" $target
+    sed -i "/color1/s/#[a-fA-F0-9]*/${red}/" $target
+    sed -i "/color2/s/#[a-fA-F0-9]*/${green}/" $target
+    sed -i "/color3/s/#[a-fA-F0-9]*/${yellow}/" $target
+    sed -i "/color4/s/#[a-fA-F0-9]*/${blue}/" $target
+    sed -i "/color5/s/#[a-fA-F0-9]*/${magenta}/" $target
+    sed -i "/color6/s/#[a-fA-F0-9]*/${cyan}/" $target
+    sed -i "/color7/s/#[a-fA-F0-9]*/${white}/" $target
+    sed -i "/color8/s/#[a-fA-F0-9]*/${dark_black}/" $target
+    sed -i "/color9/s/#[a-fA-F0-9]*/${dark_red}/" $target
+    sed -i "/color10/s/#[a-fA-F0-9]*/${dark_green}/" $target
+    sed -i "/color11/s/#[a-fA-F0-9]*/${dark_yellow}/" $target
+    sed -i "/color12/s/#[a-fA-F0-9]*/${dark_blue}/" $target
+    sed -i "/color13/s/#[a-fA-F0-9]*/${dark_magenta}/" $target
+    sed -i "/color14/s/#[a-fA-F0-9]*/${dark_cyan}/" $target
+    sed -i "/color15/s/#[a-fA-F0-9]*/${dark_white}/" $target
     case "$theme" in
       *light*)
         sed -i "/darkmode_contrast/s/=.*/= 0/" $target
@@ -192,24 +192,24 @@ if [ ! -z "$theme" ]; then
 
     # zathura
     target="$config/zathura/zathurarc"
-    sed -i "/# background/s/#[a-f0-9]*/${background}/" $target
-    sed -i "/# foreground/s/#[a-f0-9]*/${foreground}/" $target
-    sed -i "/# color0/s/#[a-f0-9]*/${black}/" $target
-    sed -i "/# color1/s/#[a-f0-9]*/${red}/" $target
-    sed -i "/# color2/s/#[a-f0-9]*/${green}/" $target
-    sed -i "/# color3/s/#[a-f0-9]*/${yellow}/" $target
-    sed -i "/# color4/s/#[a-f0-9]*/${blue}/" $target
-    sed -i "/# color5/s/#[a-f0-9]*/${magenta}/" $target
-    sed -i "/# color6/s/#[a-f0-9]*/${cyan}/" $target
-    sed -i "/# color7/s/#[a-f0-9]*/${white}/" $target
-    sed -i "/# color8/s/#[a-f0-9]*/${dark_black}/" $target
-    sed -i "/# color9/s/#[a-f0-9]*/${dark_red}/" $target
-    sed -i "/# color10/s/#[a-f0-9]*/${dark_green}/" $target
-    sed -i "/# color11/s/#[a-f0-9]*/${dark_yellow}/" $target
-    sed -i "/# color12/s/#[a-f0-9]*/${dark_blue}/" $target
-    sed -i "/# color13/s/#[a-f0-9]*/${dark_magenta}/" $target
-    sed -i "/# color14/s/#[a-f0-9]*/${dark_cyan}/" $target
-    sed -i "/# color15/s/#[a-f0-9]*/${dark_white}/" $target
+    sed -i "/# background/s/#[a-fA-F0-9]*/${background}/" $target
+    sed -i "/# foreground/s/#[a-fA-F0-9]*/${foreground}/" $target
+    sed -i "/# color0/s/#[a-fA-F0-9]*/${black}/" $target
+    sed -i "/# color1/s/#[a-fA-F0-9]*/${red}/" $target
+    sed -i "/# color2/s/#[a-fA-F0-9]*/${green}/" $target
+    sed -i "/# color3/s/#[a-fA-F0-9]*/${yellow}/" $target
+    sed -i "/# color4/s/#[a-fA-F0-9]*/${blue}/" $target
+    sed -i "/# color5/s/#[a-fA-F0-9]*/${magenta}/" $target
+    sed -i "/# color6/s/#[a-fA-F0-9]*/${cyan}/" $target
+    sed -i "/# color7/s/#[a-fA-F0-9]*/${white}/" $target
+    sed -i "/# color8/s/#[a-fA-F0-9]*/${dark_black}/" $target
+    sed -i "/# color9/s/#[a-fA-F0-9]*/${dark_red}/" $target
+    sed -i "/# color10/s/#[a-fA-F0-9]*/${dark_green}/" $target
+    sed -i "/# color11/s/#[a-fA-F0-9]*/${dark_yellow}/" $target
+    sed -i "/# color12/s/#[a-fA-F0-9]*/${dark_blue}/" $target
+    sed -i "/# color13/s/#[a-fA-F0-9]*/${dark_magenta}/" $target
+    sed -i "/# color14/s/#[a-fA-F0-9]*/${dark_cyan}/" $target
+    sed -i "/# color15/s/#[a-fA-F0-9]*/${dark_white}/" $target
 
     # dunst
     echo "Alterando configurações para dunst..." 2>&1 | tee -a $logfile
