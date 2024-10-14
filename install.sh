@@ -40,18 +40,25 @@ case $yn in
         # nonfree repo
         sudo xbps-install -Syv void-repo-nonfree 2>&1 | tee -a $logfile
 
-        # apps
-        apps="i3-gaps i3lock i3status i3blocks xorg xcape rsync \
-            git github-cli vim-huge gvim-huge neovim kitty alacritty \
-            qutebrowser conky scrot feh flameshot nitrogen lxappearance \
-            inkscape nm-applet redshift dunst rofi dmenu xcalc bat \
-            mpd mpc mpv vlc ncmpcpp mpdscribble minidlna ranger w3m-img \
-            fzf gvfs trash-cli transmission xsel breeze-icons \
-            python3-pip zip unzip make zathura zathura-pdf-poppler"
-        for app in $apps
-        do
-            sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
-        done
+        # apps install
+        # check if app list file exists
+        if [ -f "install_list_apps" ]; then
+            # read it contents and execute one line at time
+            while IFS= read -r line; do
+                # trail whitespaces and leading spaces
+                app=$(echo "$line" | awk '{$1=$1};1')
+                # ignore empty lines or lines starting with `#`
+                if [ -z "$app" ] || [ "${app#\#}" != "$app" ]; then
+                    continue
+                fi
+                # install app
+                sudo xbps-install -Syv $app 2>&1 | tee -a $logfile
+            done < install_list_apps
+        else
+            echo "Arquivo install_list_apps não encontrado." 2>&1 | tee -a $logfile
+            echo "Não instalaremos pacotes." 2>&1 | tee -a $logfile
+            echo "Pularemos para a próxima etapa.\n" 2>&1 | tee -a $logfile
+        fi
         ;;
     * )
         echo "Não instalaremos pacotes." 2>&1 | tee -a $logfile
@@ -95,16 +102,11 @@ fi
 # ~
 source_path="$dotfiles"
 target_path="$HOME"
-file="bash_aliases"
-sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
-file="bashrc"
-sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
-file="git-prompt.sh"
-sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
-file="inputrc"
-sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
-file="xsessionrc"
-sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+files="bash_aliases bashrc git-prompt.sh inputrc xsessionrc"
+for file in $files
+do
+    sudo ln -vsf "$source_path/$file" "$target_path/.$file" 2>&1 | tee -a $logfile
+done
 
 # alacritty
 source_path="$dotfiles/alacritty"
@@ -241,16 +243,12 @@ target_path="$HOME/.vim"
 if [ ! -d $target_path ]; then
     mkdir -v $target_path 2>&1 | tee -a $logfile
 fi
-file="after"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-file="colors"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-file="config"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-file="plugin"
-sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
-file="snippets"
-sudo ln -vsf "$source_path/$file" "$target_path/UltiSnips" 2>&1 | tee -a $logfile
+files="after colors config ftplugin plugin snippets"
+for file in $files
+do
+    sudo ln -vsf "$source_path/$file" $target_path 2>&1 | tee -a $logfile
+done
+
 file="base"
 cp -v "$source_path/$file" "$HOME/.vimrc" 2>&1 | tee -a $logfile
 
@@ -299,6 +297,7 @@ cp -v "$source_path/$file" $target_path 2>&1 | tee -a $logfile
 
 # {{{ OTHER RESOURCES ---------------------------------------------------------
 
+# CURSORS
 if [ ! -d "$HOME/.local/share/icons/Vimix-cursors" ]; then
     echo "Baixando cursores vimix ..." 2>&1 | tee -a $logfile
     git clone https://github.com/vinceliuice/Vimix-cursors 2>&1 | tee -a $logfile
@@ -306,6 +305,7 @@ if [ ! -d "$HOME/.local/share/icons/Vimix-cursors" ]; then
     $HOME/Vimix-cursors./install.sh 2>&1 | tee -a $logfile
 fi
 
+# THEMES AND ICONS
 echo "Instalando temas e ícones GTK ..." 2>&1 | tee -a $logfile
 source_path="$HOME/dotfiles/themes"
 target_path="$HOME/.themes"
@@ -319,6 +319,52 @@ for theme in $themes_list; do
     echo "Vamos extrair ícones $theme ..." 2>&1 | tee -a $logfile
     tar -xzf "$source_path/$theme/icons.tar.gz" -C "$target_path" 2>&1 | tee -a $logfile
 done
+
+# FONTS
+fonts_dir="$HOME/.local/share/fonts"
+if [ ! -d $fonts_dir ]; then
+    mkdir -v $fonts_dir 2>&1 | tee -a $logfile
+fi
+base_url="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1"
+
+# check if font list file exists
+if [ -f "install_list_fonts" ]; then
+    # read it contents and execute one line at time
+    while IFS= read -r line; do
+        # trail whitespaces and leading spaces
+        font=$(echo "$line" | awk '{$1=$1};1')
+        # ignore empty lines or lines starting with `#`
+        if [ -z "$font" ] || [ "${font#\#}" != "$font" ]; then
+            continue
+        fi
+        # execute if font is not already installed
+        if ! fc-list | grep -qi "$font"; then
+            echo "Obtendo $font ..." | tee -a $logfile
+            cd $fonts_dir
+            url="${base_url}/${font}.zip"
+            if [ ! -d $font ]; then
+                mkdir -v $font 2>&1 | tee -a $logfile
+            fi
+            cd $font
+            curl -fLo "${font}.zip" $url
+            unzip "${font}.zip"
+        else
+            echo "Fonte $font já se encontra instalada." | tee -a $logfile
+        fi
+    done < install_list_fonts
+else
+    echo "Arquivo install_list_fonts não encontrado." 2>&1 | tee -a $logfile
+    echo "Não instalaremos fontes." 2>&1 | tee -a $logfile
+fi
+
+fonts="apercu material"
+for font in $fonts
+do
+    cp -vr "$HOME/dotfiles/fonts/$font" $fonts_dir 2>&1 | tee -a $logfile
+done
+
+cd $fonts_dir
+fc-cache -fv . 2>&1 | tee -a $logfile
 
 # }}} ------------------------------------------------------------------------
 
