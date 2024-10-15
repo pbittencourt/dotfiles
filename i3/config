@@ -102,6 +102,7 @@ exec set_wallpaper
 exec nm-applet
 exec redshift_mine
 exec ~/dotfiles/bin/hjkl.sh
+exec unclutter --timeout 10 --jitter 10
 exec sleep 10; flameshot
 exec sleep 15; ~/dotfiles/bin/mpdstart.sh
 exec sleep 30; ~/dotfiles/bin/cloud.sh
@@ -187,7 +188,7 @@ bar {
 bindsym $mod+F1 workspace $ws1; exec $browser
 bindsym $mod+F2 workspace $ws2; exec $editor
 #bindsym $mod+F3
-#bindsym $mod+F4
+bindsym $mod+F4 exec xcalc
 bindsym $mod+F5 exec $terminal --title 'floating' ~/dotfiles/bin/mpdstart.sh
 #bindsym $mod+F6
 #bindsym $mod+F7
