@@ -2,7 +2,26 @@
 # SNIPPETS FOR LaTeX #
 #====================#
 
+# [[[ CONFIG ------------------------------------------------------------------
+
+global !p
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment():
+	return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')")
+	return x != '0' and y != '0'
+endglobal
+
+# ]]] -------------------------------------------------------------------------
+
+# [[[ GENERAL SNIPPETS --------------------------------------------------------
+
 # Inicia um artigo latex, modelo tradicional
+
 snippet artigo "Template de artigo básico" b
 \documentclass[11pt,a4paper]{article}
 \usepackage[brazil]{babel}
@@ -15,7 +34,7 @@ snippet artigo "Template de artigo básico" b
 \usepackage{hyperref}
 \pagestyle{fancy}
 \title{$1}
-\author{${2:Pedro P. Bittencourt}\footnote{${3:Professor de física e matemática da educação básica.}}}
+\author{${2:Pedro P. Bittencourt}}
 \date{\today{}}
 %\graphicspath{}
 
@@ -33,9 +52,17 @@ $0
 \end{document}
 endsnippet
 
-#---------------------#
-# Formatação de texto #
-#---------------------#
+snippet pac "Package" b
+\usepackage[${1:options}]{${2:package}}$0
+endsnippet
+
+snippet pr "part inside parts enviroment"
+\part $1
+endsnippet
+
+# ]]] -------------------------------------------------------------------------
+
+# [[[ TEXTO -------------------------------------------------------------------
 
 snippet bb "bold text"
 \textbf{${1:${VISUAL}}}$0
@@ -49,9 +76,15 @@ snippet tt "normal text"
 \textrm{$1} $0
 endsnippet
 
-#------------------#
-# Matemática geral #
-#------------------#
+snippet beg "begin something"
+\begin{${1:${VISUAL:}}}
+	$0
+\end{$1}
+endsnippet
+
+# ]]] -------------------------------------------------------------------------
+
+# [[[ MATEMÁTICA --------------------------------------------------------------
 
 snippet mk "inline math" wA
 $${1}$`!p
@@ -62,28 +95,67 @@ else:
 `$2
 endsnippet
 
-snippet fr "fração"
-\frac{$1}{$2}
+snippet dm "display math" wA
+\[
+$1
+\]$0
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+context "math()"
+snippet pt "potência" iA
+^{$1}$0
+endsnippet
+
+context "math()"
+snippet // "fração" iA
+\frac{$1}{$2}$0
 endsnippet
 
 snippet / "fração pré-seleção" i
 \\frac{${VISUAL}}{$1}$0
 endsnippet
 
-snippet difr "displaystile fraction"
-\displaystyle\frac{$1}{$2}
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "denominador fração" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
-snippet ra "rightarrow"
-\Rightarrow 
+priority 1000
+context "math()"
+snippet '^.*\)/' "() frac" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
 endsnippet
 
 snippet avg "overline average bar"
 \overline{$1}$0
 endsnippet
 
-snippet .. "cdot" iA
- \cdot 
+snippet lr) "left and right parenthesis" iA
+\left ( $1 \right )$0
+endsnippet
+
+snippet lr] "left and right brackets" iA
+\left [ $1 \right ]$0
 endsnippet
 
 snippet sis "sistemas de equações"
@@ -95,20 +167,89 @@ endsnippet
 
 snippet cols "multicols enviroment"
 \begin{multicols}{$1}
-    $2
+	$2
 \end{multicols}$0
 endsnippet
 
-snippet pr "part inside parts enviroment"
-\part $1
+# [[[ OPERADORES --------------------------------------------------------------
+
+context "math()"
+snippet ** "cdot" iA
+ \cdot 
 endsnippet
 
-#----------------#
-# Ciências geral #
-#----------------#
+context "math()"
+snippet ... "ldots" iA
+\ldots
+endsnippet
+
+context "math()"
+snippet sr "^2" iA
+^2
+endsnippet
+
+context "math()"
+snippet cb "^3" iA
+^3
+endsnippet
+
+context "math()"
+snippet raiz "raiz enésima" iA
+\sqrt$1{$2}$0
+endsnippet
+
+# ]]] -------------------------------------------------------------------------
+
+# [[[ SÍMBOLOS ----------------------------------------------------------------
+
+snippet => "implies" Ai
+\implies
+endsnippet
+
+snippet =< "implied by" Ai
+\impliedby
+endsnippet
+
+context "math()"
+snippet ::: "therefore" iA
+\therefore
+endsnippet
+
+context "math()"
+snippet <> "not equal" iA
+\neq
+endsnippet
+
+context "math()"
+snippet == "equivalent" iA
+\equiv
+endsnippet
+
+context "math()"
+snippet >= "maior ou igual a " iA
+\geq
+endsnippet
+
+context "math()"
+snippet <= "menor ou igual a" iA
+\leq
+endsnippet
+
+context "math()"
+snippet +- "mais ou menos" iA
+\pm
+endsnippet
+
+# ]]] -------------------------------------------------------------------------
+
+# [[[ CIÊNCIAS ----------------------------------------------------------------
 
 # Insere um número com unidade de medida
-# (só funciona em arquivo *.tex, demanda pacote `siunitx`)
+# (demanda pacote `siunitx`)
 snippet un "número e unidade de medida" w
 \unit[$1]{$0}
 endsnippet
+
+# ]]] -------------------------------------------------------------------------
+
+# vim:fileencoding=utf-8:foldmethod=marker
