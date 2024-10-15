@@ -78,7 +78,7 @@ export PATH="$PATH:$HOME/.local/bin"
 # {{{ HISTORY -----------------------------------------------------------------
 
 # ignore duplicated commands in history
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreboth:erasedups
 
 # number of lines in active history
 HISTSIZE=5000
