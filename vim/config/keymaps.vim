@@ -131,3 +131,8 @@ nno <leader><F5> <Plug>MarkdownPreviewToggle
 augroup copymdimage
     autocmd FileType markdown nno <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
+
+" vim-lsp
+nno <leader>]] <plug>(lsp-next-diagnostic)
+nno <leader>[[ <plug>(lsp-previous-diagnostic)
+nno <leader>gd <plug>(lsp-definition)
