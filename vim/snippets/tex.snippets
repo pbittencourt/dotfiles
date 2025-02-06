@@ -60,20 +60,70 @@ snippet pr "part inside parts enviroment"
 \part $1
 endsnippet
 
+snippet subf "subfigure"
+\begin{figure}[ht!]
+		\centering
+		\begin{subfigure}{0.48\textwidth}
+				\centering
+				\input{$1}
+				\caption{$2}
+				\label{fig:$3}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.48\textwidth}
+				\centering
+				\input{$4}
+				\caption{$5}
+				\label{fig:$6}
+		\end{subfigure}
+		\caption{$7}
+		\label{fig:$8}
+\end{figure}$0
+endsnippet
+
+snippet figi "figure input pdf"
+\begin{figure}[${1:htpb}]
+	\centering
+	${2:\resizebox{\textwidth}{!}}{\input{${3:graphics/}${4:.pdf_tex}}}
+	\caption{$5}
+	\label{fig:$6}
+\end{figure}
+endsnippet
+
+snippet enuma "enumerate with alpha items"
+\begin{enumerate}[label=\alph*)]
+	\item $1
+\end{enumerate}$0
+endsnippet
+
+snippet enumr "enumerate with roman items"
+\begin{enumerate}[label=\roman*)]
+	\item $1
+\end{enumerate}$0
+endsnippet
+
 # ]]] -------------------------------------------------------------------------
 
 # [[[ TEXTO -------------------------------------------------------------------
 
-snippet bb "bold text"
+snippet b "bold text"
 \textbf{${1:${VISUAL}}}$0
 endsnippet
 
-snippet ii "italic text"
+snippet i "italic text"
 \emph{${1:${VISUAL:}}}$0
 endsnippet
 
-snippet tt "normal text"
-\textrm{$1} $0
+snippet n "normal text"
+\textrm{${1:${VISUAL:}}} $0
+endsnippet
+
+snippet t "normal text"
+\texttt{${1:${VISUAL:}}} $0
+endsnippet
+
+snippet q "quoted text"
+\`\`${1:${VISUAL:}}''$0
 endsnippet
 
 snippet beg "begin something"
@@ -146,7 +196,17 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
 
-snippet avg "overline average bar"
+context "math()"
+snippet bin "binomial" iA
+\binom{$1}{$2}$0
+endsnippet
+
+context "math()"
+snippet c/ "cfrac" iA
+\cfrac{$1}{$2}$0
+endsnippet
+
+snippet avg "overline average bar" iA
 \overline{$1}$0
 endsnippet
 
@@ -240,6 +300,11 @@ snippet +- "mais ou menos" iA
 \pm
 endsnippet
 
+context "math()"
+snippet lbd "lambda λ" iA
+\lambda
+endsnippet
+
 # ]]] -------------------------------------------------------------------------
 
 # [[[ CIÊNCIAS ----------------------------------------------------------------
@@ -252,4 +317,4 @@ endsnippet
 
 # ]]] -------------------------------------------------------------------------
 
-# vim:fileencoding=utf-8:foldmethod=marker
+# vim:fileencoding=utf-8:foldmethod=marker:foldmarker=[[[,]]]
