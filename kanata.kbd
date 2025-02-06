@@ -1,0 +1,32 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps a s d f h j k l ;
+)
+
+(defvar
+  tap-time 150
+  hold-time 200
+)
+
+(defalias
+  caps (tap-hold $tap-time $hold-time esc (layer-toggle arrows))
+  a (tap-hold $tap-time $hold-time a lmet)
+  s (tap-hold $tap-time $hold-time s lalt)
+  d (tap-hold $tap-time $hold-time d lsft)
+  f (tap-hold $tap-time $hold-time f lctl)
+  j (tap-hold $tap-time $hold-time j rctl)
+  k (tap-hold $tap-time $hold-time k rsft)
+  l (tap-hold $tap-time $hold-time l ralt)
+  ; (tap-hold $tap-time $hold-time ; rmet)
+)
+
+(deflayer base
+  @caps @a @s @d @f h @j @k @l @;
+)
+
+(deflayer arrows
+  - - - - - left down up right -
+)
