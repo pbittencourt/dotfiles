@@ -102,6 +102,14 @@ iabbrev ievent ▫
 iabbrev inote ▪
 iabbrev imoved ▹
 iabbrev i-- —
+iabbrev nao não
+iabbrev Nao Não
+iabbrev voce você
+iabbrev Voce Você
+iabbrev mto muito
+iabbrev Mto Muito
+iabbrev ciencia ciência
+iabbrev Ciencia Ciência
 
 " funções
 nmap <leader>8 :call ToggleCC()<CR>
