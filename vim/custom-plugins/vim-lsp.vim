@@ -1,5 +1,5 @@
 " Virtual text
-let g:lsp_diagnostics_virtual_text_enabled = 1
+let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_diagnostics_virtual_text_delay = 200
 let g:lsp_diagnostics_virtual_text_prefix = "▉ "
 let g:lsp_diagnostics_virtual_text_align = "right"

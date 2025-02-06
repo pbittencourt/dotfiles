@@ -5,6 +5,9 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " exibe número do buffer
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+" exibe virtual envs
+let g:airline#extensions#virtualenv#enabled = 1
+
 " powerline symbols
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
