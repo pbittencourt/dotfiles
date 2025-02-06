@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-cat ~/.bash_history | sort | uniq | mydmenu -l 20 -p "  bash:" | xsel -b
+cat ~/.bash_history ~/.zsh_history | sed 's/^.*:0;//' | sort | uniq | mydmenu -l 20 -p " " | xsel -b
