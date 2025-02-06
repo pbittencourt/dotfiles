@@ -1,0 +1,21 @@
+[global]
+     icon_theme = "catpuccin, breeze"
+
+[urgency_low]
+     background = "#303446"
+     foreground = "#a6d189"
+     frame_color = "#a6d189"
+     highlight = "#a6d189"
+     timeout = 10
+[urgency_normal]
+     background = "#303446"
+     foreground = "#e5c890"
+     frame_color = "#e5c890"
+     highlight = "#e5c890"
+     timeout = 10
+[urgency_critical]
+     background = "#f4b8e4"
+     foreground = "#303446"
+     frame_color = "#303446"
+     highlight = "#303446"
+     timeout = 10

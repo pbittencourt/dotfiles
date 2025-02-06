@@ -39,7 +39,7 @@ output="$directory/$theme/colors.toml"
 if [ -f "$output" ]; then
     echo "INFO Alacritty config already exists. Skipping ..."
 else
-    echo "# alacritty theme nord" > $output
+    echo "# alacritty theme ${theme}" > $output
     echo "[colors.primary]" >> $output
     echo "background = \"$(echo $background | sed 's/#/0x/g')\"" >> $output
     echo "foreground = \"$(echo $foreground | sed 's/#/0x/g')\"" >> $output
