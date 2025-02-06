@@ -69,9 +69,17 @@ gitf () {
 
 # xbps
 xq () {
+    if [ -z "$1" ]; then
+        echo "Usage: xq <package_name>"
+        return 1
+    fi
     xbps-query -Rs "$1"
 }
 xi () {
+    if [ -z "$1" ]; then
+        echo "Usage: xi <package_name>"
+        return 1
+    fi
     sudo xbps-install -Sv "$1"
 }
 
