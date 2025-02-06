@@ -256,9 +256,9 @@ bindsym $mod+Return exec $terminal
 
 #bindsym $mod+z
 bindsym $mod+x exec ~/dotfiles/bin/hjkl.sh
-bindsym $mod+c exec rofi -modi ":greenclip print" \
+#bindsym $mod+c
+bindsym $mod+v exec rofi -modi ":greenclip print" \
                     -show  -run-command '{cmd}'
-#bindsym $mod+v
 bindsym $mod+b mode $mode_border
 bindsym $mod+n exec ~/dotfiles/bin/choose_wallpaper
 #bindsym $mod+m
