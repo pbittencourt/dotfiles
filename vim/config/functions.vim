@@ -51,3 +51,38 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
+
+" utiliza fzf para sugerir correções
+" source: https://coreyja.com/posts/vim-spelling-suggestions-fzf
+function! FzfSpellSink(word)
+  exe 'normal! "_ciw'.a:word
+endfunction
+function! FzfSpell()
+  let suggestions = spellsuggest(expand("<cword>"))
+  return fzf#run({'source': suggestions, 'sink': function("FzfSpellSink"), 'down': 10 })
+endfunction
+nnoremap z= :call FzfSpell()<CR>
+
+" atualiza datas no formato 'YYYY-MM-DD hh:mm'
+function! UpdateTimestamp()
+  if &filetype !=# 'markdown' && &filetype !=# 'sql'
+    return
+  endif
+  let l:save_cursor = getpos(".")
+  let l:now = strftime("%Y-%m-%d %H:%M")
+  " substitui a primeira ocorrência encontrada
+  silent! keeppatterns %s/\d\{4}-\d\{2}-\d\{2} \d\{2}:\d\{2}/\=l:now/e
+  " restaura posição original
+  call setpos('.', l:save_cursor)
+endfunction
+augroup UpdateTimestampOnSave
+  autocmd!
+  autocmd BufWritePre *.md,*.sql call UpdateTimestamp()
+augroup END
+
+" ativa spell e função de capitalização para tipos específicos
+augroup TXT_MD_SETTINGS
+    autocmd!
+    autocmd FileType text,markdown setlocal spell
+    autocmd FileType text,markdown autocmd InsertCharPre <buffer> if search('\v(%^|[.!?]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
+augroup END

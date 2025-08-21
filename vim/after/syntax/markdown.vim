@@ -5,3 +5,6 @@ syn match Normal '<\/\=code>' conceal
 
 call matchadd('Conceal', '^`\{3}\w\+$', 1000, -1, {'conceal': 'λ'})
 call matchadd('Conceal', '^`\{3}$', 1001, -1, {'conceal': '–'})
+
+syntax match Destaque /==\zs[^=]\+\ze==/ containedin=ALL
+highlight default link Destaque Search

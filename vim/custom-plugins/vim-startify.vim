@@ -17,7 +17,5 @@ let g:startify_lists = [
       \ { 'type': 'commands',  'header': ['   Comandos']               },
       \ ]
 let g:startify_bookmarks = [
-      \ { 'd': '~/Dropbox/secondbrain/journal/daily_log.md'},
-      \ { 'h': '~/Dropbox/secondbrain/journal/habit_tracker.md'},
-      \ { 'f': '~/Dropbox/secondbrain/03 recursos/techinfo.md'},
+      \ { 'd': '~/Documentos/secondbrain/6 journal/daily_log.md'},
       \ ]

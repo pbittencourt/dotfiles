@@ -104,12 +104,17 @@ iabbrev imoved ▹
 iabbrev i-- —
 iabbrev nao não
 iabbrev Nao Não
+iabbrev entao então
+iabbrev Entao Então
 iabbrev voce você
 iabbrev Voce Você
 iabbrev mto muito
 iabbrev Mto Muito
 iabbrev ciencia ciência
 iabbrev Ciencia Ciência
+iabbrev tambem também
+iabbrev Tambem Também
+nmap <c-s> ]s1z=
 
 " funções
 nmap <leader>8 :call ToggleCC()<CR>

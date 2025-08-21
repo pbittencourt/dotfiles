@@ -4,16 +4,16 @@
 priority -1000
 
 snippet #! "#! python"
-#! /usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 endsnippet
 
 snippet #! "#! sh"
-#! /bin/sh
+#!/bin/sh
 endsnippet
 
 snippet #! "#! bash"
-#! /bin/bash
+#!/bin/bash
 endsnippet
 
 snippet att "atenciosamente"
@@ -23,6 +23,10 @@ endsnippet
 
 snippet eu "meu nome"
 Pedro P. Bittencourt
+endsnippet
+
+snippet sdate "dia da semana, YYYY-MM-DD" w
+`!v strftime("%A, %Y-%m-%d")`
 endsnippet
 
 snippet lorem "lorem impsum pra galera"
@@ -35,4 +39,60 @@ endsnippet
 
 snippet << "angular brackets for HTML (auto close tags)"
 <$1 />$0
+endsnippet
+
+snippet boilershell "boilerplate for shell script"
+#!/usr/bin/bash
+
+show_help() {
+    cat <<EOF
+Usage $(basename "\$0") [-h] ${VISUAL:Parâmetros}
+
+${VISUAL:Descrição do programa}
+
+OPTIONS:
+
+    ${bold}-h${norm}  Show this help text and exit program.
+EOF
+}
+
+# verifica existência de arquivo com variáveis predefinidas
+# para controlar formatação de texto
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+# parâmetros opcionais
+# pode aceitar argumento adicional se usar `:` ao lado da letra; ver exemplo
+while getopts 'hf:' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        f)
+            echo "${green}Parâmetro fictício de exemplo. Aceita argumento!"
+            echo "Argumento opcional: $OPTARG${norm}"
+            ;;
+        \?)
+            printf "${red}${err}Illegal option: -%s\n${norm}" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+# verifica existência de argumentos posicionais
+if [[ -z "$@" ]]; then
+    show_help
+    exit 1
+fi
 endsnippet
