@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# theme="tokyostorm"
+# feh --no-fehbg --recursive --bg-fill --randomize ~/dotfiles/themes/$theme/wallpapers &
+
+theme=$(cat "$HOME/dotfiles/themes/theme")
+wallpapers="$HOME/dotfiles/themes/$theme/wallpapers.txt"
+cd "$HOME/Imagens/Wallpapers"
+feh --no-fehbg --recursive --bg-fill --randomize $(cat "$wallpapers")

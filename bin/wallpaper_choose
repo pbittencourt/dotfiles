@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+# theme=$(cat $HOME/.local/bin/set_wallpaper | grep -o '".*"' | sed 's/"//g')
+# folder="$HOME/dotfiles/themes/$theme/wallpapers"
+# choice=$(ls $folder | mydmenu -l 7 -p "  ")
+# if [ -n "$choice" ]; then
+#     feh --no-fehbg --bg-fill "$folder/$choice"
+#     notify-send -i "image-x-generic" "wallpaper" "Wallpaper changed!"
+# fi
+
+theme=$(cat "$HOME/dotfiles/themes/theme")
+wallpapers="$HOME/dotfiles/themes/$theme/wallpapers.txt"
+img_path="$HOME/Imagens/Wallpapers"
+choice=$(cat $wallpapers | mydmenu -l 10 -p "  " )
+if [ -n "$choice" ]; then
+    feh --no-fehbg --bg-fill "$img_path/$choice"
+    notify-send -i "image-x-generic" "Wallpaper" "Wallpaper changed!"
+fi

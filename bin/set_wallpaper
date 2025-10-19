@@ -1,4 +1,0 @@
-#! /bin/bash
-
-theme="everdark"
-feh --no-fehbg --recursive --bg-fill --randomize ~/dotfiles/themes/$theme/wallpapers &
