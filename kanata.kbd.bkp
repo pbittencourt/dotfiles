@@ -3,9 +3,7 @@
 )
 
 (defsrc
-  tab  q w e r y u i o p
   caps a s d f h j k l ;
-  lsft z x c v n m , . /
 )
 
 (defvar
@@ -14,7 +12,6 @@
 )
 
 (defalias
-  tab (tap-hold $tap-time $hold-time tab (layer-toggle numbers))
   caps (tap-hold $tap-time $hold-time esc (layer-toggle arrows))
   a (tap-hold $tap-time $hold-time a lmet)
   s (tap-hold $tap-time $hold-time s lalt)
@@ -27,19 +24,9 @@
 )
 
 (deflayer base
-  @tab  q  w  e  r  y  u  i  o  p
-  @caps @a @s @d @f h  @j @k @l @;
-  lsft  z  x  c  v  n  m  ,  .  /
-)
-
-(deflayer numbers
-  _ _ _ _ _ _ 4 5 6 +
-  _ _ _ _ _ _ 1 2 3 =
-  _ _ _ _ _ _ 0 _ _ _
+  @caps @a @s @d @f h @j @k @l @;
 )
 
 (deflayer arrows
-  _ _ _ _ _ _ _ _ _ _
-  _ _ _ _ _ left down up right ret
-  _ _ _ _ _ _ _ _ _ _
+  - - - - - left down up right -
 )
