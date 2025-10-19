@@ -1,0 +1,6 @@
+* {
+    color3: #7aa2f7; // prompt e borda
+    color1: #c0caf5; // texto geral
+    color0: #24283b; // fundo geral
+    color2: #414868; // fundo do item selecionado
+}

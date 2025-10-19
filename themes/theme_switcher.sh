@@ -18,6 +18,9 @@ if [ ! -z "$theme" ]; then
     notify-send -u low -t 3600 -i "applications-graphics" \
     "Tema boladão" "Aplicando tema $theme ..."
 
+    # theme name
+    echo "$theme" > "$HOME/dotfiles/theme"
+
     # xresources
     echo "Alterando arquivo Xresources ..." 2>&1 | tee -a $logfile
     #echo "#include \"$dir_path/$theme/xresources\"" > "$HOME/.Xresources"
@@ -149,9 +152,9 @@ if [ ! -z "$theme" ]; then
 
     # wallpaper
     echo "Alterando wallpaper..." 2>&1 | tee -a $logfile
-    target="$HOME/dotfiles/bin/set_wallpaper"
-    destination="$HOME/.local/bin/set_wallpaper"
-    sed -e 's/theme=.*/theme=\"'${theme}'\"/g' $target > $destination
+    # target="$HOME/dotfiles/bin/set_wallpaper"
+    # destination="$HOME/.local/bin/set_wallpaper"
+    # sed -e 's/theme=.*/theme=\"'${theme}'\"/g' $target > $destination
     feh --no-fehbg --bg-fill "$HOME/dotfiles/themes/$theme/wallpapers/default.jpg" &
     echo "... wallpaper configurado!" 2>&1 | tee -a $logfile
 
