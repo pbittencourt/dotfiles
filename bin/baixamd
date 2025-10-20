@@ -1,0 +1,116 @@
+#!/bin/bash
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") <URL> [-a]
+Utilizando readability e pandoc, salva o conteúdo de <URL> em arquivo markdown,
+no formato "YYYYMMDDhhmmss - <ARTIGO>.md". O parâmetro opcional -a define o
+nome do artigo; em caso contrário, utiliza-se o padrão "Artigo de referência".
+EOF
+}
+
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+TEMPLATE="$HOME/Documentos/secondbrain/0 sistema/09 templates/template_nota-referencia.md"
+if [[ ! -f "$TEMPLATE" ]]; then
+    echo "${red}${err}Arquivo ${smul}$TEMPLATE${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+ID_ARTIGO=$(date +"%Y%m%d%H%M")
+ARTIGO="${ID_ARTIGO} - Artigo de referência.md"
+while getopts 'ha:' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        a)
+            TITULO="$OPTARG"
+            ARTIGO="${ID_ARTIGO} - ${OPTARG}.md"
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ -z "$@" ]]; then
+    echo "${red}${err}Parâmetro ${smul}<URL>${rmul} requerido!${norm}"
+    show_help
+    exit 1
+else
+    URL="$1"
+fi
+
+echo "${blue}${inf} Exportaremos o conteúdo para ${smul}${ARTIGO}${rmul}.${norm}"
+curl "$URL" | \
+    readability "$URL" | \
+    pandoc -f html -t markdown -o "artigo.tmp"
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}${err} A operação falhou!${norm}"
+    exit 1
+else
+    echo "${green}${suc} A obtenção do artigo foi um sucesso!${norm}"
+fi
+
+# insere dados do modelo no início do artigo
+cat "$TEMPLATE" "artigo.tmp" > "$ARTIGO"
+
+# remove arquivo temporário
+rm "artigo.tmp"
+
+# ------------------------------
+# Alterando parâmetros do artigo
+
+# ID
+sed -i -r "s/^(ID:).*$/\1 \"$ID_ARTIGO\"/g" "$ARTIGO"
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}${err} Não consegui editar o ID do artigo.${norm}"
+    exit 1
+else
+    echo "${cyan}${inf} Inseri o ID do artigo.${norm}"
+fi
+
+# URL
+# https://stackoverflow.com/a/27787551
+sed -i -r "s~^(referência:).*$~\1 ${URL}~g" "$ARTIGO"
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}${err} Não consegui editar a URL do artigo.${norm}"
+    exit 1
+else
+    echo "${cyan}${inf} Inseri a URL do artigo.${norm}"
+fi
+
+# data
+DATA_ARTIGO=$(date '+%Y-%m-%d')
+sed -i -r "s/^(date:).*$/\1 $DATA_ARTIGO/g" "$ARTIGO"
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}${err} Não consegui editar a data do artigo.${norm}"
+    exit 1
+else
+    echo "${cyan}${inf} Inseri a data do artigo.${norm}"
+fi
+
+# título
+if [[ ! -z "$TITULO" ]]; then
+    sed -i -r "s/^(title:).*$/\1 $TITULO/g" "$ARTIGO"
+    if [[ ! $? -eq 0 ]]; then
+        echo "${red}${err} Não consegui editar o título do artigo.${norm}"
+        exit 1
+    else
+        echo "${cyan}${inf} Inseri o título do artigo.${norm}"
+    fi
+fi

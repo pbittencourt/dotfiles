@@ -1,0 +1,85 @@
+#!/bin/bash
+
+exec 2>$HOME/.mytdlp-error.log
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0")
+OPTIONS:
+EOF
+}
+
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+audio_only=""
+skip_download=""
+while getopts 'has' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        a)
+            audio_only="-x --audio-format mp3"
+            notify-send \
+                -u low -t 6000 -i "audio-x-mpeg" \
+                "Somente áudio" "O arquivo será exportado para formato mp3."
+            ;;
+        s)
+            skip_download="--skip-download"
+            notify-send \
+                -u low -t 6000 -i "package-x-generic" \
+                "Somente metadados" "Não baixaremos o arquivo, apenas seus metadados."
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ -z "$@" ]]; then
+    show_help
+    notify-send \
+        -u critical -t 6000 -i "warning" \
+        "Atenção" "Você não informou um link válido!"
+    exit 1
+fi
+
+if [[ ! -z "$1" ]]; then
+    url="$1"
+    notify-send \
+        -u normal -t 6000 -i "emblem-cloud-download-symbolic" \
+        "Processando" "Vamos iniciar o download do arquivo em\n${url}"
+fi
+
+yt-dlp \
+    -P "$HOME/Vídeos/Youtube" \
+    --cookies-from-browser firefox --cookies "$HOME/cookies.txt" \
+    --ignore-errors \
+    --write-subs --write-auto-subs \
+    --sub-langs "en,pt" \
+    --write-description \
+    --write-thumbnail \
+    $audio_only $skip_download $url
+if [[ $? -eq 0 ]]; then
+    notify-send \
+        -u critical -t 6000 -i "dialog-error" \
+        "Erro" "Ocorreu um erro ao extrair o arquivo. Verifique o log."
+else
+    notify-send \
+        -u normal -t 6000 -i "dialog-ok" \
+        "Finalizado!" "Download finalizado do arquivo em\n${url}"
+fi
+

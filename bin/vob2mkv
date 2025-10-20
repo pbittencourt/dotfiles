@@ -1,0 +1,76 @@
+#!/bin/bash
+
+usage="Usage $(basename "$0") [OPTIONS] [<file1>, <file2>, ... <fileN>]
+Convert VOB files to MKV using ffmpeg.
+
+OPTIONS
+    -a   execute on every video file within current working dir
+    -p   set /path/to/output/files
+    -h   show this help text
+    -i   interactive, ie, ask before every step
+    -v   verbose messages"
+
+if [ $# -eq 0 ]; then
+    echo "$usage"
+    exit
+fi
+
+verbose=0
+interactive=0
+overwrite="-y"
+output_path="."
+videos=("$@")
+
+while getopts 'havi' OPTION; do
+    case "$OPTION" in
+        h)
+            echo "$usage"
+            exit
+            ;;
+        a)
+            echo "Looping through all video files within current directory."
+            readarray -d '' videos < <(find . -regextype posix-egrep -regex '.*\.vob' -print0)
+            #readarray -d '' videos <<<$(find . -name "*.vob" -type f)
+            #videos=$(find . -name "*.vob" -type f)
+            #echo $videos
+            ;;
+        v)
+            echo "Verbose mode."
+            verbose=1
+            ;;
+        i)
+            echo "Interactive mode. We will ask before every step."
+            interactive=1
+            overwrite=""
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            echo "$USAGE" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+telegramo "😄 Aplicação vob2mkv iniciada!"
+for vob_file in "${videos[@]}"
+do
+    base_name="${vob_file%.*}"
+    mkv_file="${base_name}.mkv"
+    telegramo "✳ Iniciando a conversão de ${vob_file} para ${mkv_file} ..."
+    frame_rate=$(ffprobe -hide_banner -v error -select_streams v:0 \
+        -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 \
+        "$vob_file" | bc -l
+    )
+    ffmpeg -i "$vob_file" -y -hide_banner -map 0 \
+           -c:v libx264 -preset veryslow -tune film -vf "yadif" \
+           -profile:v high -level 3.1 -crf 23 -x264-params "ref=5:bframes=5" \
+           -r "$frame_rate" -c:a copy -c:s copy \
+           "$mkv_file"
+    if [ $? -ne 0 ]; then
+        telegramo "😫 Erro ao recodificar $vob_file para $mkv_file"
+    else
+        telegramo "✅ Arquivo $mkv_file convertido com sucesso!"
+    fi
+done
+telegramo "😄 Aplicação vob2mkv encerrada!"

@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+choice=$(echo "" | mydmenu -p "  " -l 5)
+if [ -n "$choice" ]; then
+    $HOME/.local/bin/telegramo "$choice"
+    if [ $? -ne 0 ]; then
+        notify-send -i "action-unavailable-symbolic" \
+            -u critical -t 6000 \
+            "Telegram" "Ocorreu algum erro inesperado! 😫"
+        exit 0
+    fi
+    notify-send -i "document-send" \
+        -u normal -t 6000 \
+        "Telegram" "Conteúdo enviado com sucesso!"
+else
+    #notify-send -i "document-send" \
+    notify-send -i "action-unavailable-symbolic" \
+        -u critical -t 6000 \
+        "Telegram" "Não é possível enviar conteúdo vazio!"
+fi

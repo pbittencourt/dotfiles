@@ -1,0 +1,92 @@
+#!/usr/bin/bash
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") [-h] <ARQUIVO>
+
+Utiliza ${smul}whisper_cpp${rmul} para transcrever <ARQUIVO>. Por padrão, a
+linguagem utilizada é "pt" e o modelo é "small".
+
+OPTIONS:
+
+    ${bold}-h${norm}  Show this help text and exit program.
+EOF
+}
+
+# verifica existência de arquivo com variáveis predefinidas
+# para controlar formatação de texto
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+# parâmetros opcionais
+modelo="small"
+lang="pt"
+while getopts 'hm:l:' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        m)
+            modelo="$OPTARG"
+            echo "${cyan}${inf}Modelo a ser utilizado: ${modelo}"
+            ;;
+        l)
+            lang="$OPTARG"
+            echo "${cyan}${inf}Linguagem a ser utilizada: ${lang}"
+            ;;
+        \?)
+            printf "${red}${err}Illegal option: -%s\n${norm}" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+# verifica existência de argumentos posicionais
+if [[ -z "$@" ]]; then
+    show_help
+    exit 1
+else
+    arquivo="$1" # /home/monolito/julieta.mp3
+    nomebase=$(basename "$arquivo") # julieta.mp3
+    diretorio=$(dirname "$arquivo") # /home/monolito
+fi
+
+# converte arquivo para wav, se necessário
+convertido="${diretorio}/${nomebase%.*}.wav" # /home/monolito/julieta.wav
+tipo=$(file --mime-type -Lb "$arquivo")
+if [[ "$tipo" = *mpeg* && ! -f "$convertido" ]]; then
+    echo "${cyan}${inf}Precisamos converter ${smul}${arquivo}${rmul} para formato WAV.${norm}"
+    ffmpeg -i "$arquivo" -ar 16000 -ac 1 -c:a pcm_s16le "$convertido"
+    if [[ ! $? -eq 0 ]]; then
+        echo "${red}❌Ocorreu um erro na conversão de ${smul}${arquivo}${rmul} para formato WAV.${norm}"
+        exit 1
+    else
+        echo "${green}✔ Arquivo ${smul}${convertido}${rmul} pronto para transcrição!${norm}"
+    fi
+else
+    echo "${green}✔ Arquivo ${smul}${convertido}${rmul} pronto para transcrição!${norm}"
+fi
+
+# executa transcrição em si
+$HOME/docker/whisper_cpp/build/bin/whisper-cli \
+    -m $HOME/docker/whisper_cpp/models/ggml-${modelo}.bin \
+    -l ${lang} -otxt \
+    -f ${convertido}
+
+# notifica via telegram
+if [[ ! $? -eq 0 ]]; then
+    telegramo "❌Ocorreu um erro na transcrição de ${nomebase}!"
+else
+    telegramo "✔ Arquivo ${nomebase} transcrito com sucesso!"
+fi

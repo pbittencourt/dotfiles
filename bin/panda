@@ -1,0 +1,45 @@
+#!/bin/bash
+
+usage="Usage $(basename "$0") [OPTIONS] [<file>]
+Convert <file> from markdown to html. Uses predefineds css stylesheet
+and html template.
+
+OPTIONS
+    -h   show this help text
+    -v   verbose messages"
+
+if [ $# -eq 0 ]; then
+    echo "$usage"
+    exit
+fi
+
+while getopts 'hv' OPTION; do
+    case "$OPTION" in
+        h)
+            echo "$usage"
+            exit
+            ;;
+        v)
+            echo "Verbose mode."
+            verbose=1
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            echo "$USAGE" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+echo $1
+
+filename=$(basename -- "$1")
+extension="${filename##*.}"
+filename="${filename%.*}"
+md="$filename.md"
+html="$filename.html"
+css="https://classless.de/classless.css"
+template="/home/monolito/Modelos/template.html"
+
+pandoc -s "${md}" --toc -c "${css}" --template "${template}" -o "${html}"

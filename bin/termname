@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+LOGFILE="$HOME/.local/bin/termname.log"
+if [[ ! -f "$LOGFILE" ]]; then
+    echo "arquivo não existe"
+    exit 1
+fi
+nome=$(uniq "$LOGFILE" | mydmenu -l 10 -p " : ")
+if [[ ! -z "$nome" ]]; then
+    echo "$nome" >> "$LOGFILE"
+    grep -v '^[[:space:]]*$' "$LOGFILE" | \
+        sort -u > "$LOGFILE.tmp" && \
+        mv "$LOGFILE.tmp" "$LOGFILE"
+    alacritty --title "$nome"
+fi

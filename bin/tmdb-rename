@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+saida="renomeando.txt"
+echo "" > "$saida"
+find . -maxdepth 1 -mindepth 1 -type d -print0 | while IFS= read -r -d '' item; do
+    dir_name=$(basename "$item")
+    entrada=$(echo "$dir_name" | sed 's/ /\./g' | sed 's/[^a-zA-Z0-9.]//g')
+    ano=$(echo "$entrada" | sed -n 's/.*\b\([0-9]\{4\}\)\b.*/\1/p')
+    nome=$(echo "$entrada" | sed "s/\.$ano.*//" | sed 's/\./ /g')
+    novo=$(tmdb-query "$nome" "$ano")
+    echo "mv -nv \"${dir_name}\" | \"${novo}\"" >> "$saida"
+done

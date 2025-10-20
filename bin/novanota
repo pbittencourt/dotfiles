@@ -1,0 +1,101 @@
+#!/usr/bin/bash
+
+# FIXME: demanda revisão; utilize essa referência:
+# https://github.com/BreadOnPenguins/scripts/blob/master/shortcuts-menus/notes
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") [-m] <modelo>
+
+Cria nova nota baseada no modelo <modelo>.
+
+OPTIONS:
+
+    ${bold}-h${norm}  Exibe essa ajuda e encerra o programa.
+EOF
+}
+
+# verifica existência de arquivo com variáveis predefinidas
+# para controlar formatação de texto
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+template_dir="$HOME/Modelos"
+modelo=""
+titulo=""
+etiquetas=""
+append_title=0
+while getopts 'hm:t:ae:' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        m)
+            arquivo="$OPTARG"
+            modelo="$template_dir/$arquivo.md"
+            ;;
+        t)
+            titulo="$OPTARG"
+            ;;
+        a)
+            append_title=1
+            ;;
+        e)
+            etiquetas="$OPTARG"
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ ! -f "$modelo" ]]; then
+  echo "${red}${err}Arquivo $modelo não encontrado."
+  exit 1
+else
+  echo "${cyan}${inf}Modelo escolhido: ${bold}${modelo}${norm}"
+fi
+
+arquivo_ID=$(date '+%Y%m%d%H%M%S')
+novo_arquivo="${arquivo_ID}.md"
+cp -v "$modelo" "$novo_arquivo"
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}${err}Operação falhou!${norm}"
+    echo "Não conseguimos copiar ${smul}${modelo}${rmul} para ${smul}${novo_arquivo}${rmul}."
+    exit 1
+else
+    echo "${green}${suc}Arquivo ${novo_arquivo} criado com sucesso!${norm}"
+fi
+
+# ID
+sed -i -r "s/^(ID:).*$/\1 \"$arquivo_ID\"/g" "$novo_arquivo"
+
+# data
+ahora=$(date '+%Y-%m-%d')
+sed -i -r "s/^(date:).*$/\1 $ahora/g" "$novo_arquivo"
+
+# título
+if [[ ! -z "$titulo" ]]; then
+    if [[ "$append_title" -eq 1 ]]; then
+        sed -i -r "s/^(title:.*)$/\1, $titulo/g" "$novo_arquivo"
+    else
+        sed -i -r "s/^(title:).*$/\1 $titulo/g" "$novo_arquivo"
+    fi
+fi
+
+# tags (ou etiquetas)
+if [[ ! -z "$etiquetas" ]]; then
+    sed -i -r "s/^(tags:).*$/\1 $etiquetas/g" "$novo_arquivo"
+fi

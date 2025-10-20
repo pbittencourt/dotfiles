@@ -1,7 +1,21 @@
 #!/usr/bin/bash
 
-notify-send \
-    -u low -t 4000 -i "smplayer" \
-    "MPV" "Opening:\n$1"
+HISTFILE="$HOME/.mpvyt-history.json"
+AHORA=$(date +"%Y-%m-%d-%H-%M-%S")
 
-mpv --title="floating" --force-window=immediate "$1"
+# open video
+mpv --title="floating" --force-window=immediate "$1" &
+
+# fetch data and add to history
+meta=$(yt-dlp -j "$1" | \
+    jq '{title, channel, uploader, uploader_id, uploader_url, upload_date, original_url, fulltitle, duration_string, description}' | \
+    jq --arg AHORA "$AHORA" '. + { watched_at: $AHORA}'
+)
+channel=$(echo "$meta" | jq -r '.channel')
+title=$(echo "$meta" | jq -r '.fulltitle')
+echo "$meta" >> $HISTFILE
+
+# notification ...
+notify-send \
+    -u low -t 6000 -i "smplayer" \
+    "${channel}" "${title}"

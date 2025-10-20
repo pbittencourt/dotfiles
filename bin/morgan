@@ -1,37 +1,212 @@
 #!/usr/bin/bash
 
-usage="Usage $(basename "$0") [-i -h] [-r /foo/bar]
-Media (photos and videos) organizer. Move files from working directory to user
-photo repository.
+bold=$(tput bold)
+norm=$(tput sgr0)
+undr=$(tput smul)
 
-where:
-    -i   show info from current dir, without moving files
-    -h   show this help text
-    -r   set repository of media; default is
-         /run/media/monolito/TOSHIBA EXT/wayback machine/gaveta"
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") [-h -s -i] [-d directory] [-r /path/to/repository] [FILES]
 
-destino="/run/media/monolito/TOSHIBA EXT/wayback machine/gaveta"
+Media (photos and videos) organizer. Copy files from working directory to user
+media repository. Uses ${undr}exiftool${norm} program to get metadata from file. Uses ${undr}md5sum${norm}
+program to get hash info from file.
+
+When using defaults, items will be copied to given structure:
+
+/path/to/repository/yyyy/mm/dd/HH-MM-SS.ext
+
+The ${undr}timestamp${norm} is obtained using the given sequence:
+
+1. Use ${undr}exiftool${norm} to get "Created date" info. If fails,
+2. Use original item ${undr}filename pattern${norm}. Usually, media files are stored in
+   devices with named structure like IMG-yyyy-mm-dd-HH-MM-SS.ext. If fails,
+3. Use ${undr}exiftool${norm} to get "Modification date" info.
+
+OPTIONS:
+
+    ${bold}-h${norm}  Show this help text and exit program.
+
+    ${bold}-s${norm}  Set file naming using its ${undr}md5sum${norm} hash codes. Thus, items will be copied
+        as something like f091bc...ab381a.ext. Override default behavior,
+        which is HH-MM-SS.ext (hour, minute, second) of creation/name pattern/
+        modification.
+
+    ${bold}-i${norm}  Info mode; generate log, only
+
+    ${bold}-d${norm}  Set directory inside repository to store files. Thus, items will be
+        copied to /path/to/repository/directory. Override default behavior,
+        which is /path/to/repository/yyyy/mm/dd.
+
+    ${bold}-r${norm}  Set repository of media; default is given by environment variable
+        ${bold}MORGAN_REPOSITORY${norm}.
+
+EXAMPLES:
+
+    ${bold}morgan${norm}
+        Copy media files, recursively, from working directory, to media
+        repository, defined on ${bold}MORGAN_REPOSITORY${norm}. New files will
+        be saved using default name conventions.
+
+    ${bold}morgan${norm} ${undr}IMG_20221019_093227_foo-bar.png${norm}
+        Copy ${undr}IMG_20221019_093227_foo-bar.png${norm} to media repository, defined on
+        ${bold}MORGAN_REPOSITORY${norm}, using default name conventions. Probably
+        will be saved as ${undr}MORGAN_REPOSITORY/2022/10/19/09-32-27.png${norm}.
+
+    ${bold}morgan -r${norm} ${undr}/home/user/Images/Photographia${norm}
+        Copy media files, recursively, from working directory, to
+        ${undr}/home/user/Images/Photographia${norm}. New files will be saved using default
+        name conventions.
+
+    ${bold}morgan -r${norm} ${undr}/home/user/Documents${norm} ${bold}-d${norm} ${undr}Digitalization${norm}
+        Copy media files, recursively, from working directory, to
+        ${undr}/home/user/Documents${norm}. New files will be saved using default
+        name conventions, but the program won't create directories on ${undr}yyyy/mm/dd${norm}
+        format; instead, all media files will be copied to ${undr}Digitalization${norm}
+        subfolder of ${undr}/home/user/Documents${norm} -- e.g.:
+            /home/user/Documents/Digitalization/18-03-29.tiff
+            /home/user/Documents/Digitalization/07-35-52.jpg
+            /home/user/Documents/Digitalization/21-44-01.png
+            ...
+            and so on
+
+    ${bold}morgan ${bold}-s -d${norm} ${undr}Archivo${norm}
+        Copy media files, recursively, from working directory, to media
+        repository, defined on ${bold}MORGAN_REPOSITORY${norm}. New files will be named
+        using its ${undr}md5sum${norm} hash codes. The program won't create directories
+        on ${undr}yyyy/mm/dd${norm} format; instead, all media files will be copied to 
+        ${undr}Archivo${norm} subfolder of ${undr}MORGAN_REPOSITORY${norm} -- e.g.:
+            MORGAN_REPOSITORY/Archivo/deb1ac...f90abc.jpg
+            MORGAN_REPOSITORY/Archivo/8a1f44...7749ab.jpg
+            MORGAN_REPOSITORY/Archivo/eb29a0...9a02f4.jpg
+            ...
+            and so on
+EOF
+}
+
+get_created_date() {
+    item="$1"
+    timestamp=$(exiftool "$item" | \
+                grep -oiE -m 1 "^create date.*" | \
+                grep -o "[0-9]*")
+    read -d "\n" ano mes dia hora minuto segundo <<<$(echo "$timestamp")
+    if [ "$ano" = "0000" ] || [ "$timestamp" = "" ]; then
+        return 0
+    else
+        return 42
+    fi
+}
+
+get_name_pattern() {
+    item="$1"
+    padrao='\d{4}[-._]?\d{2}[-._]?\d{2}([-._]?\d{2}[-._]?\d{2}[-._]?\d{2})?'
+    timestamp=$(echo "$item" | \
+        grep -oP $padrao | \
+        sed -e 's/[^0-9]//g'
+    )
+    ano=$(echo "$timestamp" | cut -c 1-4)
+    mes=$(echo "$timestamp" | cut -c 5-6)
+    dia=$(echo "$timestamp" | cut -c 7-8)
+    qtd_char=${#timestamp}
+    case "$qtd_char" in
+        8 )
+            hora="00"
+            minuto="00"
+            segundo="00"
+            ;;
+        14 )
+            hora=$(echo "$timestamp" | cut -c 9-10)
+            minuto=$(echo "$timestamp" | cut -c 11-12)
+            segundo=$(echo "$timestamp" | cut -c 13-14)
+            ;;
+        * )
+            # não veio um padrão correto, precisamos interromper
+            timestamp=""
+            ;;
+    esac
+    if [ "$timestamp" = "" ]; then
+        return 0
+    else
+        return 42
+    fi
+}
+
+get_modification_date() {
+    item="$1"
+    timestamp=$(exiftool "$item" |
+                grep -oiE -m 1 ".*modification.*" |
+                awk -F ' : ' '{print $NF}' |
+                grep -o "[0-9]*")
+    read -d "\n" ano mes dia hora minuto segundo delta_h delta_m <<<$(echo "$timestamp")
+    if [ "$timestamp" = "" ]; then
+        return 0
+    else
+        return 42
+    fi
+}
+
+bar_size=40
+bar_char_done="#"
+bar_char_todo="-"
+bar_percentage_scale=2
+function show_progress {
+    # source: https://www.baeldung.com/linux/command-line-progress-bar
+    current="$1"
+    total="$2"
+    elapsed="$3"
+    avg_time=$(bc <<< "scale=1; $elapsed / $current")
+    remaining=$(bc <<< "scale=1; ($total - $current) * $avg_time")
+    percent=$(bc <<< "scale=$bar_percentage_scale; 100 * $current / $total" )
+    done=$(bc <<< "scale=0; $bar_size * $percent / 100" )
+    todo=$(bc <<< "scale=0; $bar_size - $done" )
+    done_sub_bar=$(printf "%${done}s" | tr " " "${bar_char_done}")
+    todo_sub_bar=$(printf "%${todo}s" | tr " " "${bar_char_todo}")
+    echo -ne "\rProgress: \033[32m${done_sub_bar}\033[0m${todo_sub_bar} [${current}/${total}] [${elapsed} s/${remaining} s] ${percent}% "
+    if [ $total -eq $current ]; then
+        echo -e "\nDONE"
+    fi
+}
+
+destino="$MORGAN_REPOSITORY"
 agora=$(date +"%Y-%m-%d-%H-%M-%S")
 logfile="$destino/logs/morgan-$agora.log"
 infonly=0
+hashmode=0
+allfiles=0
+method_order=1
+directory=""
 
-while getopts 'ihr:' OPTION; do
+while getopts 'hsid:r:aio:' OPTION; do
     case "$OPTION" in
         h)
-            echo "$usage"
+            show_help
             exit
             ;;
-        i)
-            infonly=1
-            logfile="morgan-$agora.log"
-            echo "Running information diagnosys. Log will be saved on:"
-            echo "$logfile"
+        s)
+            hashmode=1
+            echo "Items will be named using md5sum hash."
+            ;;
+        d)
+            echo "Items will be saved into repository's subfolder $OPTARG"
+            directory="$OPTARG"
             ;;
         r)
             echo "Set repository to:"
             echo "$OPTARG"
             destino="$OPTARG"
             logfile="$destino/morgan-$agora.log"
+            ;;
+        i)
+            infonly=1
+            logfile="./morgan-$agora.log"
+            echo "Only generate log file, without create copies of items."
+            ;;
+        a)
+            allfiles=1
+            echo "All files will be processed, media items or not."
+            ;;
+        o)
+            method_order="$OPTARG"
             ;;
         \?)
             printf "Illegal option: -%s\n" "$OPTARG" >&2
@@ -44,52 +219,110 @@ shift $((OPTIND - 1))
 
 touch "$logfile"
 echo "Organização de mídia do diretório:" > "$logfile"
+if [[ "$infonly" -eq 1 ]]; then
+    echo "INFO only! We are NOT creating files!" >> "$logfile"
+fi
 pwd >> "$logfile"
-echo "" >> "$logfile"
 midias=()
 nao_processados=()
 
+# se não houver argumentos posicionais, o programa itera sobre todos os
+# arquivos do diretório atual; em caso contrário, é executado somente sobre os
+# arquivos indicados
+if [ $# -eq 0 ]; then
+    items=$(find . -name "*" -type f)
+    qtd_items=$(find . -name "*" -type f | wc -l)
+else
+    items="$@"
+    qtd_items="$#"
+fi
+
 OLDIFS=$IFS
 IFS=$'\n'
-for item in $(find . -name "*" -type f)
-do
+echo "Processaremos $qtd_items itens." 2>&1 | tee -a "$logfile"
+SECONDS=0
+current_item=1
+for item in $items; do
+    show_progress $current_item $qtd_items $SECONDS
     tipo=$(file -i "$item")
-    case "$tipo" in
-        *image* | *video* )
-        timestamp=$(exiftool "$item" |
-                    grep -oiE -m 1 "^create date.*" |
-                    grep -o "[0-9]*")
-        read -d "\n" ano mes dia hora minuto segundo <<<$(echo "$timestamp")
-        if [ "$ano" = "0000" ] || [ "$timestamp" = "" ]; then
-            timestamp=$(exiftool "$item" |
-                        grep -oiE -m 1 ".*modification.*" |
-                        awk -F ' : ' '{print $NF}' |
-                        grep -o "[0-9]*")
-            read -d "\n" ano mes dia hora minuto segundo delta_h delta_m <<<$(echo "$timestamp")
-        fi
-        extensao=$(exiftool "$item" |
-                   grep -Ei ".*extension.*" |
-                   awk -F ' : ' '{print $NF}')
-        newdir="$destino/$ano/$mes/$dia"
-        newfile="$hora-$minuto-$segundo.$extensao"
-        if [ $infonly -eq 1 ]; then
-            if [ ! -d $newdir ]; then
-                echo "mkdir: criaremos diretório '$newdir'" 2>&1 | tee -a "$logfile"
-            fi
-            echo "cp $item -> $newdir/$newfile" 2>&1 | tee -a "$logfile"
+
+    # case "$tipo" in
+    # *image* | *video* )
+    if [[ "$tipo" = *image* || "$tipo" == *video* || "$allfiles" -eq 1 ]]; then
+
+        # extensao=$(exiftool "$item" |
+        #            grep -Ei ".*extension.*" |
+        #            awk -F ' : ' '{print $NF}')
+        extensao="${item##*.}"
+
+        # cria nomenclatura e estrutura de diretório
+        if [ $hashmode -eq 1 ]; then
+            newdir="${destino}/${directory}"
+            filename=$(md5sum "${item}" | awk '{print $1}')
+            newfile="${filename}.${extensao}"
         else
-            mkdir -pv "$newdir" 2>&1 | tee -a "$logfile"
-            cp -nv "$item" "$newdir/$newfile" 2>&1 | tee -a "$logfile"
+            # tenta obter timestamp usando todos os métodos, em sequência
+            case "$method_order" in
+                1)
+                    ;;
+            esac
+            get_created_date "$item"
+            if [ $? -eq 0 ]; then
+                echo "WARNING: Processamento de $item falhou com método get_created_date. Tentaremos com o próximo." >> "$logfile"
+                get_name_pattern "$item"
+                if [ $? -eq 0 ]; then
+                    echo "WARNING: Processamento de $item falhou com método get_name_pattern. Tentaremos com o próximo." >> "$logfile"
+                    get_modification_date "$item"
+                fi
+            fi
+            newdir="${destino}/${ano}/${mes}/${dia}"
+            newfile="${hora}-${minuto}-${segundo}.${extensao}"
         fi
+        # enquanto houver arquivo com o mesmo nome ...
+        n=1
+        while [[ -e "$newdir/$newfile" ]]; do
+            # compara pra ver se não é a mesma imagem
+            if cmp -s "$item" "$newdir/$newfile"; then
+                echo "WARNING: Os arquivos '$item' e '$newdir/$newfile' têm o mesmo conteúdo." >> "$logfile"
+                # em caso afirmativo, encerra o loop de cópia de $item
+                break;
+            fi
+            # em caso negativo, adiciona sufixo `_N` e segue com o loop
+            # de verificação; com isso, garantimos que todos os itens
+            # de mesmo nome serão verificados.
+            newfile="${hora}-${minuto}-${segundo}_${n}.${extensao}"
+            ((n++))
+        done
+        if [ "$infonly" -eq 1 ]; then
+            # apenas exibe o que seria feito
+            echo "'${item}' -> '${newdir}/${newfile}'" >> "$logfile"
+        else
+            # realiza cópia, em si!
+            mkdir -pv "$newdir" >> "$logfile" 2>&1
+            copia=$(cp -nvp "$item" "$newdir/$newfile" 2>&1 | tee -a "$logfile")
+            # quando a cópia falhar, informa o item original
+            jaexiste=$(echo "$copia" | grep "not replacing")
+            if [ ! -z "$jaexiste" ]; then
+                echo "Arquivo original: $item" >> "$logfile"
+            fi
+        fi
+        # adiciona ao dicionário de itens processados
         midias[${#midias[@]}]="$item"
-        ;;
-        * )
+    # ;;
+
+    # * )
+    else
+        # item não é uma mídia válida;
+        # adiciona ao dicionário de itens não processados
         nao_processados[${#nao_processados[@]}]="$item"
-        ;;
-    esac
+    # ;;
+    # esac
+    fi
+    ((current_item++))
 done
 IFS=$OLDIFS
 
+echo ""
 echo "Processamos ${#midias[@]} arquivos de mídia." 2>&1 | tee -a "$logfile"
 echo "Não processamos ${#nao_processados[@]} arquivos de outros tipos:" 2>&1 | tee -a "$logfile"
 for item in "${nao_processados[@]}"

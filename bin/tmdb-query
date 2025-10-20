@@ -1,0 +1,168 @@
+#!/usr/bin/bash
+
+norm=$(tput sgr0)
+bold=$(tput bold)
+smul=$(tput smul)
+rmul=$(tput rmul)
+black=$(tput setaf 0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+magenta=$(tput setaf 5)
+cyan=$(tput setaf 6)
+white=$(tput setaf 7)
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") [-m -s] [-y YEAR] <ITEM>
+EOF
+}
+
+exit_error() {
+    msg="$1"
+    icon="action-unavailable-symbolic"
+    notify-send \
+        -u critical -t 6000 -i "$icon" \
+        "TMDB" "$msg"
+}
+
+source $HOME/.local/bin/tmdb.conf
+ACCESS="$ACCESS"
+KEY="$KEY"
+
+prefix="search/movie"
+search_type="M"
+year=""
+notification=0
+clipboard=0
+
+while getopts 'smnc' OPTION; do
+    case "$OPTION" in
+        s)
+            echo "${cyan}Pesquisando uma SÉRIE DE TV ...${norm}"
+            prefix="search/tv"
+            search_type="S"
+            ;;
+        m)
+            echo "${cyan}Pesquisando um FILME ...${norm}"
+            prefix="search/movie"
+            search_type="M"
+            ;;
+        n)
+            echo "${cyan}Geraremos uma notificação para o usuário.${norm}"
+            notification=1
+            ;;
+        c)
+            echo "${cyan}Copiaremos a saída para o clipboard.${norm}"
+            clipboard=1
+            ;;
+        \?)
+            printf "${red}❌Illegal option: -%s\n${norm}" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ -z "$@" ]]; then
+    echo "${red}❌Informe um termo para pesquisa!${norm}"
+    show_help
+    exit 1
+else
+    echo "${green} Parâmetro de pesquisa: ${smul}${1}${rmul}.${norm}"
+    query=$(sed 's/ /+/g' <<< "$1")
+    nome="$1"
+fi
+
+if [[ ! -z "$2" ]]; then
+    ano="$2"
+    echo "${green} Ano de lançamento: ${smul}${2}${rmul}.${norm}"
+    case $search_type in
+        M)
+            year="&primary_release_year=$ano"
+            ;;
+        S)
+            year="&year=$ano"
+            ;;
+    esac
+fi
+
+URL="https://api.themoviedb.org/3/${prefix}?query=${query}${year}"
+HEADER="Authorization: Bearer ${ACCESS}"
+temp="$HOME/.local/bin/tmdb.json.tmp"
+curl --request GET --url "$URL" --header "$HEADER" -s -o ${temp} \
+     || exit_error "Requisição falhou para o termo ${query}"
+
+json="$HOME/.local/bin/tmdb.json"
+jq '.' ${temp} > "${json}"
+
+if [[ ! -z "$ano" ]]; then
+    case $search_type in
+        M)
+        overview=$(jq --arg ano "$ano" \
+            '.results[] | select(.release_date | contains($ano)) | .id' \
+            "${json}" | head -n 1) \
+            || exit_error "Não foi possível obter o ID para ${nome}."
+        title=$(jq --arg ano "$ano" \
+            '.results[] | select(.release_date | contains($ano)) | .original_title' \
+            "${json}" | head -n 1 | \
+            sed 's/"//g' ) \
+            || exit_error "Não foi possível obter o título para ${nome}."
+        tmdbid=$(jq --arg ano "$ano" \
+            '.results[] | select(.release_date | contains($ano)) | .overview' \
+            "${json}" | head -n 1) \
+            || exit_error "Não foi possível obter o resumo para ${nome}."
+        ;;
+        S)
+        tmdbid=$(jq --arg ano "$ano" \
+            '.results[] | select(.first_air_date | contains($ano)) | .id' \
+            "${json}" | head -n 1) \
+            || exit_error "Não foi possível obter o ID para ${nome}."
+        title=$(jq --arg ano "$ano" \
+            '.results[] | select(.first_air_date | contains($ano)) | .original_name' \
+            "${json}" | head -n 1 | \
+            sed 's/"//g' ) \
+            || exit_error "Não foi possível obter o título para ${nome}."
+        overview=$(jq --arg ano "$ano" \
+            '.results[] | select(.first_air_date | contains($ano)) | .overview' \
+            "${json}" | head -n 1) \
+            || exit_error "Não foi possível obter o ID para ${nome}."
+        ;;
+    esac
+else
+    echo "${magenta} Consideraremos o primeiro registro encontrado.${norm}"
+    tmdbid=$(jq '.results[0].id' "${json}") \
+        || exit_error "Não foi possível obter o ID para ${nome}."
+    overview=$(jq '.results[0].overview' "${json}") \
+        || exit_error "Não foi possível obter o resumo para ${nome}."
+    case $search_type in
+        M)
+        title=$(jq '.results[0].original_title' "${json}" | \
+            sed 's/"//g') \
+            || exit_error "Não foi possível obter o título para ${nome}."
+        ano=$(jq '.results[0].release_date' \
+            "${json}" | sed 's/-.*//g' | sed 's/[^0-9]//g')
+        ;;
+        S)
+        title=$(jq '.results[0].original_name' "${json}" | \
+            sed 's/"//g') \
+            || exit_error "Não foi possível obter o título para ${nome}."
+        ano=$(jq '.results[0].first_air_date' \
+            "${json}" | sed 's/-.*//g' | sed 's/[^0-9]//g')
+        ;;
+    esac
+fi
+novo="${title} (${ano}) [tmdbid-${tmdbid}]"
+echo "${blue} Resultado: ${bold}${novo}${norm}"
+
+if [[ "$clipboard" -eq 1 ]]; then
+    echo "$novo" | xsel -b
+fi
+
+if [[ "$notification" -eq 1 ]]; then
+    notify-send \
+        -u low -t 8000 -i "edit-copy-symbolic" \
+        "TMDB" "${novo}\n\n${overview}"
+fi

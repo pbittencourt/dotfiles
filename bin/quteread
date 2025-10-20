@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+# NOTE: adiciona item ao `readeck` utilizando sua API.
+# o nome do script tem origem no fato dele ser utilizado
+# principalmente a partir do `qutebrowser`
+#
+# FIXME: demanda continuidade, foi apenas um primeiro teste;
+# conferir: http://192.168.0.54:8123/docs/api
+
+TOKEN="Aaf6hA7hMxM1jZaLx5xRpnUFi3cyFbrBMh6z7343WhHcV9Xe"
+
+curl \
+    -H \
+    "Authorization: Bearer ${TOKEN}" \
+    http://192.168.0.54:8123/api/bookmarks
+
+curl \
+    -X POST \
+    "http://192.168.0.54:8123/api/bookmarks" \
+    -H 'accept: application/json'\
+    -H 'content-type: application/json' \
+    -d '{"url":"string"}'

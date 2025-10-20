@@ -1,0 +1,60 @@
+---
+title: morgan
+---
+flowchart LR
+
+  subgraph bloco_inicial
+    direction TB
+    def_destino[/Define variável destino a partir de variável de ambiente MORGAN_REPOSITORY./]
+    def_agora[/Obtém timestamp atual./]
+    def_logfile[/Define variável logfile. Seu endereço de gravação padrão é no diretório destino, subdiretório logs, com nomenclatura de log incluindo timestamp calculado./]
+    inicio_param([Início da verificação de parâmetros])
+
+    inicio_param --> param_h{Usuário inseriu parâmetro h?}
+    param_h -- Sim --> param_h_sim[/Exibe mensagem de ajuda/] --> fim_h([Encerra o programa])
+    param_h -- Não --> fim_param
+
+    inicio_param --> param_r{Usuário inseriu parâmetro r?}
+    param_r -- Sim --> param_r_sim(Define variável destino. O local informado será o repositório de gravação das imagens.) --> fim_param
+    param_r -- Não --> fim_param
+
+    fim_param([Fim da verificação de parâmetros])
+  end
+
+  subgraph loop_items
+    direction TB
+    inicio_loop([Início da iteração entre os arquivos do diretório de trabalho])
+    --> mime_type{Arquivo tem mime-type image ou video?}
+    mime_type -- Não --> nao_proc[/Adiciona item a dicionário de arquivos não processados pelo programa./] --> fim_loop
+    mime_type -- Sim --> createdate
+
+    createdate[Obtém timestamp a partir do padrão create date na saída de exiftool.]
+    --> leitura1(Lê e armazena variáveis ano, dia, mês, hora, minuto e segundo)
+    --> teste1{O comando retorna saída válida?}
+    teste1 -- Não --> padrao_nome
+    teste1 -- Sim --> leitura1
+
+
+    padrao_nome[Obtém timestamp a partir de padrões no nome do arquivo.]
+    --> teste2{O comando retorna saída válida?}
+    teste2 -- Não --> modificationdate
+
+    modificationdate[Obtém timestamp a partir do padrão modification date na saída de exiftool.]
+    --> teste3{O comando retorna saída válida?}
+    teste3 -- Não --> fim_loop
+
+    fim_loop([Fim da iteração.])
+  end
+
+  subgraph bloco_final
+    direction TB
+    items_proc[/Exibe quantidade de arquivos de mídia processados./]
+    --> items_nao_proc[/Exibe quantidade de arquivos de outro tipo, não processados pelo programa./]
+    --> item_nao_proc[/Exibe relação de itens não processados pelo programa./]
+  end
+
+  inicio([Início do programa])
+  --> bloco_inicial
+  --> loop_items
+  --> bloco_final
+  --> fim([Fim do programa])

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+usage="Usage $(basename "$0") MESSAGE
+Send me a telegram message.
+
+OPTIONS
+    -h   show this help text
+"
+
+if [ $# -eq 0 ]; then
+    echo "$usage"
+    exit
+fi
+
+source $HOME/.local/bin/telegramo.conf
+TOKEN="$TELEGRAM_TOKEN"
+CHAT_ID="$TELEGRAM_CHAT_ID"
+
+MSG="$1"
+curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+    -d chat_id="${CHAT_ID}" \
+    -d text="$MSG"

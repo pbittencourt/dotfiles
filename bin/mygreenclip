@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+selecao=$(greenclip print | mydmenu -l 15)
+
+if [[ $? -eq 0 ]]; then
+    echo "$selecao" | xsel -b
+    notify-send \
+        -u low -t 4000 -i "edit-copy-symbolic" \
+        "greenclip" "Texto copiado para o clipboard:\n\n${selecao:0:100}"
+fi

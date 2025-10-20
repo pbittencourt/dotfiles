@@ -1,0 +1,170 @@
+#!/usr/bin/bash
+
+show_help() {
+    cat <<EOF
+Usage $(basename "$0") [-l] [-s] [-h] </path/to/file.torrent> [item] [novo_nome]
+
+Inicia ${smul}arquivo${rmul} torrent usando transmission-remote. Se o usuário informar um
+${smul}item${rmul} específico, verifica se este existe na lista de arquivos do torrent e, em
+caso afirmativo, baixa somente tal item. Neste caso, o usuário pode informar um
+${smul}novo nome${rmul} para salvar o arquivo quando o torrent for concluído. Por padrão, ele
+será copiado com este nome para ~/Downloads.
+
+OPTIONS:
+
+    ${bold}-h${norm}  Show this help text and exit program.
+
+    ${bold}-s${norm}  Execute transmission on server.
+
+    ${bold}-l${norm}  Execute transmission on local machine.
+EOF
+}
+
+COMMON="$HOME/.local/bin/common.sh"
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    err="❌"
+    red=$(tput setaf 1)
+    norm=$(tput sgr0)
+    echo "${red}${err}Arquivo ${smul}$COMMON${rmul} não encontrado. O programa será encerrado.${norm}"
+    exit 1
+fi
+
+ENV_FILE="$HOME/.env-transmission"
+if [[ -f "$ENV_FILE" ]]; then
+  source "$ENV_FILE"
+else
+  echo "Arquivo $ENV_FILE não encontrado. Crie um com TRANS_AUTH e TRANS_HOST."
+  exit 1
+fi
+if [[ -z "$TRANS_AUTH" || -z "$TRANS_HOST" ]]; then
+  echo "Variáveis TRANS_AUTH ou TRANS_HOST não estão definidas corretamente."
+  exit 1
+fi
+
+prefixo=""
+while getopts 'hlsn:' OPTION; do
+    case "$OPTION" in
+        h)
+            show_help
+            exit
+            ;;
+        l)
+            prefixo=""
+            echo "${cyan}Transmission será executado ${bold}localmente${norm}."
+            ;;
+        s)
+            prefixo="${TRANS_HOST} --auth ${TRANS_AUTH}"
+            echo "${cyan}Transmission será executado ${bold}no servidor${norm}."
+            ;;
+        \?)
+            printf "Illegal option: -%s\n" "$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ -z "$@" ]]; then
+    show_help
+    exit 1
+fi
+
+transmission-remote $prefixo --list &>/dev/null
+if [[ ! $? -eq 0 ]]; then
+    echo "${red}❌Transmission desconectado!${norm}"
+    exit 1
+fi
+
+if [[ ! -z "$1" ]]; then
+    arquivo="$1"
+    echo "${cyan}Tentaremos adicionar arquivo ${smul}${arquivo}${rmul} à transmissão.${norm}"
+fi
+transmission-show "$arquivo" &>/dev/null
+if [[ $? -eq 0 ]]; then
+    echo "${green}✔ Arquivo ${smul}${arquivo}${rmul} é um torrent válido!${norm}"
+else
+    echo "${red}❌Arquivo ${smul}${arquivo}${rmul} não é um torrent válido!${norm}"
+    exit 1
+fi
+
+if [[ ! -z "$2" ]]; then
+    item="$2"
+    echo "${cyan}Tentaremos baixar item ${smul}${item}${rmul} do arquivo.${norm}"
+    transmission-show "$arquivo" | grep -i "$item" &>/dev/null
+    if [[ $? -eq 0 ]]; then
+        echo "${green}✔ Item ${smul}${item}${rmul} encontrado no arquivo!${norm}"
+    else
+        echo "${red}❌Item ${smul}${item}${rmul} não encontrado no arquivo!${norm}"
+        exit 1
+    fi
+else
+    echo "${green} Vamos baixar ${smul}todos${rmul} os itens do torrent!${norm}"
+fi
+
+if [[ ! -z "$3" ]]; then
+    novo_nome="$3"
+    echo "${green} Vamos renomear o item para ${smul}${novo_nome}${rmul} ao final do processo!${norm}"
+else
+    novo_nome=""
+fi
+
+if [[ -z "$item" ]]; then
+    transmission-remote $prefixo -a "$arquivo"
+    if [ $? -eq 0 ]; then
+        notify-send \
+            -u low -t 6000 -i "transmission-tray-icon" \
+            "Sucesso" "Arquivo ${arquivo} adicionado ao trem!"
+    else
+        notify-send \
+            -u critical -t 6000 -i "transmission-tray-icon" \
+            "ERRO" "Não foi possível adicionar arquivo ${arquivo} ao trem."
+        exit 1
+    fi
+else
+    # adiciona o torrent e inicia pausado
+    transmission-remote ${prefixo} -a "$arquivo" --start-paused &>/dev/null
+    if [ ! $? -eq 0 ]; then
+        echo "${red}❌Falhou ao adicionar arquivo ${smul}${arquivo}${rmul}.${norm}"
+        exit 1
+    fi
+    # obtém id do último item, ie, do arquivo recém adicionado
+    ultimo=$(transmission-remote ${prefixo} -l | \
+        awk 'NR>1 && $1 ~ /^[0-9]+$/ {print $1}' | \
+        sort -n | \
+        tail -1)
+    if [[ -z "$ultimo" ]]; then
+        echo "${red}❌Falhou ao obter ID do torrent adicionado.${norm}"
+        exit 1
+    fi
+    # remove todos os itens da relacao para baixar
+    transmission-remote ${prefixo} -t "${ultimo}" -G all &>/dev/null
+    if [ ! $? -eq 0 ]; then
+        echo "${red}❌Falhou ao remover todos os itens do torrent.${norm}"
+        exit 1
+    fi
+    # obtem a linha em que o item se localiza
+    linha=$(transmission-remote ${prefixo} -t ${ultimo} -f | \
+        grep -i "${item}" | \
+        awk -F ':' '{print $1}')
+    if [[ -z "$linha" ]]; then
+        echo "${red}❌Falhou ao obter linha em que o item se localiza.${norm}"
+        exit 1
+    fi
+    # adiciona a linha a relacao pra baixar e inicia o torrent
+    transmission-remote ${prefixo} -t "${ultimo}" -g"${linha}" -s &>/dev/null
+    if [ $? -eq 0 ]; then
+        echo "${green}✔ Item ${smul}${item}${rmul} do arquivo ${smul}${arquivo}${rmul} iniciado com sucesso!${norm}"
+        notify-send \
+            -u low -t 6000 -i "transmission-tray-icon" \
+            "Sucesso" "Item ${item} do arquivo ${arquivo} iniciado na linha ${linha}!"
+    else
+        echo "${red}❌Falhou ao adicionar item ${smul}${item}${rmul} do arquivo ${smul}${arquivo}${rmul}.${norm}"
+        notify-send \
+            -u critical -t 6000 -i "transmission-tray-icon" \
+            "ERRO" "Não foi possível iniciar torrent ${arquivo} com item ${item} na linha ${linha}."
+        exit 1
+    fi
+fi
